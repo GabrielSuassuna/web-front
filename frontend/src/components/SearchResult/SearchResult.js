@@ -25,7 +25,7 @@ function SearchResult(props) {
   if(props.type === SEARCH_RESULT_TYPES.DISCIPLINE_TAUGHT)
     return <DisciplineTaughtSearchResult resultData={props.resultData}/>;
   if(props.type === SEARCH_RESULT_TYPES.FEEDBACK)
-    return <FeedbackSearchResult resultData={props.resultData}/>;
+    return <FeedbackSearchResult resultData={props.resultData} handleVote={props.handleVote}/>;
 }
 
 export default SearchResult;
