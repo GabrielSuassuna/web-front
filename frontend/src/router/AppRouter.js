@@ -12,7 +12,7 @@ import FeedbackCreationPage from "../pages/FeedbackCreationPage/FeedbackCreation
 import FeedbackDescriptionPage from "../pages/FeedbackDescriptionPage/FeedbackDescriptionPage";
 import FeedbackRevisionPage from "../pages/FeedbackRevisionPage/FeedbackRevisionPage";
 import HomePage from "../pages/HomePage/HomePage";
-import LoggedHomePage from "../pages/LoggedHome/LoggedHome";
+import LoggedHomePage from "../pages/LoggedHomePage/LoggedHomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import MyFeedbacksPage from "../pages/MyFeedbacksPage/MyFeedbacksPage";
 import MyProfilePage from "../pages/MyProfilePage/MyProfilePage";

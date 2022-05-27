@@ -57,7 +57,7 @@ function ExplorePage() {
   return (
     <div>
       <h1>ExplorePage</h1>
-      {DUMMY_RESULTS.map(result => <><SearchResult type={result.type} resultData={result.resultData}/> <br/> </>)}
+      {DUMMY_RESULTS.map( (result, i) => <div key={i}><SearchResult  type={result.type} resultData={result.resultData}/> <br/> </div>)}
     </div>
   );
 }
