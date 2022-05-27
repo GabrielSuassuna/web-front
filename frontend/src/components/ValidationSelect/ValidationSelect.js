@@ -1,7 +1,7 @@
 import styles from "./ValidationSelect.module.css";
 
 /**
- * Componente que representa um campo de input que pode ser validado.
+ * Componente que representa um campo de select.
  *
  * props:
  *  * name (String): Nome do select

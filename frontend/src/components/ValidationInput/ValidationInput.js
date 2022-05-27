@@ -7,6 +7,7 @@ import styles from "./ValidationInput.module.css";
  * props:
  *  * label (String): Texto que indica sobre o que é o campo 
  *  * hint (String): Dica que aparece quando o campo está vazio
+ *  * name (String): Nome do input
  *  * type (String): Tipo do input
  *  *       <ValidationInput label="Código da Disciplina" hint="ex: CK0203" type="text" inputRef={disciplineHoursRef} validation={validationNumberChecker} />
  *  * inputRef (Ref): Referência do valor do campo
@@ -19,7 +20,7 @@ function ValidationInput(props) {
   return (
     <div>
       <label htmlFor='validationInput'>{props.label}:</label>
-      <input className={styles.validationInput} type={props.type} id='validationInput' onFocus={() => setShouldValidate(false)} onBlur={() => setShouldValidate(true)} ref={props.inputRef} />
+      <input className={styles.validationInput} type={props.type} id='validationInput' onFocus={() => setShouldValidate(false)} onBlur={() => setShouldValidate(true)} ref={props.inputRef} name={props.name}/>
       {shouldValidate && !props.validation(props.inputRef).isValid && <small className={styles.validationError}>{props.validation(props.inputRef).message || 'Campo inválido!'}</small>}
     </div>
   );

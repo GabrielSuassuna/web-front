@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import RadioInput from "../../components/RadioInput/RadioInput";
 import SearchResult from "../../components/SearchResult/SearchResult";
+import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import { SEARCH_RESULT_TYPES } from "../../utils/consts";
 
@@ -76,8 +78,17 @@ const DUMMY_SELECT_OPTIONS = [
   { value: "DISABLED", label: "Opção indisponível", disabled: true },
 ];
 
+const DUMMY_RADIO_OPTIONS = [
+  { id: 'scoreAsc', value: "scoreAsc", label: "Classificação (Crescente)" },
+  { id: 'scoreDesc', value: "scoreDesc", label: "Classificação (Decrescente)" },
+  { id: 'nameAsc', value: "nameAsc", label: "Nome (Crescente)" },
+  { id: 'nameDesc', value: "nameDesc", label: "Nome (Decrescente)" }
+];
+
 function ExplorePage() {
   const [searchType, setSearchType] = useState("ALL");
+  const [sorting, setSorting] = useState('scoreAsc');
+
   return (
     <div>
       <h1>ExplorePage</h1>
@@ -91,6 +102,13 @@ function ExplorePage() {
         options={DUMMY_SELECT_OPTIONS}
       />
 
+      <RadioInput 
+        label='Modo de ordenação'
+        name='order'
+        options={DUMMY_RADIO_OPTIONS}
+        selected={sorting}
+        setSelected={setSorting}
+      />
       {DUMMY_RESULTS.map((result, i) => (
         <div key={i}>
           <SearchResult type={result.type} resultData={result.resultData} />{" "}
