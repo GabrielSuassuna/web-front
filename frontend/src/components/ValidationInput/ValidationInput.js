@@ -15,6 +15,17 @@ import styles from "./ValidationInput.module.css";
  */
 function ValidationInput(props) {
   let [shouldValidate, setShouldValidate] = useState(false);
+  let [errorMessage, setErrorMessage] = useState('');
+
+  const validationCheck = () => {
+    let validation = props.validation(props.inputRef);
+    if(validation.isValid)
+      setErrorMessage('')
+    else
+      setErrorMessage(validation.message)
+  }
+
+  
 
   return (
     <div>
@@ -23,15 +34,15 @@ function ValidationInput(props) {
         className={styles.validationInput}
         type={props.type}
         id="validationInput"
-        onFocus={() => setShouldValidate(false)}
-        onBlur={() => setShouldValidate(true)}
+        onFocus={() => setShouldValidate(true)}
         ref={props.inputRef}
         name={props.name}
         placeholder={props.hint}
+        onChange={validationCheck}
       />
-      {shouldValidate && !props.validation(props.inputRef).isValid && (
+      {shouldValidate && errorMessage && (
         <small className={styles.validationError}>
-          {props.validation(props.inputRef).message || "Campo inválido!"}
+          {errorMessage}
         </small>
       )}
     </div>
