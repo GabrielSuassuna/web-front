@@ -73,6 +73,7 @@ const DUMMY_SELECT_OPTIONS = [
   { value: "DISCIPLINE", label: "Disciplina" },
   { value: "DISCIPLINE_TAUGHT", label: "Disciplina Ministrada" },
   { value: "FEEDBACK", label: "Feedback" },
+  { value: "DISABLED", label: "Opção indisponível", disabled: true },
 ];
 
 function ExplorePage() {

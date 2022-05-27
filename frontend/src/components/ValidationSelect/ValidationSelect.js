@@ -9,7 +9,7 @@ import styles from "./ValidationSelect.module.css";
  *  * hint (String): Dica que aparece quando o campo está vazio
  *  * value (Object): Estado do React que armazena o valor selecionado
  *  * valueHandler (Function): Função para modificar o estado do valor selecionado
- *  * options (Array): Lista de opções onde cada elemento é do formato Object { value: Object, label: String }
+ *  * options (Array): Lista de opções onde cada elemento é do formato Object { value: Object, label: String, disabled: Boolean }
  */
 function ValidationSelect(props) {
   return (
@@ -23,7 +23,7 @@ function ValidationSelect(props) {
         onChange={(e) => props.valueHandler(e.target.value)}
       >
         {props.options.map((o) => (
-          <option key={`${o.value}_${o.label}`} value={o.value}>
+          <option key={`${o.value}_${o.label}`} value={o.value} disabled={!!o.disabled}>
             {o.label}
           </option>
         ))}
