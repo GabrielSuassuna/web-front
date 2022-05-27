@@ -12,38 +12,51 @@ import styles from "./ValidationInput.module.css";
  *  * inputRef (Ref): Referência do valor do campo
  *  * validation (Function): Função que faz a validação do input e retorna uma mensagem indicando o possível erro de validação.
  *      Retorno da função validation: Object {  isValid: Boolean,  message: String (opcional)  }
+ *  * isTextArea (Boolean): Indica se é uma textarea
+ *  * inputClasses (array): Classes para o input
  */
 function ValidationInput(props) {
   let [shouldValidate, setShouldValidate] = useState(false);
-  let [errorMessage, setErrorMessage] = useState('');
+  let [errorMessage, setErrorMessage] = useState("");
 
   const validationCheck = () => {
     let validation = props.validation(props.inputRef);
-    if(validation.isValid)
-      setErrorMessage('')
-    else
-      setErrorMessage(validation.message)
+    if (validation.isValid) setErrorMessage("");
+    else setErrorMessage(validation.message);
+  };
+
+  let input = (
+    <input
+      className={[styles.validationInput, ...(props.inputClasses || [])].join(
+        " "
+      )}
+      type={props.type}
+      id={`validationInput_${props.name}`}
+      onFocus={() => setShouldValidate(true)}
+      ref={props.inputRef}
+      name={props.name}
+      placeholder={props.hint}
+      onChange={validationCheck}
+    />
+  );
+  if (props.isTextArea) {
+    input = <textarea
+      className={[styles.validationInput, ...(props.inputClasses || [])].join(' ')}
+      type={props.type}
+      id={`validationInput_${props.name}`}
+      onFocus={() => setShouldValidate(true)}
+      ref={props.inputRef}
+      name={props.name}
+      placeholder={props.hint}
+      onChange={validationCheck}
+    />
   }
-
-  
-
   return (
     <div>
       <label htmlFor="validationInput">{props.label}:</label>
-      <input
-        className={styles.validationInput}
-        type={props.type}
-        id="validationInput"
-        onFocus={() => setShouldValidate(true)}
-        ref={props.inputRef}
-        name={props.name}
-        placeholder={props.hint}
-        onChange={validationCheck}
-      />
+      {input}
       {shouldValidate && errorMessage && (
-        <small className={styles.validationError}>
-          {errorMessage}
-        </small>
+        <small className={styles.validationError}>{errorMessage}</small>
       )}
     </div>
   );
