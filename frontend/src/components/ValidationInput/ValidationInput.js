@@ -1,11 +1,11 @@
-import {useState} from 'react';
+import { useState } from "react";
 import styles from "./ValidationInput.module.css";
 
 /**
  * Componente que representa um campo de input que pode ser validado.
  *
  * props:
- *  * label (String): Texto que indica sobre o que é o campo 
+ *  * label (String): Texto que indica sobre o que é o campo
  *  * hint (String): Dica que aparece quando o campo está vazio
  *  * name (String): Nome do input
  *  * type (String): Tipo do input
@@ -18,9 +18,22 @@ function ValidationInput(props) {
 
   return (
     <div>
-      <label htmlFor='validationInput'>{props.label}:</label>
-      <input className={styles.validationInput} type={props.type} id='validationInput' onFocus={() => setShouldValidate(false)} onBlur={() => setShouldValidate(true)} ref={props.inputRef} name={props.name}/>
-      {shouldValidate && !props.validation(props.inputRef).isValid && <small className={styles.validationError}>{props.validation(props.inputRef).message || 'Campo inválido!'}</small>}
+      <label htmlFor="validationInput">{props.label}:</label>
+      <input
+        className={styles.validationInput}
+        type={props.type}
+        id="validationInput"
+        onFocus={() => setShouldValidate(false)}
+        onBlur={() => setShouldValidate(true)}
+        ref={props.inputRef}
+        name={props.name}
+        placeholder={props.hint}
+      />
+      {shouldValidate && !props.validation(props.inputRef).isValid && (
+        <small className={styles.validationError}>
+          {props.validation(props.inputRef).message || "Campo inválido!"}
+        </small>
+      )}
     </div>
   );
 }
