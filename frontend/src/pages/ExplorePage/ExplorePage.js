@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import RadioInput from "../../components/RadioInput/RadioInput";
 import SearchResult from "../../components/SearchResult/SearchResult";
-import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import { SEARCH_RESULT_TYPES } from "../../utils/consts";
 
