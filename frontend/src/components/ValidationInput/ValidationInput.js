@@ -40,16 +40,20 @@ function ValidationInput(props) {
     />
   );
   if (props.isTextArea) {
-    input = <textarea
-      className={[styles.validationInput, ...(props.inputClasses || [])].join(' ')}
-      type={props.type}
-      id={`validationInput_${props.name}`}
-      onFocus={() => setShouldValidate(true)}
-      ref={props.inputRef}
-      name={props.name}
-      placeholder={props.hint}
-      onChange={validationCheck}
-    />
+    input = (
+      <textarea
+        className={[styles.validationInput, ...(props.inputClasses || [])].join(
+          " "
+        )}
+        type={props.type}
+        id={`validationInput_${props.name}`}
+        onFocus={() => setShouldValidate(true)}
+        ref={props.inputRef}
+        name={props.name}
+        placeholder={props.hint}
+        onChange={validationCheck}
+      />
+    );
   }
   return (
     <div>
