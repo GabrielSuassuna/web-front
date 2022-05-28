@@ -1,7 +1,11 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 
 function DisciplineRegisterPage() {
+  const navigate = useNavigate();
+
   const disciplineNameRef = useRef(null);
   const disciplineCodeRef = useRef(null);
   const disciplineHoursRef = useRef(null);
@@ -25,6 +29,24 @@ function DisciplineRegisterPage() {
       return { isValid: true };
     }
     return { isValid: false, message: "Esse campo não pode estar vazio" };
+  };
+
+  const registerDisciplineHandler = () => {
+    if (
+      !validationStringChecker(disciplineNameRef).isValid ||
+      !validationStringChecker(disciplineCodeRef).isValid ||
+      !validationNumberChecker(disciplineHoursRef).isValid 
+    )
+      return alert("Dados inválidos!");
+    
+    let requestData = {
+      id: disciplineNameRef.current.ref,
+      name: disciplineCodeRef.current.id,
+      hours: disciplineHoursRef.current.id, // Algo precisa ser feito com essa senha
+    };
+    alert("Registro realizado!")
+    console.log(requestData)
+    navigate('/description/discipline')
   };
 
   return (
@@ -51,6 +73,9 @@ function DisciplineRegisterPage() {
         inputRef={disciplineHoursRef}
         validation={validationNumberChecker}
       />
+
+      
+    <IconButton content="Registrar disciplina" onClick={registerDisciplineHandler} />
     </div>
   );
 }
