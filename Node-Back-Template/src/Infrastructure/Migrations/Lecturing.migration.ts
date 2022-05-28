@@ -2,7 +2,7 @@ import { Client } from 'pg'
 import { Database } from '../Database'
 import { Migration } from '../../Interfaces/Migration/Migration.interface'
 
-export class TagMigration implements Migration{
+export class LecturingMigration implements Migration{
     private client: Client
 
     constructor(){
@@ -11,13 +11,15 @@ export class TagMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE tag(
+            CREATE TABLE lecturing(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
-                name TEXT NOT NULL,
-                description TEXT NOT NULL
+                professor_id serial NOT NULL, 
+                discipline_id serial NOT NULL, 
+                FOREIGN KEY (professor_id) REFERENCES professor (id),
+                FOREIGN KEY (discipline_id) REFERENCES discipline (id)
             );
 
-            CREATE SEQUENCE tag_seq
+            CREATE SEQUENCE lecturing_seq
             START 1
             INCREMENT 1;
         `
@@ -25,7 +27,7 @@ export class TagMigration implements Migration{
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while applying Tag migration; Stack: ${err}`)
+                    reject(`Error while applying Lecturing migration; Stack: ${err}`)
                 }
                 else{
                     resolve("")
@@ -36,15 +38,15 @@ export class TagMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE tag;
+            DROP TABLE lecturing;
             
-            DROP SEQUENCE tag_seq;
+            DROP SEQUENCE lecturing_seq;
         `
 
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while dropping Tag table; Stack: ${err}`)
+                    reject(`Error while dropping Lecturing table; Stack: ${err}`)
                 }else{
                     resolve("")
                 }

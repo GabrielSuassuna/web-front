@@ -16,8 +16,8 @@ export class Server {
         this.port = Number(process.env.PORT) || 3000;
      
         this.setupServer()
-        this.initializeControllers(new ControllerUoW().getControllers());
-        this.initializeSwagger()
+        //this.initializeControllers(new ControllerUoW().getControllers());
+        //this.initializeSwagger()
     }
 
     async setupServer(){

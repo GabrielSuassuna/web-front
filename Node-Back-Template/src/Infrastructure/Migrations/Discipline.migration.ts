@@ -2,7 +2,7 @@ import { Client } from 'pg'
 import { Database } from '../Database'
 import { Migration } from '../../Interfaces/Migration/Migration.interface'
 
-export class TagMigration implements Migration{
+export class DisciplineMigration implements Migration{
     private client: Client
 
     constructor(){
@@ -11,13 +11,13 @@ export class TagMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE tag(
+            CREATE TABLE discipline(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 name TEXT NOT NULL,
                 description TEXT NOT NULL
             );
 
-            CREATE SEQUENCE tag_seq
+            CREATE SEQUENCE discipline_seq
             START 1
             INCREMENT 1;
         `
@@ -25,7 +25,7 @@ export class TagMigration implements Migration{
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while applying Tag migration; Stack: ${err}`)
+                    reject(`Error while applying Discipline migration; Stack: ${err}`)
                 }
                 else{
                     resolve("")
@@ -36,15 +36,15 @@ export class TagMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE tag;
+            DROP TABLE discipline;
             
-            DROP SEQUENCE tag_seq;
+            DROP SEQUENCE discipline_seq;
         `
 
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while dropping Tag table; Stack: ${err}`)
+                    reject(`Error while dropping Discipline table; Stack: ${err}`)
                 }else{
                     resolve("")
                 }

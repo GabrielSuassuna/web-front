@@ -11,13 +11,13 @@ export class FAQMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE FAQ(
+            CREATE TABLE faq(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 question TEXT NOT NULL,
                 answer TEXT NOT NULL
             );
 
-            CREATE SEQUENCE faq_sec
+            CREATE SEQUENCE faq_seq
             START 1
             INCREMENT 1;
         `
@@ -36,9 +36,9 @@ export class FAQMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE FAQ;
+            DROP TABLE faq;
             
-            DROP SEQUENCE faq_sec;
+            DROP SEQUENCE faq_seq;
         `
 
         return new Promise((resolve, reject) => {

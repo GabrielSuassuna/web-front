@@ -11,7 +11,7 @@ export class StudentMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE Student(
+            CREATE TABLE student(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 registration TEXT NOT NULL,
                 name TEXT NOT NULL,
@@ -37,7 +37,7 @@ export class StudentMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE Student;
+            DROP TABLE student;
             
             DROP SEQUENCE student_seq;
         `

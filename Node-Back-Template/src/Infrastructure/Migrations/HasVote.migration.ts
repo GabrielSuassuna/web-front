@@ -2,7 +2,7 @@ import { Client } from 'pg'
 import { Database } from '../Database'
 import { Migration } from '../../Interfaces/Migration/Migration.interface'
 
-export class AddressMigration implements Migration {
+export class HasVoteMigration implements Migration{
     private client: Client
 
     constructor(){
@@ -11,28 +11,26 @@ export class AddressMigration implements Migration {
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE Address(
+            CREATE TABLE has_vote(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
-                clientId serial NOT NULL,
-                country TEXT NOT NULL,
-                state TEXT NOT NULL,
-                city TEXT NOT NULL,
-                street TEXT NOT NULL,
-                number TEXT NOT NULL,
-                code TEXT NOT NULL,
-                complement TEXT,
-                FOREIGN KEY (clientId) REFERENCES Client (id)
+                feedback_id serial NOT NULL, 
+                student_id serial NOT NULL, 
+                is_upvote BOOLEAN NOT NULL,
+                FOREIGN KEY (feedback_id) REFERENCES feedback (id),
+                FOREIGN KEY (student_id) REFERENCES student (id)
             );
 
-            CREATE SEQUENCE address_seq
+            CREATE SEQUENCE has_vote_seq
             START 1
             INCREMENT 1;
         `
+
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while applying Address migration; Stack: ${err}`)
-                }else{
+                    reject(`Error while applying HasVote migration; Stack: ${err}`)
+                }
+                else{
                     resolve("")
                 }
             })
@@ -41,18 +39,19 @@ export class AddressMigration implements Migration {
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE Address;
+            DROP TABLE has_vote;
             
-            DROP SEQUENCE address_seq;
+            DROP SEQUENCE has_vote_seq;
         `
+
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while dropping Address table; Stack: ${err}`)
+                    reject(`Error while dropping HasVote table; Stack: ${err}`)
                 }else{
                     resolve("")
                 }
             })
-        })       
+        })  
     }
 }

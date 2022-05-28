@@ -2,7 +2,7 @@ import { Client } from 'pg'
 import { Database } from '../Database'
 import { Migration } from '../../Interfaces/Migration/Migration.interface'
 
-export class TagMigration implements Migration{
+export class HasTagMigration implements Migration{
     private client: Client
 
     constructor(){
@@ -11,13 +11,15 @@ export class TagMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE tag(
+            CREATE TABLE has_tag(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
-                name TEXT NOT NULL,
-                description TEXT NOT NULL
+                feedback_id serial NOT NULL, 
+                tag_id serial NOT NULL, 
+                FOREIGN KEY (feedback_id) REFERENCES feedback (id),
+                FOREIGN KEY (tag_id) REFERENCES tag (id)
             );
 
-            CREATE SEQUENCE tag_seq
+            CREATE SEQUENCE has_tag_seq
             START 1
             INCREMENT 1;
         `
@@ -25,7 +27,7 @@ export class TagMigration implements Migration{
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while applying Tag migration; Stack: ${err}`)
+                    reject(`Error while applying HasTag migration; Stack: ${err}`)
                 }
                 else{
                     resolve("")
@@ -36,15 +38,15 @@ export class TagMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE tag;
+            DROP TABLE has_tag;
             
-            DROP SEQUENCE tag_seq;
+            DROP SEQUENCE has_tag_seq;
         `
 
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while dropping Tag table; Stack: ${err}`)
+                    reject(`Error while dropping HasTag table; Stack: ${err}`)
                 }else{
                     resolve("")
                 }

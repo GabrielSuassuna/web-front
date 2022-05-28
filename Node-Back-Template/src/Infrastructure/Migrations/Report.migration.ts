@@ -2,7 +2,7 @@ import { Client } from 'pg'
 import { Database } from '../Database'
 import { Migration } from '../../Interfaces/Migration/Migration.interface'
 
-export class TagMigration implements Migration{
+export class ReportMigration implements Migration{
     private client: Client
 
     constructor(){
@@ -11,13 +11,18 @@ export class TagMigration implements Migration{
 
     run(): Promise<string>{
         const SQL = `
-            CREATE TABLE tag(
+            CREATE TABLE report(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
-                name TEXT NOT NULL,
-                description TEXT NOT NULL
+                feedback_id serial NOT NULL,  
+                author_id serial NOT NULL,  
+                revisor_id serial, 
+                status TEXT NOT NULL,
+                FOREIGN KEY (feedback_id) REFERENCES feedback (id),
+                FOREIGN KEY (author_id) REFERENCES professor (id),
+                FOREIGN KEY (revisor_id) REFERENCES professor (id)
             );
 
-            CREATE SEQUENCE tag_seq
+            CREATE SEQUENCE report_seq
             START 1
             INCREMENT 1;
         `
@@ -25,7 +30,7 @@ export class TagMigration implements Migration{
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while applying Tag migration; Stack: ${err}`)
+                    reject(`Error while applying Report migration; Stack: ${err}`)
                 }
                 else{
                     resolve("")
@@ -36,15 +41,15 @@ export class TagMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
-            DROP TABLE tag;
+            DROP TABLE report;
             
-            DROP SEQUENCE tag_seq;
+            DROP SEQUENCE report_seq;
         `
 
         return new Promise((resolve, reject) => {
             this.client.query(SQL, (err, res) => {
                 if (err) {
-                    reject(`Error while dropping Tag table; Stack: ${err}`)
+                    reject(`Error while dropping Report table; Stack: ${err}`)
                 }else{
                     resolve("")
                 }
