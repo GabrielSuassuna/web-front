@@ -14,7 +14,8 @@ export class DisciplineMigration implements Migration{
             CREATE TABLE discipline(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 name TEXT NOT NULL,
-                description TEXT NOT NULL
+                description TEXT NOT NULL,
+                hours SMALLINT NOT NULL
             );
 
             CREATE SEQUENCE discipline_seq
