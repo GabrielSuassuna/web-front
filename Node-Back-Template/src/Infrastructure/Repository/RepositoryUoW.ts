@@ -1,27 +1,33 @@
 import { Client } from "pg";
 import { Database } from "../Database";
 import { QueryHandler } from "../Handlers/Query.handler";
-import { AddressRepository } from "./Address.repository";
-import { AuthRepository } from "./Auth.repository";
-import { ClientRepository } from "./Client.repository";
+import { DepartmentRepository } from "./Department.repository";
+import { DisciplineRepository } from "./Discipline.repository";
+import { FAQRepository } from "./FAQ.repository";
+import { StudentRepository } from "./Student.repository";
+import { TagRepository } from "./Tag.repository";
 
 export class RepositoryUoW {
 
     private client: Client
     private queryHandler: QueryHandler<void>
 
-    authRepository: AuthRepository
-    clientRepository: ClientRepository
-    addressRepository: AddressRepository
+    departmentRepository: DepartmentRepository
+    disciplineRepository: DisciplineRepository
+    faqRepository: FAQRepository
+    studentRepository: StudentRepository
+    tagRepository: TagRepository
 
     constructor(){
         this.client = new Database().getClient();
 
         this.queryHandler = new QueryHandler<void>(this.client);
 
-        this.authRepository = new AuthRepository(this.client)
-        this.clientRepository = new ClientRepository(this.client)
-        this.addressRepository = new AddressRepository(this.client)
+        this.departmentRepository = new DepartmentRepository(this.client)
+        this.disciplineRepository = new DisciplineRepository(this.client)
+        this.faqRepository = new FAQRepository(this.client)
+        this.studentRepository = new StudentRepository(this.client)
+        this.tagRepository = new TagRepository(this.client)
     }
 
     public beginTransaction(){
