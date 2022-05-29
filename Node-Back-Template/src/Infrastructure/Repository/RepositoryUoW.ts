@@ -6,6 +6,7 @@ import { DisciplineRepository } from "./Discipline.repository";
 import { FAQRepository } from "./FAQ.repository";
 import { StudentRepository } from "./Student.repository";
 import { TagRepository } from "./Tag.repository";
+import { ProfessorRepository } from "./Professor.repository";
 
 export class RepositoryUoW {
 
@@ -17,6 +18,7 @@ export class RepositoryUoW {
     faqRepository: FAQRepository
     studentRepository: StudentRepository
     tagRepository: TagRepository
+    professorRepository: ProfessorRepository
 
     constructor(){
         this.client = new Database().getClient();
@@ -28,6 +30,7 @@ export class RepositoryUoW {
         this.faqRepository = new FAQRepository(this.client)
         this.studentRepository = new StudentRepository(this.client)
         this.tagRepository = new TagRepository(this.client)
+        this.professorRepository = new ProfessorRepository(this.client)
     }
 
     public beginTransaction(){
