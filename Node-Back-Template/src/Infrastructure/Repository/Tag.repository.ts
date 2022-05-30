@@ -4,7 +4,7 @@ import { TagInterface } from "../../Interfaces/Tag.interface"
 import { Client } from "pg"
 import { GetTag } from "../../Interfaces/Get/GetTag.interface"
 import { PostTag } from "../../Interfaces/Post/PostTag.interface"
-import { PutTag } from "../../Interfaces/Put/Tag.interface"
+import { PutTag } from "../../Interfaces/Put/PutTag.interface"
 
 export class TagRepository {
     queryHandler: QueryHandler<GetTag>

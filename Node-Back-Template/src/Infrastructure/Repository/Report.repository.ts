@@ -4,7 +4,7 @@ import { ReportInterface } from "../../Interfaces/Report.interface"
 import { Client } from "pg"
 import { GetReport } from "../../Interfaces/Get/GetReport.interface"
 import { PostReport } from "../../Interfaces/Post/PostReport.interface"
-import { PutReport } from "../../Interfaces/Put/Report.interface"
+import { PutReport } from "../../Interfaces/Put/PutReport.interface"
 
 export class ReportRepository {
     queryHandler: QueryHandler<GetReport>

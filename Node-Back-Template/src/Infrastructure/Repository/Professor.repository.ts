@@ -4,7 +4,7 @@ import { ProfessorInterface } from "../../Interfaces/Professor.interface"
 import { Client } from "pg"
 import { GetProfessor } from "../../Interfaces/Get/GetProfessor.interface"
 import { PostProfessor } from "../../Interfaces/Post/PostProfessor.interface"
-import { PutProfessor } from "../../Interfaces/Put/Professor.interface"
+import { PutProfessor } from "../../Interfaces/Put/PutProfessor.interface"
 
 export class ProfessorRepository {
     queryHandler: QueryHandler<GetProfessor>

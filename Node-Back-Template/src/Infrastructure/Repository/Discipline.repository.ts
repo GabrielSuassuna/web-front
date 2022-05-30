@@ -4,7 +4,7 @@ import { DisciplineInterface } from "../../Interfaces/Discipline.interface"
 import { Client } from "pg"
 import { GetDiscipline } from "../../Interfaces/Get/GetDiscipline.interface"
 import { PostDiscipline } from "../../Interfaces/Post/PostDiscipline.interface"
-import { PutDiscipline } from "../../Interfaces/Put/Discipline.interface"
+import { PutDiscipline } from "../../Interfaces/Put/PutDiscipline.interface"
 
 export class DisciplineRepository {
     queryHandler: QueryHandler<GetDiscipline>

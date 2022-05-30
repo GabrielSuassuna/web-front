@@ -4,7 +4,7 @@ import { FAQInterface } from "../../Interfaces/FAQ.interface"
 import { Client } from "pg"
 import { GetFAQ } from "../../Interfaces/Get/GetFAQ.interface"
 import { PostFAQ } from "../../Interfaces/Post/PostFAQ.interface"
-import { PutFAQ } from "../../Interfaces/Put/FAQ.interface"
+import { PutFAQ } from "../../Interfaces/Put/PutFAQ.interface"
 
 export class FAQRepository {
     queryHandler: QueryHandler<GetFAQ>

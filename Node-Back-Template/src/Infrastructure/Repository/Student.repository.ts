@@ -4,7 +4,7 @@ import { StudentInterface } from "../../Interfaces/Student.interface"
 import { Client } from "pg"
 import { GetStudent } from "../../Interfaces/Get/GetStudent.interface"
 import { PostStudent } from "../../Interfaces/Post/PostStudent.interface"
-import { PutStudent } from "../../Interfaces/Put/Student.interface"
+import { PutStudent } from "../../Interfaces/Put/PutStudent.interface"
 
 export class StudentRepository {
     queryHandler: QueryHandler<GetStudent>

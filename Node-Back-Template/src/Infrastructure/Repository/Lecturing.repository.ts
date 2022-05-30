@@ -4,7 +4,7 @@ import { LecturingInterface } from "../../Interfaces/Lecturing.interface"
 import { Client } from "pg"
 import { GetLecturing } from "../../Interfaces/Get/GetLecturing.interface"
 import { PostLecturing } from "../../Interfaces/Post/PostLecturing.interface"
-import { PutLecturing } from "../../Interfaces/Put/Lecturing.interface"
+import { PutLecturing } from "../../Interfaces/Put/PutLecturing.interface"
 
 export class LecturingRepository {
     queryHandler: QueryHandler<GetLecturing>

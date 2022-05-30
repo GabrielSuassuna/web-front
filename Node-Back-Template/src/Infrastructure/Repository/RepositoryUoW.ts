@@ -7,6 +7,12 @@ import { FAQRepository } from "./FAQ.repository";
 import { StudentRepository } from "./Student.repository";
 import { TagRepository } from "./Tag.repository";
 import { ProfessorRepository } from "./Professor.repository";
+import { LecturingRepository } from "./Lecturing.repository";
+import { FeedbackRepository } from "./Feedback.repository";
+import { HasTagRepository } from "./HasTag.repository";
+import { HasVoteRepository } from "./HasVote.repository";
+import { ReportRepository } from "./Report.repository";
+import { ReportLogRepository } from "./ReportLog.repository";
 
 export class RepositoryUoW {
 
@@ -19,6 +25,12 @@ export class RepositoryUoW {
     studentRepository: StudentRepository
     tagRepository: TagRepository
     professorRepository: ProfessorRepository
+    lecturingRepository: LecturingRepository
+    feedbackRepository: FeedbackRepository
+    hasTagRepository: HasTagRepository
+    hasVoteRepository: HasVoteRepository
+    reportRepository: ReportRepository
+    reportLogRepository: ReportLogRepository
 
     constructor(){
         this.client = new Database().getClient();
@@ -31,6 +43,12 @@ export class RepositoryUoW {
         this.studentRepository = new StudentRepository(this.client)
         this.tagRepository = new TagRepository(this.client)
         this.professorRepository = new ProfessorRepository(this.client)
+        this.lecturingRepository = new LecturingRepository(this.client)
+        this.feedbackRepository = new FeedbackRepository(this.client)
+        this.hasTagRepository = new HasTagRepository(this.client)
+        this.hasVoteRepository = new HasVoteRepository(this.client)
+        this.reportRepository = new ReportRepository(this.client)
+        this.reportLogRepository = new ReportLogRepository(this.client)
     }
 
     public beginTransaction(){

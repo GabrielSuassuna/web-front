@@ -4,7 +4,7 @@ import { DepartmentInterface } from "../../Interfaces/Department.interface"
 import { Client } from "pg"
 import { GetDepartment } from "../../Interfaces/Get/GetDepartment.interface"
 import { PostDepartment } from "../../Interfaces/Post/PostDepartment.interface"
-import { PutDepartment } from "../../Interfaces/Put/Department.interface"
+import { PutDepartment } from "../../Interfaces/Put/PutDepartment.interface"
 
 export class DepartmentRepository {
     queryHandler: QueryHandler<GetDepartment>

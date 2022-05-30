@@ -4,7 +4,7 @@ import { HasTagInterface } from "../../Interfaces/HasTag.interface"
 import { Client } from "pg"
 import { GetHasTag } from "../../Interfaces/Get/GetHasTag.interface"
 import { PostHasTag } from "../../Interfaces/Post/PostHasTag.interface"
-import { PutHasTag } from "../../Interfaces/Put/HasTag.interface"
+import { PutHasTag } from "../../Interfaces/Put/PutHasTag.interface"
 
 export class HasTagRepository {
     queryHandler: QueryHandler<GetHasTag>

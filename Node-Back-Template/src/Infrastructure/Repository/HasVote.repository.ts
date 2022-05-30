@@ -4,7 +4,7 @@ import { HasVoteInterface } from "../../Interfaces/HasVote.interface"
 import { Client } from "pg"
 import { GetHasVote } from "../../Interfaces/Get/GetHasVote.interface"
 import { PostHasVote } from "../../Interfaces/Post/PostHasVote.interface"
-import { PutHasVote } from "../../Interfaces/Put/HasVote.interface"
+import { PutHasVote } from "../../Interfaces/Put/PutHasVote.interface"
 
 export class HasVoteRepository {
     queryHandler: QueryHandler<GetHasVote>

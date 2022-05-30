@@ -4,7 +4,7 @@ import { FeedbackInterface } from "../../Interfaces/Feedback.interface"
 import { Client } from "pg"
 import { GetFeedback } from "../../Interfaces/Get/GetFeedback.interface"
 import { PostFeedback } from "../../Interfaces/Post/PostFeedback.interface"
-import { PutFeedback } from "../../Interfaces/Put/Feedback.interface"
+import { PutFeedback } from "../../Interfaces/Put/PutFeedback.interface"
 
 export class FeedbackRepository {
     queryHandler: QueryHandler<GetFeedback>
