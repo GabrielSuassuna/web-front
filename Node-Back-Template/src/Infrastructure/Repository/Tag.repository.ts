@@ -1,6 +1,6 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { TagInterface } from '../../Interfaces/Tag.interface'
+import { TagInterface } from "../../Interfaces/Tag.interface"
 import { Client } from "pg"
 import { GetTag } from "../../Interfaces/Get/GetTag.interface"
 import { PostTag } from "../../Interfaces/Post/PostTag.interface"

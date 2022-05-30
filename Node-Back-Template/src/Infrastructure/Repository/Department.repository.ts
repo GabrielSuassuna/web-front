@@ -1,6 +1,6 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { DepartmentInterface } from '../../Interfaces/Department.interface'
+import { DepartmentInterface } from "../../Interfaces/Department.interface"
 import { Client } from "pg"
 import { GetDepartment } from "../../Interfaces/Get/GetDepartment.interface"
 import { PostDepartment } from "../../Interfaces/Post/PostDepartment.interface"

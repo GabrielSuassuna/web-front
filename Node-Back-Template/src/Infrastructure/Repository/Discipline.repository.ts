@@ -1,6 +1,6 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { DisciplineInterface } from '../../Interfaces/Discipline.interface'
+import { DisciplineInterface } from "../../Interfaces/Discipline.interface"
 import { Client } from "pg"
 import { GetDiscipline } from "../../Interfaces/Get/GetDiscipline.interface"
 import { PostDiscipline } from "../../Interfaces/Post/PostDiscipline.interface"

@@ -1,6 +1,6 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { ProfessorInterface } from '../../Interfaces/Professor.interface'
+import { ProfessorInterface } from "../../Interfaces/Professor.interface"
 import { Client } from "pg"
 import { GetProfessor } from "../../Interfaces/Get/GetProfessor.interface"
 import { PostProfessor } from "../../Interfaces/Post/PostProfessor.interface"

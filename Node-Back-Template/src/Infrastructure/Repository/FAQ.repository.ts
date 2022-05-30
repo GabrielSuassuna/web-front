@@ -1,6 +1,6 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { FAQInterface } from '../../Interfaces/FAQ.interface'
+import { FAQInterface } from "../../Interfaces/FAQ.interface"
 import { Client } from "pg"
 import { GetFAQ } from "../../Interfaces/Get/GetFAQ.interface"
 import { PostFAQ } from "../../Interfaces/Post/PostFAQ.interface"
