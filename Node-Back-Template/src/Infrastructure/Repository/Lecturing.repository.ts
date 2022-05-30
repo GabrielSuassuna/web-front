@@ -3,7 +3,6 @@ import { QueryHandler } from "../Handlers/Query.handler"
 import { LecturingInterface } from "../../Interfaces/Lecturing.interface"
 import { Client } from "pg"
 import { GetLecturing } from "../../Interfaces/Get/GetLecturing.interface"
-import { PostLecturing } from "../../Interfaces/Post/PostLecturing.interface"
 import { PutLecturing } from "../../Interfaces/Put/PutLecturing.interface"
 
 export class LecturingRepository {
@@ -34,7 +33,7 @@ export class LecturingRepository {
 
     }
 
-    public async create(lecturing: PostLecturing): Promise<string> {
+    public async create(professorId: string, disciplineId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("lecturing")
         
         const SQL = `
@@ -51,8 +50,8 @@ export class LecturingRepository {
         `
         const values = [
           newId,
-          lecturing.professor_id,
-          lecturing.discipline_id,
+          professorId,
+          disciplineId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)
@@ -60,6 +59,7 @@ export class LecturingRepository {
         return newId;
     }
     
+    // TODO: Dar uma olhada nesse update e ver se ele é necessário
     public async update(lecturing: PutLecturing, lecturingId: string): Promise<void> {
         const SQL = `
             UPDATE lecturing
@@ -76,13 +76,17 @@ export class LecturingRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(lecturingId: string): Promise<void> {
+    public async delete(lecturingId: string, professorId: string, disciplineId: string): Promise<void> {
         const SQL = `
             DELETE FROM lecturing
             WHERE id = $1
+                AND professor_id = $2
+                AND discipline_id = $3
         `
         const values = [
-          lecturingId
+          lecturingId,
+          professorId,
+          disciplineId
         ]
 
         await this.queryHandler.runQuery(SQL, values)

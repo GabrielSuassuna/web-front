@@ -91,13 +91,17 @@ export class ReportLogRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(reportLogId: string): Promise<void> {
+    public async delete(reportLogId: string, reportId: string, authorId: string): Promise<void> {
         const SQL = `
             DELETE FROM report_log
             WHERE id = $1
+                AND report_id = $2
+                AND author_id = $3
         `
         const values = [
-          reportLogId
+          reportLogId,
+          reportId,
+          authorId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

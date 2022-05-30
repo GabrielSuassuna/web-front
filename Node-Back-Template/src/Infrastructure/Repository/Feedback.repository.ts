@@ -116,13 +116,17 @@ export class FeedbackRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(feedbackId: string): Promise<void> {
+    public async delete(feedbackId: string, lecturingId: string, studentId: string): Promise<void> {
         const SQL = `
             DELETE FROM feedback
             WHERE id = $1
+                AND lecturing_id = $2
+                AND student_id = $3
         `
         const values = [
-          feedbackId
+          feedbackId,
+          lecturingId,
+          studentId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

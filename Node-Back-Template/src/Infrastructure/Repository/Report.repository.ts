@@ -34,7 +34,7 @@ export class ReportRepository {
 
     }
 
-    public async create(report: PostReport): Promise<string> {
+    public async create(report: PostReport, feedbackId: string, authorId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("report")
         
         const SQL = `
@@ -55,8 +55,8 @@ export class ReportRepository {
         `
         const values = [
           newId,
-          report.feedback_id,
-          report.author_id,
+          feedbackId,
+          authorId,
           report.revisor_id,
           report.status,
         ]
@@ -66,33 +66,37 @@ export class ReportRepository {
         return newId;
     }
     
-    public async update(report: PutReport, reportId: string): Promise<void> {
+    public async update(report: PutReport, reportId: string, feedbackId: string, authorId: string): Promise<void> {
         const SQL = `
             UPDATE report
-            SET feedback_id = $1,
-                author_id = $2,
-                revisor_id = $3,
-                status = $4
-            WHERE id = $5
+            SET revisor_id = $1,
+                status = $2
+            WHERE id = $3
+                AND feedback_id = $4
+                AND author_id = $5
         `
         const values = [
-          report.feedback_id,
-          report.author_id,
           report.revisor_id,
           report.status,
           reportId,
+          feedbackId,
+          authorId,
         ]
         
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(reportId: string): Promise<void> {
+    public async delete(reportId: string, feedbackId: string, authorId: string): Promise<void> {
         const SQL = `
             DELETE FROM report
             WHERE id = $1
+                AND feedback_id = $2
+                AND author_id = $3
         `
         const values = [
-          reportId
+          reportId,
+          feedbackId,
+          authorId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

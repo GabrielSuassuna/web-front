@@ -1,5 +1,4 @@
 export interface PutProfessor {
-  id: string
   siape: string
   password: string
   name: string

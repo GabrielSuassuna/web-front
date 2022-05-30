@@ -34,7 +34,7 @@ export class HasVoteRepository {
 
     }
 
-    public async create(hasVote: PostHasVote): Promise<string> {
+    public async create(hasVote: PostHasVote, feedbackId: string, studentId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("has_vote")
         
         const SQL = `
@@ -53,8 +53,8 @@ export class HasVoteRepository {
         `
         const values = [
           newId,
-          hasVote.feedback_id,
-          hasVote.student_id,
+          feedbackId,
+          studentId,
           hasVote.is_upvote,
         ]
 
@@ -63,31 +63,35 @@ export class HasVoteRepository {
         return newId;
     }
     
-    public async update(hasVote: PutHasVote, hasVoteId: string): Promise<void> {
+    public async update(hasVote: PutHasVote, hasVoteId: string, feedbackId: string, studentId: string): Promise<void> {
         const SQL = `
             UPDATE has_vote
-            SET feedback_id = $1,
-                student_id = $2,
-                is_upvote = $3
-            WHERE id = $4
+            SET is_upvote = $1
+            WHERE id = $2
+                AND feedback_id = $3
+                AND student_id = $4
         `
         const values = [
-          hasVote.feedback_id,
-          hasVote.student_id,
           hasVote.is_upvote,
           hasVoteId,
+          feedbackId,
+          studentId,
         ]
         
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(hasVoteId: string): Promise<void> {
+    public async delete(hasVoteId: string, feedbackId: string, studentId: string): Promise<void> {
         const SQL = `
             DELETE FROM has_vote
             WHERE id = $1
+                AND feedback_id = $2
+                AND student_id = $3
         `
         const values = [
-          hasVoteId
+          hasVoteId,
+          feedbackId,
+          studentId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

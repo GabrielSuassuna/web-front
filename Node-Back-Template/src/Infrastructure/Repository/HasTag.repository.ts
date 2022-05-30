@@ -3,7 +3,6 @@ import { QueryHandler } from "../Handlers/Query.handler"
 import { HasTagInterface } from "../../Interfaces/HasTag.interface"
 import { Client } from "pg"
 import { GetHasTag } from "../../Interfaces/Get/GetHasTag.interface"
-import { PostHasTag } from "../../Interfaces/Post/PostHasTag.interface"
 import { PutHasTag } from "../../Interfaces/Put/PutHasTag.interface"
 
 export class HasTagRepository {
@@ -34,7 +33,7 @@ export class HasTagRepository {
 
     }
 
-    public async create(hasTag: PostHasTag): Promise<string> {
+    public async create(feedbackId: string, tagId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("has_tag")
         
         const SQL = `
@@ -51,8 +50,8 @@ export class HasTagRepository {
         `
         const values = [
           newId,
-          hasTag.feedback_id,
-          hasTag.tag_id,
+          feedbackId,
+          tagId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)
@@ -60,6 +59,7 @@ export class HasTagRepository {
         return newId;
     }
     
+    // TODO: Dar uma olhada nesse update e ver se ele é necessário
     public async update(hasTag: PutHasTag, hasTagId: string): Promise<void> {
         const SQL = `
             UPDATE has_tag
@@ -76,13 +76,17 @@ export class HasTagRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(hasTagId: string): Promise<void> {
+    public async delete(hasTagId: string, feedbackId: string, tagId: string): Promise<void> {
         const SQL = `
             DELETE FROM has_tag
             WHERE id = $1
+                AND feedback_id = $2
+                AND tag_id = $3
         `
         const values = [
-          hasTagId
+          hasTagId,
+          feedbackId,
+          tagId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

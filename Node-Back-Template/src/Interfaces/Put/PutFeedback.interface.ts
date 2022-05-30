@@ -1,7 +1,4 @@
 export interface PutFeedback {
-  id: string
-  lecturing_id: string
-  student_id: string
   title: string
   description: string
   period: string
