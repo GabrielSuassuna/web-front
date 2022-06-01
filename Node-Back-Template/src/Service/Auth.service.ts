@@ -63,7 +63,7 @@ export class AuthService {
             if(!!toBeFoundClient.length){
                 const secret = process.env.JWT_SECRET
                 if(!secret)
-                  return response.status(401).json({ auth: false, message: 'Problem while decoding token.' });
+                  return response.status(401).json({ data: [], message: 'Problema ao decodificar o token' });
                 
                 const token = sign(
                     {
