@@ -40,10 +40,10 @@ export class StudentNotificationService {
         let result: GetStudentNotification[] = []
     
         try{
-            const studentNotificationId: string = request.params.studentNotificationId
+            const notificationId: string = request.params.notificationId
             
             await this.repositoryUoW.beginTransaction();
-            await this.repositoryUoW.studentNotificationRepository.delete(studentNotificationId)
+            await this.repositoryUoW.studentNotificationRepository.delete(notificationId)
             await this.repositoryUoW.commit();
 
             return response.status(200).json(setApiResponse<GetStudentNotification[]>(result, sucessMessage))

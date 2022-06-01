@@ -16,8 +16,8 @@ export class NotificationController {
     public getRouter() {
         this.router.get(`${this.prefixPath}/student/:studentId`, (request: Request, response: Response) => this.getStudentNotification(request, response));
         this.router.get(`${this.prefixPath}/professor/:professorId`, (request: Request, response: Response) => this.getProfessorNotification(request, response));
-        this.router.delete(`${this.prefixPath}/student/:studentNotificationId`, (request: Request, response: Response) => this.deleteStudentNotification(request, response));
-        this.router.delete(`${this.prefixPath}/professor/:professorNotificationId`, (request: Request, response: Response) => this.deleteProfessorNotification(request, response));
+        this.router.delete(`${this.prefixPath}/student/:notificationId`, (request: Request, response: Response) => this.deleteStudentNotification(request, response));
+        this.router.delete(`${this.prefixPath}/professor/:notificationId`, (request: Request, response: Response) => this.deleteProfessorNotification(request, response));
         
 
         

@@ -40,10 +40,10 @@ export class ProfessorNotificationService {
         let result: GetProfessorNotification[] = []
     
         try{
-            const professorNotificationId: string = request.params.professorNotificationId
+            const notificationId: string = request.params.notificationId
             
             await this.repositoryUoW.beginTransaction();
-            await this.repositoryUoW.professorNotificationRepository.delete(professorNotificationId)
+            await this.repositoryUoW.professorNotificationRepository.delete(notificationId)
             await this.repositoryUoW.commit();
 
             return response.status(200).json(setApiResponse<GetProfessorNotification[]>(result, sucessMessage))
