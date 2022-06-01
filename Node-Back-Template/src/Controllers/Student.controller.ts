@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express'
 
 import { ServiceUoW } from '../Service/ServiceUoW'
 
-export class ProfessorController {
+export class StudentController {
 
     private prefixPath: string = "/auth"
     private router: Router
@@ -22,15 +22,15 @@ export class ProfessorController {
     }
 
     private create(request: Request, response: Response){
-        this.serviceUoW.professorService.create(request, response)
+        this.serviceUoW.studentService.create(request, response)
     }
 
     private update(request: Request, response: Response){
-        this.serviceUoW.professorService.update(request, response)
+        this.serviceUoW.studentService.update(request, response)
     }
 
     private delete(request: Request, response: Response){
-        this.serviceUoW.professorService.delete(request, response)
+        this.serviceUoW.studentService.delete(request, response)
     }
 
 }
