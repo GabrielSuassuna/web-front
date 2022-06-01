@@ -21,6 +21,18 @@ export class StudentNotificationRepository {
         return await this.queryHandler.runQuery(SQL)
     }
 
+    public async getAllByStudentId(studentId: string): Promise<GetStudentNotification[]>{
+        const SQL = `
+            SELECT * FROM student_notification WHERE student_id = $1
+        `
+
+        const values = [
+            studentId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+    }
+
     public async getById(studentNotificationId: string): Promise<GetStudentNotification[]>{
         const SQL = `
             SELECT * FROM student_notification WHERE id = $1
@@ -76,15 +88,13 @@ export class StudentNotificationRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(studentNotificationId: string, studentId: string): Promise<void> {
+    public async delete(studentNotificationId: string): Promise<void> {
         const SQL = `
             DELETE FROM student_notification
             WHERE id = $1
-                AND student_id = $2
         `
         const values = [
-          studentNotificationId,
-          studentId,
+          studentNotificationId
         ]
 
         await this.queryHandler.runQuery(SQL, values)
