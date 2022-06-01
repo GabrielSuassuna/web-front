@@ -4,6 +4,8 @@ import { DepartmentMigration } from './Department.migration'
 import { DisciplineMigration } from './Discipline.migration'
 import { TagMigration } from './Tag.migration'
 import { ProfessorMigration } from './Professor.migration'
+import { StudentNotificationMigration } from './StudentNotification.migration'
+import { ProfessorNotificationMigration } from './ProfessorNotification.migration'
 import { LecturingMigration } from './Lecturing.migration'
 import { FeedbackMigration } from './Feedback.migration'
 import { HasTagMigration } from './HasTag.migration'
@@ -24,6 +26,8 @@ export class MigrationUoW {
         await new TagMigration().run()
         await new ProfessorMigration().run()
         await new LecturingMigration().run()
+        await new StudentNotificationMigration().run()
+        await new ProfessorNotificationMigration().run()
         await new FeedbackMigration().run()
         await new HasTagMigration().run()
         await new HasVoteMigration().run()
@@ -39,6 +43,8 @@ export class MigrationUoW {
         await new HasVoteMigration().drop()        
         await new HasTagMigration().drop()
         await new FeedbackMigration().drop()
+        await new ProfessorNotificationMigration().drop()
+        await new StudentNotificationMigration().drop()
         await new LecturingMigration().drop()
         await new ProfessorMigration().drop()
         await new TagMigration().drop()
