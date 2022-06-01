@@ -1,8 +1,8 @@
 export const AuthPaths = {
-    "/auth": {
+    "/authStudent": {
         "post": {
             "tags": ["Auth"],
-            "summary": "Get all address from a client",
+            "summary": "Realiza a autenticação de um estudante.",
             "security": [{
                 "Bearer": []
             }],
@@ -18,7 +18,7 @@ export const AuthPaths = {
             },
             "responses": {
                 "200": {
-                    "description": "OK",
+                    "description": "OK - Aluno autenticado com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -39,7 +39,70 @@ export const AuthPaths = {
                     },
                 },
                 "401": {
-                    "description": "Not found",
+                    "description": "Unauthorized - Erro durante a autenticação",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    },
+    "/authProfessor": {
+        "post": {
+            "tags": ["Auth"],
+            "summary": "Realiza a autenticação de um professor.",
+            "security": [{
+                "Bearer": []
+            }],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "required": ["data", "message"],
+                        "schema": {
+                            "$ref": "#/components/schemas/PostAuth"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "OK - Professor autenticado com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized- Erro durante a autenticação",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
