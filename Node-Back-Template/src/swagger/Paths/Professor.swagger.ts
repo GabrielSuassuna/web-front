@@ -2,7 +2,30 @@ export const ProfessorPaths = {
     "/professor": {
         "get": {
             "tags": ["Professor"],
-            "summary": "Obtém todos os professores de um departamento.",
+            "summary": "Obtém todos os professores.",
+            "parameters": [
+                {
+                    "name": "departamentId",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "name",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "siape",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
             "responses": {
                 "200": {
                     "description": "OK - Professores obtidos com sucesso",
@@ -26,7 +49,7 @@ export const ProfessorPaths = {
                                             "name": "Ricardo Martins",
                                         },
                                     ],
-                                    "message" : "Success"
+                                    "message" : "Professores obtidos com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -67,9 +90,17 @@ export const ProfessorPaths = {
                             }
                         }
                     },
+                },        "departmentId": {
+                    "type": "string",
+                },
+                "siape": {
+                    "type": "string",
+                },
+                "name": {
+                    "type": "string"
                 },
                 "400": {
-                    "description": "Bad request - Requisição mal formatada ou inválida",
+                    "description": "Bad request - Erro ao obter professores",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -77,7 +108,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Requisição mal formatada ou inválida"
+                                    "message" : "Erro ao obter professores"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -149,7 +180,7 @@ export const ProfessorPaths = {
                                             "is_course_coordinator": false,
                                         }
                                     ],
-                                    "message" : "Success"
+                                    "message" : "Professor criado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -166,33 +197,8 @@ export const ProfessorPaths = {
                         }
                     },
                 },
-                "404": {
-                    "description": "Not found - Departamento não encontrado",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Departamento não encontrado"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
                 "400": {
-                    "description": "Bad request - Requisição mal formatada ou inválida",
+                    "description": "Bad request - Erro ao criar professor",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -200,7 +206,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Requisição mal formatada ou inválida"
+                                    "message" : "Erro ao criar professor"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -254,7 +260,7 @@ export const ProfessorPaths = {
                                             "is_course_coordinator": false,
                                         }
                                     ],
-                                    "message" : "Success"
+                                    "message" : "Professor obtido com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -297,7 +303,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Requisição mal formatada ou inválida",
+                    "description": "Bad request - Erro ao obter professor",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -305,7 +311,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Requisição mal formatada ou inválida"
+                                    "message" : "Erro ao obter professor"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -358,7 +364,7 @@ export const ProfessorPaths = {
             },
             "responses": {
                 "200": {
-                    "description": "OK - Professor editado com sucesso",
+                    "description": "OK - Professor atualizado com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -377,7 +383,7 @@ export const ProfessorPaths = {
                                             "is_course_coordinator": false,
                                         }
                                     ],
-                                    "message" : "Success"
+                                    "message" : "Professor atualizado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -420,7 +426,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Requisição mal formatada ou inválida",
+                    "description": "Bad request - Erro ao atualizar professor",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -428,7 +434,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Requisição mal formatada ou inválida"
+                                    "message" : "Erro ao atualizar professor"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -489,7 +495,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Requisição mal formatada ou inválida",
+                    "description": "Bad request - Erro ao deletar professor",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -497,7 +503,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Requisição mal formatada ou inválida"
+                                    "message" : "Erro ao deletar professor"
                                 }, 
                                 "properties": {
                                     "data": {
