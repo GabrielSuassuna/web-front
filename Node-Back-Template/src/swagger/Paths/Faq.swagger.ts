@@ -1,34 +1,11 @@
-export const DisciplinePaths = {
-    "/discipline": {
+export const FaqPaths = {
+    "/faq": {
         "get": {
-            "tags": ["Discipline"],
-            "summary": "Obtém todas as disciplinas.",
-            "parameters": [
-                {
-                    "name": "name",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "code",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "hours",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-            ],
+            "tags": ["Faq"],
+            "summary": "Obtém todas as perguntas frequentes.",
             "responses": {
                 "200": {
-                    "description": "OK - Disciplinas obtidas com sucesso",
+                    "description": "OK - Perguntas obtidas com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -38,22 +15,22 @@ export const DisciplinePaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "code": "CK0101",
-                                            "name": "Algoritmos Aproximativos",
+                                            "question": "Por que...",
+                                            "answer": "Devido ao...",
                                         },
                                         {
                                             "id": "2",
-                                            "code": "CK0102",
-                                            "name": "Programação Linear",
+                                            "question": "Por que...",
+                                            "answer": "Devido ao...",
                                         },
                                     ],
-                                    "message" : "Disciplinas obtidas com sucesso"
+                                    "message" : "Perguntas obtidas com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/Disciline"
+                                            "$ref": "#/components/schemas/GetFaq"
                                         }
                                     },    
                                     "message": {
@@ -65,7 +42,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplinas não encontradas",
+                    "description": "Not found - Perguntas não encontradas",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -73,7 +50,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplinas não encontrados"
+                                    "message" : "Perguntas não encontrados"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -90,7 +67,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter disciplinas",
+                    "description": "Bad request - Erro ao obter perguntas",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -98,7 +75,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter disciplinas"
+                                    "message" : "Erro ao obter perguntas"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -117,26 +94,25 @@ export const DisciplinePaths = {
             }
         },
         "post": {
-            "tags": ["Discipline"],
-            "summary": "Cria uma nova disciplina com os dados especificados.",
+            "tags": ["Faq"],
+            "summary": "Cria uma nova pergunta com os dados especificados.",
             "requestBody": {
                 "content": {
                     "application/json": {
                         "required": ["data", "message"],
-                        "example": {    
-                            "code": "CK0103",
-                            "name": "Matemática Discreta",
-                            "hours": 96,
+                        "example": {
+                            "question": "Por que...",
+                            "answer": "Devido ao...",
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PostDiscipline"
+                            "$ref": "#/components/schemas/PostFaq"
                         }
                     }
                 }
             },
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina criada com sucesso",
+                    "description": "OK - Pergunta criada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -145,19 +121,18 @@ export const DisciplinePaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
-                                            "hours": 96,
-                                        }
+                                            "id": "2",
+                                            "question": "Por que...",
+                                            "answer": "Devido ao...",
+                                        },
                                     ],
-                                    "message" : "Disciplina criada com sucesso"
+                                    "message" : "Pergunta criada com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetFaq"
                                         }
                                     },    
                                     "message": {
@@ -169,7 +144,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao criar disciplina",
+                    "description": "Bad request - Erro ao criar pergunta",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -177,7 +152,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao criar disciplina"
+                                    "message" : "Erro ao criar pergunta"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -247,15 +222,15 @@ export const DisciplinePaths = {
             }
         },
     },
-    "/discipline/{disciplineId}": {
+    "/faq/{faqId}": {
         "get": {
-            "tags": ["Discipline"],
-            "summary": "Obtém os dados de uma disciplina especificada.",
+            "tags": ["Faq"],
+            "summary": "Obtém os dados de uma pergunta especificada.",
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "faqId",
                     "in": "path",
-                    "description": "ID da disciplina",
+                    "description": "ID da pergunta",
                     "schema": {
                         "type": "string"
                     }
@@ -263,7 +238,7 @@ export const DisciplinePaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina obtida com sucesso",
+                    "description": "OK - Pergunta obtida com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -272,19 +247,18 @@ export const DisciplinePaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
-                                            "hours": 96,
+                                            "id": "2",
+                                            "question": "Por que...",
+                                            "answer": "Devido ao...",
                                         }
                                     ],
-                                    "message" : "Disciplina obtida com sucesso"
+                                    "message" : "Pergunta obtida com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetFaq"
                                         }
                                     },    
                                     "message": {
@@ -296,7 +270,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplina não encontrada",
+                    "description": "Not found - Pergunta não encontrada",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -304,7 +278,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina não encontrada"
+                                    "message" : "Pergunta não encontrada"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -321,7 +295,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter disciplina",
+                    "description": "Bad request - Erro ao obter pergunta",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -329,7 +303,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter disciplina"
+                                    "message" : "Erro ao obter pergunta"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -349,12 +323,12 @@ export const DisciplinePaths = {
         },
         "put": {
             "tags": ["Disciplina"],
-            "summary": "Atualiza os dados de uma disciplina especificada.",
+            "summary": "Atualiza os dados de uma pergunta especificada.",
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "faqId",
                     "in": "path",
-                    "description": "ID da disciplina",
+                    "description": "ID da pergunta",
                     "schema": {
                         "type": "string"
                     }
@@ -365,20 +339,19 @@ export const DisciplinePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "id": "4",
-                            "code": "CK0103",
-                            "name": "Matemática Discreta",
-                            "hours": 96,
+                            "id": "2",
+                            "question": "Por que...",
+                            "answer": "Devido ao...",
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PutDiscipline"
+                            "$ref": "#/components/schemas/PutFaq"
                         }
                     }
                 }
             },
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina atualizada com sucesso",
+                    "description": "OK - Pergunta atualizada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -387,19 +360,18 @@ export const DisciplinePaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
-                                            "hours": 96,
+                                            "id": "2",
+                                            "question": "Por que...",
+                                            "answer": "Devido ao...",
                                         }
                                     ],
-                                    "message" : "Disciplina atualizado com sucesso"
+                                    "message" : "Pergunta atualizado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetFaq"
                                         }
                                     },    
                                     "message": {
@@ -411,7 +383,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplina não encontrada",
+                    "description": "Not found - Pergunta não encontrada",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -419,7 +391,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina não encontrada"
+                                    "message" : "Pergunta não encontrada"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -436,7 +408,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao atualizar disciplina",
+                    "description": "Bad request - Erro ao atualizar pergunta",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -444,7 +416,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao atualizar disciplina"
+                                    "message" : "Erro ao atualizar pergunta"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -513,16 +485,16 @@ export const DisciplinePaths = {
             }
         },
         "delete": {
-            "tags": ["Discipline"],
-            "summary": "Deletar uma disciplina especificada.",
+            "tags": ["Faq"],
+            "summary": "Deletar uma pergunta especificada.",
             "security": [{
                 "Bearer": []
             }],
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "faqId",
                     "in": "path",
-                    "description": "ID da Disciplina",
+                    "description": "ID da Pergunta",
                     "schema": {
                         "type": "text"
                     }
@@ -530,7 +502,7 @@ export const DisciplinePaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina deletada com sucesso",
+                    "description": "OK - Pergunta deletada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -538,7 +510,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina deletada com sucesso"
+                                    "message" : "Pergunta deletada com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -555,7 +527,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao deletar disciplina",
+                    "description": "Bad request - Erro ao deletar pergunta",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -563,7 +535,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao deletar disciplina"
+                                    "message" : "Erro ao deletar pergunta"
                                 }, 
                                 "properties": {
                                     "data": {

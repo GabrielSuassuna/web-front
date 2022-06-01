@@ -31,6 +31,10 @@ import { GetDiscipline } from './Models/Get/Discipline.swagger'
 import { PostDiscipline } from './Models/Post/Discipline.swagger'
 import { PutDiscipline } from './Models/Put/Discipline.swagger'
 
+import { GetFaq } from './Models/Get/Faq.swagger'
+import { PostFaq } from './Models/Post/Faq.swagger'
+import { PutFaq } from './Models/Put/Faq.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { AddressPaths } from './Paths/Address.swagger'
 import { ClientPaths } from './Paths/Client.swagger'
@@ -39,6 +43,7 @@ import { LecturingPaths } from './Paths/Lecturing.swagger'
 import { DepartmentPaths } from './Paths/Department.swagger'
 import { StudentPaths } from './Paths/Student.swagger'
 import { DisciplinePaths } from './Paths/Discipline.swagger'
+import { FaqPaths } from './Paths/Faq.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -81,6 +86,10 @@ export const swaggerDocument = {
           "description": "Todos os endpoints relacionados com disciplinas."
         },
         {
+          "name": "Faq",
+          "description": "Todos os endpoints relacionados com perguntas frequentes (FAQ)."
+        },
+        {
           "name": "Client",
           "description": "All Client related endpoints"
         },
@@ -96,6 +105,7 @@ export const swaggerDocument = {
       ...DepartmentPaths,
       ...StudentPaths,
       ...DisciplinePaths,
+      ...FaqPaths,
       ...ClientPaths,
       ...AddressPaths,
     },
@@ -117,6 +127,9 @@ export const swaggerDocument = {
         GetDiscipline,
         PostDiscipline,
         PutDiscipline,
+        GetFaq,
+        PostFaq,
+        PutFaq,  
         Client,
         GetClient,
         PostClient,
