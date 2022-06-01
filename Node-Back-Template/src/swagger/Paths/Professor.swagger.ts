@@ -90,14 +90,6 @@ export const ProfessorPaths = {
                             }
                         }
                     },
-                },        "departmentId": {
-                    "type": "string",
-                },
-                "siape": {
-                    "type": "string",
-                },
-                "name": {
-                    "type": "string"
                 },
                 "400": {
                     "description": "Bad request - Erro ao obter professores",
