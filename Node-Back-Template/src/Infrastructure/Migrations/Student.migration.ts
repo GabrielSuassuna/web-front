@@ -13,7 +13,7 @@ export class StudentMigration implements Migration{
         const SQL = `
             CREATE TABLE student(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
-                registration TEXT NOT NULL,
+                registration TEXT UNIQUE NOT NULL,
                 name TEXT NOT NULL,
                 password TEXT NOT NULL
             );

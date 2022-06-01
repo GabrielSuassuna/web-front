@@ -14,7 +14,7 @@ export class ProfessorMigration implements Migration{
             CREATE TABLE professor(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 department_id serial NOT NULL, 
-                siape TEXT NOT NULL,
+                siape TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,
                 name TEXT NOT NULL,
                 about TEXT NOT NULL,
