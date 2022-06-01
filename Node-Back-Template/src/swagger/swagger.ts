@@ -3,6 +3,7 @@ import { Address } from './Models/Address.swagger'
 import { Professor } from './Models/Professor.swagger'
 import { Lecturing } from './Models/Lecturing.swagger'
 import { Department } from './Models/Department.swagger'
+import { Discipline } from './Models/Discipline.swagger'
 
 import { PostClient } from './Models/Post/PostClient.swagger'
 import { GetAddress } from './Models/Get/Address.swagger'
@@ -26,6 +27,10 @@ import { GetStudent } from './Models/Get/Student.swagger'
 import { PostStudent } from './Models/Post/Student.swagger'
 import { PutStudent } from './Models/Put/Student.swagger'
 
+import { GetDiscipline } from './Models/Get/Discipline.swagger'
+import { PostDiscipline } from './Models/Post/Discipline.swagger'
+import { PutDiscipline } from './Models/Put/Discipline.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { AddressPaths } from './Paths/Address.swagger'
 import { ClientPaths } from './Paths/Client.swagger'
@@ -33,6 +38,7 @@ import { ProfessorPaths } from './Paths/Professor.swagger'
 import { LecturingPaths } from './Paths/Lecturing.swagger'
 import { DepartmentPaths } from './Paths/Department.swagger'
 import { StudentPaths } from './Paths/Student.swagger'
+import { DisciplinePaths } from './Paths/Discipline.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -71,6 +77,10 @@ export const swaggerDocument = {
           "description": "Todos os endpoints relacionados com membros do corpo discente."
         },
         {
+          "name": "Discipline",
+          "description": "Todos os endpoints relacionados com disciplinas."
+        },
+        {
           "name": "Client",
           "description": "All Client related endpoints"
         },
@@ -85,6 +95,7 @@ export const swaggerDocument = {
       ...LecturingPaths,
       ...DepartmentPaths,
       ...StudentPaths,
+      ...DisciplinePaths,
       ...ClientPaths,
       ...AddressPaths,
     },
@@ -102,6 +113,10 @@ export const swaggerDocument = {
         GetStudent,
         PostStudent,
         PutStudent,
+        Discipline,
+        GetDiscipline,
+        PostDiscipline,
+        PutDiscipline,
         Client,
         GetClient,
         PostClient,
