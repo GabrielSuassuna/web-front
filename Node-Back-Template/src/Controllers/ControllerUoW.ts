@@ -1,4 +1,5 @@
 import { AuthController } from './Auth.controller'
+import { DisciplineController } from './Discipline.controller'
 import { FAQController } from './FAQ.controller'
 import { ProfessorController } from './Professor.controller'
 import { StudentController } from './Student.controller'
@@ -14,7 +15,8 @@ export class ControllerUoW{
             new ProfessorController(),
             new StudentController(),
             new FAQController(),
-            new TagController()
+            new TagController(),
+            new DisciplineController()
         ]
     }
 
