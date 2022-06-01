@@ -1,7 +1,7 @@
 export const PostAuth = {
-    "required": ["document", "password"],
+    "required": ["code", "password"],
     "properties": {
-        "document": {
+        "code": {
             "type": "string"
         },
         "password": {

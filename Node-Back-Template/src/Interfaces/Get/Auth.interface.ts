@@ -1,4 +1,4 @@
 export interface GetAuth {
-    document: string,
+    code: string,
     password: string,
 }

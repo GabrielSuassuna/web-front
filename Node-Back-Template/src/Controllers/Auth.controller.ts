@@ -14,12 +14,17 @@ export class AuthController {
     }
  
     public getRouter() {
-        this.router.post(`${this.prefixPath}`, (request: Request, response: Response) => this.login(request, response));
+        this.router.post(`${this.prefixPath}/professor`, (request: Request, response: Response) => this.loginAsProfessor(request, response));
+        this.router.post(`${this.prefixPath}/student`, (request: Request, response: Response) => this.loginAsStudent(request, response));
 
         return this.router
     }
 
-    private login(request: Request, response: Response){
-        this.serviceUoW.authService.validateCredentials(request, response)
+    private loginAsProfessor(request: Request, response: Response){
+        this.serviceUoW.authService.validateProfessorCredentials(request, response)
+    }
+
+    private loginAsStudent(request: Request, response: Response){
+        this.serviceUoW.authService.validateStudentCredentials(request, response)
     }
 }

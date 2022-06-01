@@ -13,12 +13,14 @@ import { HasTagRepository } from "./HasTag.repository";
 import { HasVoteRepository } from "./HasVote.repository";
 import { ReportRepository } from "./Report.repository";
 import { ReportLogRepository } from "./ReportLog.repository";
+import { AuthRepository } from "./Auth.repository";
 
 export class RepositoryUoW {
 
     private client: Client
     private queryHandler: QueryHandler<void>
-
+    
+    authRepository: AuthRepository
     departmentRepository: DepartmentRepository
     disciplineRepository: DisciplineRepository
     faqRepository: FAQRepository
@@ -37,6 +39,7 @@ export class RepositoryUoW {
 
         this.queryHandler = new QueryHandler<void>(this.client);
 
+        this.authRepository = new AuthRepository(this.client)
         this.departmentRepository = new DepartmentRepository(this.client)
         this.disciplineRepository = new DisciplineRepository(this.client)
         this.faqRepository = new FAQRepository(this.client)
