@@ -1,4 +1,5 @@
 export interface PostProfessor {
+  departmentId: string
   siape: string
   password: string
   name: string

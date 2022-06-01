@@ -1,17 +1,14 @@
-import { AddressService } from './Address.service'
 import { AuthService } from './Auth.service'
-import { ClientService } from './Client.service'
+import { ProfessorService } from './Professor.service'
 
 export class ServiceUoW {
 
     public authService: AuthService
-    public clientService: ClientService
-    public addressService: AddressService
+    public professorService: ProfessorService
 
     constructor(){
         this.authService = new AuthService()
-        this.clientService = new ClientService()
-        this.addressService = new AddressService()
+        this.professorService = new ProfessorService()
     }
 
 }

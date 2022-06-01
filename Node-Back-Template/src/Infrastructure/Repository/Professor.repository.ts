@@ -106,15 +106,13 @@ export class ProfessorRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(professorId: string, departmentId: string): Promise<void> {
+    public async delete(professorId: string): Promise<void> {
         const SQL = `
             DELETE FROM professor
             WHERE id = $1
-                AND department_id = $2
         `
         const values = [
-          professorId,
-          departmentId,
+          professorId
         ]
 
         await this.queryHandler.runQuery(SQL, values)
