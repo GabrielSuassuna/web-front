@@ -13,6 +13,7 @@ export class DisciplineMigration implements Migration{
         const SQL = `
             CREATE TABLE discipline(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
+                code TEXT UNIQUE NOT NULL,
                 name TEXT NOT NULL,
                 description TEXT NOT NULL,
                 hours SMALLINT NOT NULL

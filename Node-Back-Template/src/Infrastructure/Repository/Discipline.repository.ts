@@ -40,6 +40,7 @@ export class DisciplineRepository {
         const SQL = `
             INSERT INTO discipline(
                 id,
+                code,
                 name,
                 description,
                 hours,
@@ -48,11 +49,13 @@ export class DisciplineRepository {
                 $1,
                 $2,
                 $3,
-                $4
+                $4,
+                $5
             )
         `
         const values = [
             newId,
+            discipline.code,
             discipline.name,
             discipline.description,
             discipline.hours,
@@ -66,12 +69,14 @@ export class DisciplineRepository {
     public async update(discipline: PutDiscipline, disciplineId: string): Promise<void> {
         const SQL = `
             UPDATE discipline
-            SET name = $1,
-                description = $2,
-                hours = $3
-            WHERE id = $4
+            SET code = $1,
+                name = $2,
+                description = $3,
+                hours = $4
+            WHERE id = $5
         `
         const values = [
+            discipline.code,
             discipline.name,
             discipline.description,
             discipline.hours,
