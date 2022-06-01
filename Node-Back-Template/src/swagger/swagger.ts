@@ -22,6 +22,9 @@ import { GetLecturing } from './Models/Get/Lecturing.swagger'
 
 import { PostDepartment } from './Models/Post/Department.swagger'
 
+import { GetStudent } from './Models/Get/Student.swagger'
+import { PostStudent } from './Models/Post/Student.swagger'
+import { PutStudent } from './Models/Put/Student.swagger'
 
 import { AuthPaths } from './Paths/Auth.swagger'
 import { AddressPaths } from './Paths/Address.swagger'
@@ -29,6 +32,7 @@ import { ClientPaths } from './Paths/Client.swagger'
 import { ProfessorPaths } from './Paths/Professor.swagger'
 import { LecturingPaths } from './Paths/Lecturing.swagger'
 import { DepartmentPaths } from './Paths/Department.swagger'
+import { StudentPaths } from './Paths/Student.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -63,6 +67,10 @@ export const swaggerDocument = {
           "description": "Todos os endpoints relacionados com departamentos."
         },
         {
+          "name": "Student",
+          "description": "Todos os endpoints relacionados com membros do corpo discente."
+        },
+        {
           "name": "Client",
           "description": "All Client related endpoints"
         },
@@ -76,6 +84,7 @@ export const swaggerDocument = {
       ...ProfessorPaths,
       ...LecturingPaths,
       ...DepartmentPaths,
+      ...StudentPaths,
       ...ClientPaths,
       ...AddressPaths,
     },
@@ -90,6 +99,9 @@ export const swaggerDocument = {
         GetLecturing,
         Department,
         PostDepartment,
+        GetStudent,
+        PostStudent,
+        PutStudent,
         Client,
         GetClient,
         PostClient,
