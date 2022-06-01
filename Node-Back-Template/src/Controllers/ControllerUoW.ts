@@ -1,8 +1,8 @@
-import { StudentService } from '../Service/Student.service'
 import { AuthController } from './Auth.controller'
 import { FAQController } from './FAQ.controller'
 import { ProfessorController } from './Professor.controller'
 import { StudentController } from './Student.controller'
+import { TagController } from './Tag.controller'
 
 export class ControllerUoW{
 
@@ -13,7 +13,8 @@ export class ControllerUoW{
             new AuthController(),
             new ProfessorController(),
             new StudentController(),
-            new FAQController()
+            new FAQController(),
+            new TagController()
         ]
     }
 

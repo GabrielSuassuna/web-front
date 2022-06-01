@@ -4,7 +4,7 @@ import { ServiceUoW } from '../Service/ServiceUoW'
 
 export class ProfessorController {
 
-    private prefixPath: string = "/auth"
+    private prefixPath: string = "/professor"
     private router: Router
     private serviceUoW: ServiceUoW
 
