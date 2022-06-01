@@ -15,11 +15,11 @@ export class ReportMigration implements Migration{
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 feedback_id serial NOT NULL,  
                 author_id serial NOT NULL,  
-                revisor_id serial, 
+                reviewer_id serial, 
                 status TEXT NOT NULL,
                 FOREIGN KEY (feedback_id) REFERENCES feedback (id),
                 FOREIGN KEY (author_id) REFERENCES professor (id),
-                FOREIGN KEY (revisor_id) REFERENCES professor (id)
+                FOREIGN KEY (reviewer_id) REFERENCES professor (id)
             );
 
             CREATE SEQUENCE report_seq

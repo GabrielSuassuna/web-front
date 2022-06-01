@@ -1,4 +1,4 @@
 export interface PostReport {
-  revisor_id: string
+  reviewer_id: string
   status: string
 }

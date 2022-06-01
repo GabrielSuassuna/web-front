@@ -42,7 +42,7 @@ export class ReportRepository {
                 id,
                 feedback_id,
                 author_id,
-                revisor_id,
+                reviewer_id,
                 status
             )
             VALUES (
@@ -57,7 +57,7 @@ export class ReportRepository {
           newId,
           feedbackId,
           authorId,
-          report.revisor_id,
+          report.reviewer_id,
           report.status,
         ]
 
@@ -69,14 +69,14 @@ export class ReportRepository {
     public async update(report: PutReport, reportId: string, feedbackId: string, authorId: string): Promise<void> {
         const SQL = `
             UPDATE report
-            SET revisor_id = $1,
+            SET reviewer_id = $1,
                 status = $2
             WHERE id = $3
                 AND feedback_id = $4
                 AND author_id = $5
         `
         const values = [
-          report.revisor_id,
+          report.reviewer_id,
           report.status,
           reportId,
           feedbackId,
