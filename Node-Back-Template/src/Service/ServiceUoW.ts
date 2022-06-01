@@ -1,4 +1,5 @@
 import { AuthService } from './Auth.service'
+import { DepartmentService } from './Department.service'
 import { DisciplineService } from './Discipline.service'
 import { FAQService } from './FAQ.service'
 import { ProfessorService } from './Professor.service'
@@ -16,6 +17,7 @@ export class ServiceUoW {
     public disciplineService: DisciplineService
     public studentNotificationService: StudentNotificationService
     public professorNotificationService: ProfessorNotificationService
+    public departmentService: DepartmentService
     
     constructor(){
         this.authService = new AuthService()
@@ -26,6 +28,7 @@ export class ServiceUoW {
         this.disciplineService = new DisciplineService()
         this.studentNotificationService = new StudentNotificationService()
         this.professorNotificationService = new ProfessorNotificationService()
+        this.departmentService = new DepartmentService()
     }
 
 }

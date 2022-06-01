@@ -34,6 +34,38 @@ export class DepartmentRepository {
 
     }
 
+    public async getDepartmentCoordinator(departmentId: string): Promise<GetDepartment[]>{
+        const SQL = `
+            SELECT * 
+              FROM professor 
+             WHERE department_id = $1
+               AND is_course_coordinator = TRUE
+        `
+
+        const values = [
+            departmentId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
+    public async getDepartmentChief(departmentId: string): Promise<GetDepartment[]>{
+        const SQL = `
+            SELECT * 
+              FROM professor 
+             WHERE department_id = $1
+               AND is_head_of_department = TRUE
+        `
+
+        const values = [
+            departmentId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
     public async create(department: PostDepartment): Promise<string> {
         const newId = await this.queryHandler.getSequence("department")
         
