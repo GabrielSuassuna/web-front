@@ -380,10 +380,10 @@ export const ProfessorPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "id": "1",
                             "departmentId": "5",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
+                            "password": "ADVBSNHAD",
                             "about": "Rodrigo Marques é professor do departamento...",
                             "lattes_url": "lattes.cnpq.br/...",
                             "is_head_of_department": false,
