@@ -13,7 +13,7 @@ export class AuthRepository {
     public async validateProfessorCredentials(loginCredentials: GetAuth): Promise<string[]>{
         const SQL = `
             SELECT id 
-              FROM Client 
+              FROM professor 
              WHERE siape = $1
                AND password = $2;
         `
@@ -31,7 +31,7 @@ export class AuthRepository {
     public async validateStudentCredentials(loginCredentials: GetAuth): Promise<string[]>{
         const SQL = `
             SELECT id 
-              FROM Client 
+              FROM student 
              WHERE registration = $1
                AND password = $2;
         `
