@@ -1,19 +1,9 @@
-import { Client } from './Models/Client.swagger'
-import { Address } from './Models/Address.swagger'
 import { Professor } from './Models/Professor.swagger'
 import { Lecturing } from './Models/Lecturing.swagger'
 import { Department } from './Models/Department.swagger'
 import { Discipline } from './Models/Discipline.swagger'
 import { Feedback } from './Models/Feedback.swagger'
 import { Tag } from './Models/Tag.swagger'
-
-import { PostClient } from './Models/Post/PostClient.swagger'
-import { GetAddress } from './Models/Get/Address.swagger'
-import { PutAddress } from './Models/Put/Address.swagger'
-import { PostAddress } from './Models/Post/Address.swagger'
-
-import { GetClient } from './Models/Get/Client.swagger'
-import { PutClient } from './Models/Put/PutClient.swagger'
 
 import { PostAuth } from './Models/Post/Auth.swagger'
 
@@ -50,8 +40,6 @@ import { PostTag } from './Models/Post/Tag.swagger'
 import { PutTag } from './Models/Put/Tag.swagger'
 
 import { AuthPaths } from './Paths/Auth.swagger'
-import { AddressPaths } from './Paths/Address.swagger'
-import { ClientPaths } from './Paths/Client.swagger'
 import { ProfessorPaths } from './Paths/Professor.swagger'
 import { LecturingPaths } from './Paths/Lecturing.swagger'
 import { DepartmentPaths } from './Paths/Department.swagger'
