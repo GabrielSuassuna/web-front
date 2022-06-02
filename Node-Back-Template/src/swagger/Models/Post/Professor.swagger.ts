@@ -1,5 +1,5 @@
 export const PostProfessor = {
-    "required": ["departmentId", "siape", "name", "about", "lattes_url", "is_head_of_department", "is_course_coordinator"],
+    "required": ["departmentId", "siape", "name", "password", "about", "lattes_url", "is_head_of_department", "is_course_coordinator"],
     "properties": {
         "departmentId": {
             "type": "string",
@@ -8,6 +8,9 @@ export const PostProfessor = {
             "type": "string",
         },
         "name": {
+            "type": "string"
+        },
+        "password": {
             "type": "string"
         },
         "about": {

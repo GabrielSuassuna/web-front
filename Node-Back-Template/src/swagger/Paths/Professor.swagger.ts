@@ -129,6 +129,7 @@ export const ProfessorPaths = {
                             "departmentId": "1",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
+                            "password": "ASDXASACASX",
                             "about": "Rodrigo Marques é professor do departamento...",
                             "lattes_url": "lattes.cnpq.br/...",
                             "is_head_of_department": false,
