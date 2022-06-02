@@ -117,14 +117,6 @@ export const swaggerDocument = {
         {
           "name": "Tag",
           "description": "Todos os endpoints relacionados com tags (características)."
-        },
-        {
-          "name": "Client",
-          "description": "All Client related endpoints"
-        },
-        {
-          "name": "Address",
-          "description": "All Address related endpoints"
         }
     ],
     "paths": {
@@ -138,8 +130,6 @@ export const swaggerDocument = {
       ...FeedbackPaths,
       ...HasVotePaths,
       ...TagPaths,
-      ...ClientPaths,
-      ...AddressPaths,
     },
     "components": {
       "schemas":{
@@ -173,14 +163,6 @@ export const swaggerDocument = {
         GetTag,
         PostTag,
         PutTag,
-        Client,
-        GetClient,
-        PostClient,
-        PutClient,
-        Address,
-        GetAddress,
-        PutAddress,
-        PostAddress,
       },
       "securitySchemes": {
         "Bearer": {
