@@ -224,7 +224,7 @@ export const FaqPaths = {
     },
     "/faq/{faqId}": {
         "put": {
-            "tags": ["Disciplina"],
+            "tags": ["Faq"],
             "summary": "Atualiza os dados de uma pergunta especificada.",
             "parameters": [
                 {

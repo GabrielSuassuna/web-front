@@ -222,7 +222,7 @@ export const TagPaths = {
     },
     "/tag/{tagId}": {
         "get": {
-            "tags": ["Discipline"],
+            "tags": ["Tag"],
             "summary": "Obtém os dados de uma tag especificada.",
             "parameters": [
                 {
