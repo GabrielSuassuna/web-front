@@ -46,7 +46,7 @@ export class DepartmentController {
     }
 
     private delete(request: Request, response: Response){
-        this.serviceUoW.professorNotificationService.delete(request, response)
+        this.serviceUoW.departmentService.delete(request, response)
     }
 
 }
