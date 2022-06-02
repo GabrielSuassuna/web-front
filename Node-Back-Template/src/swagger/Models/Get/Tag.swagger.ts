@@ -1,7 +1,7 @@
-export const PutDiscipline = {
-    "required": ["code", "name", "description", "hours"],
+export const GetTag = {
+    "required": ["id", "name", "description"],
     "properties": {
-        "code": {
+        "id": {
             "type": "string",
         },
         "name": {
@@ -9,9 +9,6 @@ export const PutDiscipline = {
         },
         "description": {
             "type": "string",
-        },
-        "hours": {
-            "type": "number",
         }
     }
 }

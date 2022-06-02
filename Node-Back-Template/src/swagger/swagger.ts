@@ -5,6 +5,7 @@ import { Lecturing } from './Models/Lecturing.swagger'
 import { Department } from './Models/Department.swagger'
 import { Discipline } from './Models/Discipline.swagger'
 import { Feedback } from './Models/Feedback.swagger'
+import { Tag } from './Models/Tag.swagger'
 
 import { PostClient } from './Models/Post/PostClient.swagger'
 import { GetAddress } from './Models/Get/Address.swagger'
@@ -40,6 +41,14 @@ import { PutFaq } from './Models/Put/Faq.swagger'
 import { GetFeedback } from './Models/Get/Feedback.swagger'
 import { PostFeedback } from './Models/Post/Feedback.swagger'
 
+import { GetHasVote } from './Models/Get/HasVote.swagger'
+import { PostHasVote } from './Models/Post/HasVote.swagger'
+import { PutHasVote } from './Models/Put/HasVote.swagger'
+
+import { GetTag } from './Models/Get/Tag.swagger'
+import { PostTag } from './Models/Post/Tag.swagger'
+import { PutTag } from './Models/Put/Tag.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { AddressPaths } from './Paths/Address.swagger'
 import { ClientPaths } from './Paths/Client.swagger'
@@ -50,6 +59,8 @@ import { StudentPaths } from './Paths/Student.swagger'
 import { DisciplinePaths } from './Paths/Discipline.swagger'
 import { FaqPaths } from './Paths/Faq.swagger'
 import { FeedbackPaths } from './Paths/Feedback.swagger'
+import { HasVotePaths } from './Paths/HasVote.swagger'
+import { TagPaths } from './Paths/Tag.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -100,6 +111,14 @@ export const swaggerDocument = {
           "description": "Todos os endpoints relacionados com feedbacks."
         },
         {
+          "name": "HasVote",
+          "description": "Todos os endpoints relacionados com interações com feedbacks."
+        },
+        {
+          "name": "Tag",
+          "description": "Todos os endpoints relacionados com tags (características)."
+        },
+        {
           "name": "Client",
           "description": "All Client related endpoints"
         },
@@ -117,6 +136,8 @@ export const swaggerDocument = {
       ...DisciplinePaths,
       ...FaqPaths,
       ...FeedbackPaths,
+      ...HasVotePaths,
+      ...TagPaths,
       ...ClientPaths,
       ...AddressPaths,
     },
@@ -145,6 +166,13 @@ export const swaggerDocument = {
         Feedback,
         GetFeedback,
         PostFeedback,
+        GetHasVote,
+        PostHasVote,
+        PutHasVote,
+        Tag,
+        GetTag,
+        PostTag,
+        PutTag,
         Client,
         GetClient,
         PostClient,

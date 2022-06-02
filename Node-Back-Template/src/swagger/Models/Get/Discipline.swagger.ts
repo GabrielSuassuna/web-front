@@ -1,5 +1,5 @@
 export const GetDiscipline = {
-    "required": ["id", "code", "name", "hours"],
+    "required": ["id", "code", "name", "description", "hours"],
     "properties": {
         "id": {
             "type": "string",
@@ -8,6 +8,9 @@ export const GetDiscipline = {
             "type": "string",
         },
         "name": {
+            "type": "string",
+        },
+        "description": {
             "type": "string",
         },
         "hours": {

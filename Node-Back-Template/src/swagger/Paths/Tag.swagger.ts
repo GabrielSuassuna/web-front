@@ -1,34 +1,11 @@
-export const DisciplinePaths = {
-    "/discipline": {
+export const TagPaths = {
+    "/tag": {
         "get": {
-            "tags": ["Discipline"],
-            "summary": "Obtém todas as disciplinas.",
-            "parameters": [
-                {
-                    "name": "name",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "code",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "hours",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-            ],
+            "tags": ["Tag"],
+            "summary": "Obtém todas as tags.",
             "responses": {
                 "200": {
-                    "description": "OK - Disciplinas obtidas com sucesso",
+                    "description": "OK - Tags obtidas com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -38,22 +15,20 @@ export const DisciplinePaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "code": "CK0101",
-                                            "name": "Algoritmos Aproximativos",
+                                            "name": "Aulas Objetivas",
                                         },
                                         {
                                             "id": "2",
-                                            "code": "CK0102",
-                                            "name": "Programação Linear",
+                                            "name": "Visão de Mercado",
                                         },
                                     ],
-                                    "message" : "Disciplinas obtidas com sucesso"
+                                    "message" : "Tags obtidas com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/Disciline"
+                                            "$ref": "#/components/schemas/Tag"
                                         }
                                     },    
                                     "message": {
@@ -65,7 +40,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplinas não encontradas",
+                    "description": "Not found - Tags não encontradas",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -73,7 +48,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplinas não encontrados"
+                                    "message" : "Tags não encontrados"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -90,7 +65,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter disciplinas",
+                    "description": "Bad request - Erro ao obter tags",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -98,7 +73,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter disciplinas"
+                                    "message" : "Erro ao obter tags"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -117,27 +92,25 @@ export const DisciplinePaths = {
             }
         },
         "post": {
-            "tags": ["Discipline"],
-            "summary": "Cria uma nova disciplina com os dados especificados.",
+            "tags": ["Tag"],
+            "summary": "Cria uma nova tag com os dados especificados.",
             "requestBody": {
                 "content": {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "code": "CK0103",
-                            "name": "Matemática Discreta",
+                            "name": "Visão de Mercado",
                             "description": "Disciplina com foco em...",
-                            "hours": 96,
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PostDiscipline"
+                            "$ref": "#/components/schemas/PostTag"
                         }
                     }
                 }
             },
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina criada com sucesso",
+                    "description": "OK - Tag criada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -146,20 +119,18 @@ export const DisciplinePaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
+                                            "id": "3",
+                                            "name": "Visão de Mercado",
                                             "description": "Disciplina com foco em...",
-                                            "hours": 96,
                                         }
                                     ],
-                                    "message" : "Disciplina criada com sucesso"
+                                    "message" : "Tag criada com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetTag"
                                         }
                                     },    
                                     "message": {
@@ -171,7 +142,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao criar disciplina",
+                    "description": "Bad request - Erro ao criar tag",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -179,7 +150,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao criar disciplina"
+                                    "message" : "Erro ao criar tag"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -247,17 +218,17 @@ export const DisciplinePaths = {
                 },
 
             }
-        },
+        }
     },
-    "/discipline/{disciplineId}": {
+    "/tag/{tagId}": {
         "get": {
             "tags": ["Discipline"],
-            "summary": "Obtém os dados de uma disciplina especificada.",
+            "summary": "Obtém os dados de uma tag especificada.",
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "tagId",
                     "in": "path",
-                    "description": "ID da disciplina",
+                    "description": "ID da tag",
                     "schema": {
                         "type": "string"
                     }
@@ -265,7 +236,7 @@ export const DisciplinePaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina obtida com sucesso",
+                    "description": "OK - Tag obtida com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -275,19 +246,17 @@ export const DisciplinePaths = {
                                     "data": [
                                         {
                                             "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
+                                            "name": "Aulas Objetivas",
                                             "description": "Disciplina com foco em ...",
-                                            "hours": 96,
                                         }
                                     ],
-                                    "message" : "Disciplina obtida com sucesso"
+                                    "message" : "Tag obtida com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetTag"
                                         }
                                     },    
                                     "message": {
@@ -299,7 +268,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplina não encontrada",
+                    "description": "Not found - Tag não encontrada",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -307,7 +276,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina não encontrada"
+                                    "message" : "Tag não encontrada"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -324,7 +293,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter disciplina",
+                    "description": "Bad request - Erro ao obter tag",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -332,7 +301,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter disciplina"
+                                    "message" : "Erro ao obter tag"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -351,13 +320,13 @@ export const DisciplinePaths = {
             }
         },
         "put": {
-            "tags": ["Discipline"],
+            "tags": ["Tag"],
             "summary": "Atualiza os dados de uma disciplina especificada.",
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "tagId",
                     "in": "path",
-                    "description": "ID da disciplina",
+                    "description": "ID da tag",
                     "schema": {
                         "type": "string"
                     }
@@ -368,20 +337,18 @@ export const DisciplinePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "code": "CK0103",
-                            "name": "Matemática Discreta",
+                            "name": "Aulas Objetivas",
                             "description": "Disciplina com foco em ...",
-                            "hours": 96,
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PutDiscipline"
+                            "$ref": "#/components/schemas/PutTag"
                         }
                     }
                 }
             },
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina atualizada com sucesso",
+                    "description": "OK - Tag atualizada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -391,19 +358,17 @@ export const DisciplinePaths = {
                                     "data": [
                                         {
                                             "id": "4",
-                                            "code": "CK0103",
-                                            "name": "Matemática Discreta",
+                                            "name": "Aulas Objetivas",
                                             "description": "Disciplina com foco em ...",
-                                            "hours": 96,
                                         }
                                     ],
-                                    "message" : "Disciplina atualizado com sucesso"
+                                    "message" : "Tag atualizado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDiscipline"
+                                            "$ref": "#/components/schemas/GetTag"
                                         }
                                     },    
                                     "message": {
@@ -415,7 +380,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Disciplina não encontrada",
+                    "description": "Not found - Tag não encontrada",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -423,7 +388,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina não encontrada"
+                                    "message" : "Tag não encontrada"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -440,7 +405,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao atualizar disciplina",
+                    "description": "Bad request - Erro ao atualizar tag",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -448,7 +413,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao atualizar disciplina"
+                                    "message" : "Erro ao atualizar tag"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -517,16 +482,16 @@ export const DisciplinePaths = {
             }
         },
         "delete": {
-            "tags": ["Discipline"],
-            "summary": "Deletar uma disciplina especificada.",
+            "tags": ["Tag"],
+            "summary": "Deletar uma tag especificada.",
             "security": [{
                 "Bearer": []
             }],
             "parameters": [
                 {
-                    "name": "disciplineId",
+                    "name": "tagId",
                     "in": "path",
-                    "description": "ID da Disciplina",
+                    "description": "ID da Tag",
                     "schema": {
                         "type": "text"
                     }
@@ -534,7 +499,7 @@ export const DisciplinePaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Disciplina deletada com sucesso",
+                    "description": "OK - Tag deletada com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -542,7 +507,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Disciplina deletada com sucesso"
+                                    "message" : "Tag deletada com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -559,7 +524,7 @@ export const DisciplinePaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao deletar disciplina",
+                    "description": "Bad request - Erro ao deletar tag",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -567,7 +532,7 @@ export const DisciplinePaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao deletar disciplina"
+                                    "message" : "Erro ao deletar tag"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -634,6 +599,6 @@ export const DisciplinePaths = {
                     },
                 },
             }
-        },
+        }
     }
 }
