@@ -118,26 +118,15 @@ export const ProfessorPaths = {
                 }
             }
         },
-    },
-    "/professor/{departmentId}": {
         "post": {
             "tags": ["Professor"],
             "summary": "Cria um novo professor no departamento com os dados especificados.",
-            "parameters": [
-                {
-                    "name": "departmentId",
-                    "in": "path",
-                    "description": "ID do departamento",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-            ],
             "requestBody": {
                 "content": {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
+                            "departmentId": "1",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
                             "about": "Rodrigo Marques é professor do departamento...",
