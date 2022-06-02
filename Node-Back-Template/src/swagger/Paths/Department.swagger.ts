@@ -103,12 +103,16 @@ export const DepartmentPaths = {
         "post": {
             "tags": ["Department"],
             "summary": "Cria um novo departamento com os dados especificados.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
                             "name": "Departamento de Estatística",
+                            "description": "Departamento especializado em estatística aplicada"
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostDepartment"

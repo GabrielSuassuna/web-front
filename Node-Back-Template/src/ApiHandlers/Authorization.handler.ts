@@ -9,9 +9,9 @@ export function authHandler(request: Request, response: Response, next: NextFunc
     let token: string = <string>request.headers['authorization'];
     if (!token) return response.status(401).json({ data: [], message: 'Problema ao decodificar o token' });
     
-    token = token.replace("Bearer ", "")
+    const splitedToken = token.replace("Bearer ", "")
     
-    verify(token, secret, function(err, decoded) {
+    verify(splitedToken, secret, function(err, decoded) {
       if (err) return response.status(500).json({ data: [], message: 'Falha ao processar a requisição.' });
       
       next();

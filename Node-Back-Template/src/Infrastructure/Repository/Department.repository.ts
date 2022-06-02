@@ -5,6 +5,7 @@ import { Client } from "pg"
 import { GetDepartment } from "../../Interfaces/Get/GetDepartment.interface"
 import { PostDepartment } from "../../Interfaces/Post/PostDepartment.interface"
 import { PutDepartment } from "../../Interfaces/Put/PutDepartment.interface"
+import { DepartmentFilter } from "../../Interfaces/Filters/DepartmentFilter.interface"
 
 export class DepartmentRepository {
     queryHandler: QueryHandler<GetDepartment>
@@ -13,12 +14,16 @@ export class DepartmentRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<DepartmentInterface[]>{
+    public async getAll(departmentFilter: DepartmentFilter | null = null): Promise<DepartmentInterface[]>{
         const SQL = `
             SELECT * FROM department
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        let values: any[] = []
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, departmentFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(departmentId: string): Promise<GetDepartment[]>{
@@ -73,7 +78,7 @@ export class DepartmentRepository {
             INSERT INTO department(
                 id,
                 name,
-                description,
+                description
             )
             VALUES (
                 $1,
@@ -120,4 +125,17 @@ export class DepartmentRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    private applyGetAllFilters(SQL: string, values: any[], deparmentFilter: DepartmentFilter | null = null){
+        let sqlWithFilter = SQL
+        let valuesWithFilter = values
+
+        sqlWithFilter += 'WHERE 0=0'
+
+        if(deparmentFilter?.name){
+            values.push(`%${deparmentFilter.name}%`)
+            sqlWithFilter += ` AND name LIKE $${values.length}`
+        }
+        
+        return { sqlWithFilter, valuesWithFilter }
+    }
 }
