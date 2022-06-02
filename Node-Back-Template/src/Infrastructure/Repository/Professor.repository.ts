@@ -5,6 +5,7 @@ import { Client } from "pg"
 import { GetProfessor } from "../../Interfaces/Get/GetProfessor.interface"
 import { PostProfessor } from "../../Interfaces/Post/PostProfessor.interface"
 import { PutProfessor } from "../../Interfaces/Put/PutProfessor.interface"
+import { ProfessorFilter } from "../../Interfaces/Filters/ProfessorFilter.interface"
 
 export class ProfessorRepository {
     queryHandler: QueryHandler<GetProfessor>
@@ -13,12 +14,16 @@ export class ProfessorRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<ProfessorInterface[]>{
+    public async getAll(professorFilter: ProfessorFilter | null = null): Promise<ProfessorInterface[]>{
         const SQL = `
             SELECT * FROM professor
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        let values: any[] = []
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, professorFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(professorId: string): Promise<GetProfessor[]>{
@@ -118,4 +123,26 @@ export class ProfessorRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    
+    private applyGetAllFilters(SQL: string, values: any[], professorFilter: ProfessorFilter | null = null){
+        let sqlWithFilter = SQL
+        let valuesWithFilter = values
+
+        sqlWithFilter += 'WHERE 0=0'
+
+        if(professorFilter?.name){
+            values.push(`%${professorFilter.name}%`)
+            sqlWithFilter += ` AND name LIKE $${values.length}`
+        }
+        if(professorFilter?.departmentId){
+            values.push(professorFilter.departmentId)
+            sqlWithFilter += ` AND department_id = $${values.length}`
+        }
+        if(professorFilter?.siape){
+            values.push(professorFilter.siape)
+            sqlWithFilter += ` AND siape = $${values.length}`
+        }
+        
+        return { sqlWithFilter, valuesWithFilter }
+    }
 }

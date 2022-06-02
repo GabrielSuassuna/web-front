@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
+import { ProfessorFilter } from '../Interfaces/Filters/ProfessorFilter.interface'
 import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
 import { PostProfessor } from '../Interfaces/Post/PostProfessor.interface'
 import { ProfessorInterface } from '../Interfaces/Professor.interface'
@@ -21,7 +22,16 @@ export class ProfessorService {
         let result: ProfessorInterface[] = []
     
         try{
-            const toBeFoundProfessors: ProfessorInterface[] = await this.repositoryUoW.professorRepository.getAll()
+            
+            const { 
+                name, 
+                departmentId, 
+                siape
+            } = request.query as any
+            
+            const professorFilter: ProfessorFilter = { name, departmentId, siape }
+
+            const toBeFoundProfessors: ProfessorInterface[] = await this.repositoryUoW.professorRepository.getAll(professorFilter)
 
             if(!!toBeFoundProfessors.length){
                 return response.status(200).json(setApiResponse<ProfessorInterface[]>(toBeFoundProfessors, sucessMessage))
