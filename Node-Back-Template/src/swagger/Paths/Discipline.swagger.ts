@@ -348,7 +348,7 @@ export const DisciplinePaths = {
             }
         },
         "put": {
-            "tags": ["Disciplina"],
+            "tags": ["Discipline"],
             "summary": "Atualiza os dados de uma disciplina especificada.",
             "parameters": [
                 {
