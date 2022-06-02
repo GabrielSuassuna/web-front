@@ -1,9 +1,6 @@
 export const PutDiscipline = {
-    "required": ["id", "code", "name", "hours"],
+    "required": ["code", "name", "hours"],
     "properties": {
-        "id": {
-            "type": "string",
-        },
         "code": {
             "type": "string",
         },

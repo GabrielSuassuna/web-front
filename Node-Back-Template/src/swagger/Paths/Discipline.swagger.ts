@@ -365,7 +365,6 @@ export const DisciplinePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "id": "4",
                             "code": "CK0103",
                             "name": "Matemática Discreta",
                             "hours": 96,
