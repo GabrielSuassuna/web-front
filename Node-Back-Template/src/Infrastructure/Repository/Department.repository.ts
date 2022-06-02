@@ -73,7 +73,7 @@ export class DepartmentRepository {
             INSERT INTO department(
                 id,
                 name,
-                description,
+                description
             )
             VALUES (
                 $1,
