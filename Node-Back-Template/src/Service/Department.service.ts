@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { DepartmentInterface } from '../Interfaces/Department.interface'
+import { DepartmentFilter } from '../Interfaces/Filters/DepartmentFilter.interface'
 import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { PostDepartment } from '../Interfaces/Post/PostDepartment.interface'
 import { PutDepartment } from '../Interfaces/Put/PutDepartment.interface'
@@ -21,7 +22,14 @@ export class DepartmentService {
         let result: DepartmentInterface[] = []
     
         try{
-            const toBeFoundDepartment: DepartmentInterface[] = await this.repositoryUoW.departmentRepository.getAll()
+
+            const { 
+                name
+            } = request.query as any
+            
+            const deparmentFilter: DepartmentFilter = { name }
+
+            const toBeFoundDepartment: DepartmentInterface[] = await this.repositoryUoW.departmentRepository.getAll(deparmentFilter)
 
             if(!!toBeFoundDepartment.length){
                 return response.status(200).json(setApiResponse<DepartmentInterface[]>(toBeFoundDepartment, sucessMessage))
