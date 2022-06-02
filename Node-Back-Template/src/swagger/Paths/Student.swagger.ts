@@ -82,7 +82,10 @@ export const StudentPaths = {
     "/student/{studentId}": {
         "put":{
             "tags": ["Student"],
-            "summary": "Atualiza os dados de um estudante especificado.",
+            "summary": "Atualiza os dados de um estudante especificado. Necessita de autenticação do estudante especificado.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "studentId",
@@ -245,7 +248,7 @@ export const StudentPaths = {
         },
         "delete": {
             "tags": ["Student"],
-            "summary": "Deletar um estudante especificado.",
+            "summary": "Deletar um estudante especificado. Necessita de autenticação do estudante especificado ou do administrador.", 
             "security": [{
                 "Bearer": []
             }],

@@ -93,7 +93,10 @@ export const TagPaths = {
         },
         "post": {
             "tags": ["Tag"],
-            "summary": "Cria uma nova tag com os dados especificados.",
+            "summary": "Cria uma nova tag com os dados especificados. Necessita de autenticação de chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -321,7 +324,10 @@ export const TagPaths = {
         },
         "put": {
             "tags": ["Tag"],
-            "summary": "Atualiza os dados de uma disciplina especificada.",
+            "summary": "Atualiza os dados de uma disciplina especificada. Necessita de autenticação de chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "tagId",
@@ -483,7 +489,7 @@ export const TagPaths = {
         },
         "delete": {
             "tags": ["Tag"],
-            "summary": "Deletar uma tag especificada.",
+            "summary": "Deletar uma tag especificada. Necessita da autenticação de chefe de departamento, coordenador ou administrador.",
             "security": [{
                 "Bearer": []
             }],

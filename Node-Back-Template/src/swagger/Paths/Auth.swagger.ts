@@ -2,7 +2,7 @@ export const AuthPaths = {
     "/auth/admin": {
         "post": {
             "tags": ["Auth"],
-            "summary": "Realiza a autenticação de um estudante.",
+            "summary": "Realiza a autenticação de um administrador de sistema.",
             "requestBody": {
                 "content": {
                     "application/json": {

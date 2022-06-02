@@ -95,7 +95,10 @@ export const FaqPaths = {
         },
         "post": {
             "tags": ["Faq"],
-            "summary": "Cria uma nova pergunta com os dados especificados.",
+            "summary": "Cria uma nova pergunta com os dados especificados. Necessita de autenticação de chefe de departamento, coordenador de curso ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -225,7 +228,10 @@ export const FaqPaths = {
     "/faq/{faqId}": {
         "put": {
             "tags": ["Faq"],
-            "summary": "Atualiza os dados de uma pergunta especificada.",
+            "summary": "Atualiza os dados de uma pergunta especificada. Necessita de autenticação de chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "faqId",
@@ -388,7 +394,7 @@ export const FaqPaths = {
         },
         "delete": {
             "tags": ["Faq"],
-            "summary": "Deletar uma pergunta especificada.",
+            "summary": "Deletar uma pergunta especificada. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
             "security": [{
                 "Bearer": []
             }],

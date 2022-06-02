@@ -2,7 +2,7 @@ export const HasVotePaths = {
     "/hasVote/{feedbackId}": {
         "delete": {
             "tags": ["HasVote"],
-            "summary": "Deletar um feedback especificado.",
+            "summary": "Deletar uma interação com feedback especificado. Necessita da autenticação do estudante autor da interação.",
             "security": [{
                 "Bearer": []
             }],
@@ -121,7 +121,10 @@ export const HasVotePaths = {
         },
         "post": {
             "tags": ["HasVote"],
-            "summary": "Cria uma nova interação com os dados especificados.",
+            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -251,7 +254,10 @@ export const HasVotePaths = {
         },
         "put": {
             "tags": ["HasVote"],
-            "summary": "Atualiza os dados de uma interação.",
+            "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "hasVoteId",

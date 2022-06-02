@@ -120,7 +120,10 @@ export const ProfessorPaths = {
         },
         "post": {
             "tags": ["Professor"],
-            "summary": "Cria um novo professor no departamento com os dados especificados.",
+            "summary": "Cria um novo professor no departamento com os dados especificados. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -364,7 +367,10 @@ export const ProfessorPaths = {
         },
         "put": {
             "tags": ["Professor"],
-            "summary": "Atualiza os dados de um professor especificado.",
+            "summary": "Atualiza os dados de um professor especificado. Necessita de autenticação do professor ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "professorId",
@@ -537,7 +543,7 @@ export const ProfessorPaths = {
         },
         "delete": {
             "tags": ["Professor"],
-            "summary": "Deletar um professor especificado.",
+            "summary": "Deletar um professor especificado. Necessita de autenticação do professor ou do administrador.",
             "security": [{
                 "Bearer": []
             }],

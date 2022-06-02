@@ -2,7 +2,7 @@ export const NotificationPaths = {
     "/notification/{notificationId}": {
         "delete": {
             "tags": ["Notification"],
-            "summary": "Deletar uma notificação especificada.",
+            "summary": "Deletar uma notificação especificada. Necessita da autenticação do usuário recebedor da notificação.",
             "security": [{
                 "Bearer": []
             }],
@@ -123,7 +123,10 @@ export const NotificationPaths = {
     "/notification/professor/{professorId}": {
         "get": {
             "tags": ["Notification"],
-            "summary": "Obtém todas as notificações de um professor especificado.",
+            "summary": "Obtém todas as notificações de um professor especificado. Necessita da autenticação do usuário recebedor da notificação.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "professorId",
@@ -215,14 +218,67 @@ export const NotificationPaths = {
                             }
                         }
                     },
-                }
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
             }
         },
     },
     "/notification/student/{studentId}": {
         "get": {
             "tags": ["Notification"],
-            "summary": "Obtém todas as notificações de um aluno especificado.",
+            "summary": "Obtém todas as notificações de um aluno especificado. Necessita da autenticação do usuário recebedor da notificação.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "studentId",
@@ -314,7 +370,57 @@ export const NotificationPaths = {
                             }
                         }
                     },
-                }
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
             }
         },
     },

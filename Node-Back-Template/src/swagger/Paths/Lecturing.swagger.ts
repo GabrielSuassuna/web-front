@@ -256,7 +256,7 @@ export const LecturingPaths = {
         },
         "delete": {
             "tags": ["Lecturing"],
-            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado",
+            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado. Necessita da autenticação do professor da disciplina.",
             "security": [{
                 "Bearer": []
             }],

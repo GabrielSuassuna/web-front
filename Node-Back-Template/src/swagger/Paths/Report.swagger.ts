@@ -2,7 +2,10 @@ export const ReportPaths = {
     "/report": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém todos as denúncias.",
+            "summary": "Obtém todos as denúncias. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "authorId",
@@ -117,12 +120,65 @@ export const ReportPaths = {
                             }
                         }
                     },
-                }
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
             }
         },
         "post": {
             "tags": ["Report"],
-            "summary": "Cria uma nova denúncia com os dados especificados.",
+            "summary": "Cria uma nova denúncia com os dados especificados. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -253,7 +309,10 @@ export const ReportPaths = {
     "/report/{reportId}": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém os dados de uma denúncia especificada.",
+            "summary": "Obtém os dados de uma denúncia especificada. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "reportId",
@@ -369,12 +428,62 @@ export const ReportPaths = {
                             }
                         }
                     },
-                }
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
             }
         },
         "delete": {
             "tags": ["Report"],
-            "summary": "Deletar uma denúncia especificada.",
+            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
@@ -495,7 +604,10 @@ export const ReportPaths = {
     "report/update/{reportId}": {
         "put": {
             "tags": ["Report"],
-            "summary": "Atualiza uma denúncia especificada.",
+            "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "reportId",

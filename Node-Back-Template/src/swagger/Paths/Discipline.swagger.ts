@@ -118,7 +118,10 @@ export const DisciplinePaths = {
         },
         "post": {
             "tags": ["Discipline"],
-            "summary": "Cria uma nova disciplina com os dados especificados.",
+            "summary": "Cria uma nova disciplina com os dados especificados. Necessita de autenticação de chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -352,7 +355,10 @@ export const DisciplinePaths = {
         },
         "put": {
             "tags": ["Discipline"],
-            "summary": "Atualiza os dados de uma disciplina especificada.",
+            "summary": "Atualiza os dados de uma disciplina especificada. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "disciplineId",
@@ -518,7 +524,7 @@ export const DisciplinePaths = {
         },
         "delete": {
             "tags": ["Discipline"],
-            "summary": "Deletar uma disciplina especificada.",
+            "summary": "Deletar uma disciplina especificada. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
             "security": [{
                 "Bearer": []
             }],

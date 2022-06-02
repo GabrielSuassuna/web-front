@@ -102,7 +102,7 @@ export const DepartmentPaths = {
         },
         "post": {
             "tags": ["Department"],
-            "summary": "Cria um novo departamento com os dados especificados.",
+            "summary": "Cria um novo departamento com os dados especificados. Necessita de autenticação do administrador.",
             "security": [{
                 "Bearer": []
             }],
@@ -234,7 +234,10 @@ export const DepartmentPaths = {
     "/department/{departmentId}": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza os dados de um departamento especificado.",
+            "summary": "Atualiza os dados de um departamento especificado. Necessita de autenticação do administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "departmentId",
@@ -393,7 +396,7 @@ export const DepartmentPaths = {
         },
         "delete": {
             "tags": ["Department"],
-            "summary": "Deletar um departamento especificado.",
+            "summary": "Deletar um departamento especificado. Necessita de autenticação do administrador.",
             "security": [{
                 "Bearer": []
             }],
@@ -672,7 +675,10 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeCoordinator": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o coordenador de curso do departamento.",
+            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "departmentId",
@@ -834,7 +840,10 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeDepartmentChief": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o chefe do departamento.",
+            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",            
+            "security": [{
+                "Bearer": []
+            }],
             "parameters": [
                 {
                     "name": "departmentId",

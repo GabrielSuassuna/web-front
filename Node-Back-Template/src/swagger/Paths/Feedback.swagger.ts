@@ -146,7 +146,10 @@ export const FeedbackPaths = {
         },
         "post": {
             "tags": ["Feedback"],
-            "summary": "Cria um novo feedback com os dados especificados.",
+            "summary": "Cria um novo feedback com os dados especificados. Necessita de autenticação de estudante.",
+            "security": [{
+                "Bearer": []
+            }],
             "requestBody": {
                 "content": {
                     "application/json": {
@@ -401,7 +404,7 @@ export const FeedbackPaths = {
         },
         "delete":{
             "tags": ["Feedback"],
-            "summary": "Deletar um feedback especificado.",
+            "summary": "Deleta um feedback especificado. Necessita da autenticação do estudante criador.",
             "security": [{
                 "Bearer": []
             }],
