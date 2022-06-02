@@ -1,48 +1,54 @@
-import express, { Express } from 'express'
-import * as swaggerUI from 'swagger-ui-express'
-import dotenv from 'dotenv'
+import express, { Express } from "express";
+import * as swaggerUI from "swagger-ui-express";
+import dotenv from "dotenv";
 
-import { swaggerDocument } from './swagger/swagger'
-import { ControllerUoW } from './Controllers/ControllerUoW';
-import { MigrationUoW } from './Infrastructure/Migrations/MigrationUoW'
+import { swaggerDocument } from "./swagger/swagger";
+import { ControllerUoW } from "./Controllers/ControllerUoW";
+import { MigrationUoW } from "./Infrastructure/Migrations/MigrationUoW";
 
 export class Server {
-    server: Express
-    port: string | number
+  server: Express;
+  port: string | number;
 
-    constructor() {
-        dotenv.config()
-        this.server = express();
-        this.port = Number(process.env.PORT) || 3000;
-     
-        this.setupServer()
-        this.initializeControllers(new ControllerUoW().getControllers());
-        this.initializeSwagger()
-    }
+  constructor() {
+    dotenv.config();
+    this.server = express();
+    this.port = Number(process.env.PORT) || 3000;
 
-    async setupServer(){
-        this.server.use(express.json())
-        if(process.env.SHOULD_RESTART_DATABASE === "true")
-            await new MigrationUoW().reset()
-    }
+    this.setupServer();
+    this.initializeControllers(new ControllerUoW().getControllers());
+    this.initializeSwagger();
+  }
 
-    initializeControllers(controllers: any[]){
-        controllers.forEach((controller) => {
-            this.server.use(controller.getRouter())
-        })
-    }
+  async setupServer() {
+    this.server.use(express.json());
+    if (process.env.SHOULD_RESTART_DATABASE === "true")
+      await new MigrationUoW().reset();
+  }
 
-    initializeSwagger(){
-        this.server.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
-    }
+  initializeControllers(controllers: any[]) {
+    controllers.forEach((controller) => {
+      this.server.use(controller.getRouter());
+    });
+  }
 
-    run(){
-        this.server.listen(this.port, () => {
-            console.log(`⚡️[server]: Server is running at http://localhost:${this.port}`);
-        });
-    }
+  initializeSwagger() {
+    this.server.use(
+      "/swagger",
+      swaggerUI.serve,
+      swaggerUI.setup(swaggerDocument)
+    );
+  }
 
-    getServer(){
-        return this.server
-    }
+  run() {
+    this.server.listen(this.port, () => {
+      console.log(
+        `⚡️[server]: Server is running at http://localhost:${this.port}`
+      );
+    });
+  }
+
+  getServer() {
+    return this.server;
+  }
 }
