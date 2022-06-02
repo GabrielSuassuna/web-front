@@ -126,6 +126,7 @@ export const DisciplinePaths = {
                         "example": {    
                             "code": "CK0103",
                             "name": "Matemática Discreta",
+                            "description": "Disciplina com foco em...",
                             "hours": 96,
                         },
                         "schema": {
@@ -148,6 +149,7 @@ export const DisciplinePaths = {
                                             "id": "4",
                                             "code": "CK0103",
                                             "name": "Matemática Discreta",
+                                            "description": "Disciplina com foco em...",
                                             "hours": 96,
                                         }
                                     ],
@@ -275,6 +277,7 @@ export const DisciplinePaths = {
                                             "id": "4",
                                             "code": "CK0103",
                                             "name": "Matemática Discreta",
+                                            "description": "Disciplina com foco em ...",
                                             "hours": 96,
                                         }
                                     ],
@@ -367,6 +370,7 @@ export const DisciplinePaths = {
                         "example": {
                             "code": "CK0103",
                             "name": "Matemática Discreta",
+                            "description": "Disciplina com foco em ...",
                             "hours": 96,
                         },
                         "schema": {
@@ -389,6 +393,7 @@ export const DisciplinePaths = {
                                             "id": "4",
                                             "code": "CK0103",
                                             "name": "Matemática Discreta",
+                                            "description": "Disciplina com foco em ...",
                                             "hours": 96,
                                         }
                                     ],
