@@ -4,6 +4,7 @@ import { Department } from './Models/Department.swagger'
 import { Discipline } from './Models/Discipline.swagger'
 import { Feedback } from './Models/Feedback.swagger'
 import { Tag } from './Models/Tag.swagger'
+import { Report } from './Models/Report.swagger'
 
 import { PostAuth } from './Models/Post/Auth.swagger'
 
@@ -41,6 +42,11 @@ import { PutTag } from './Models/Put/Tag.swagger'
 
 import { GetNotification } from './Models/Get/Notification.swagger'
 
+import { GetReport } from './Models/Get/Report.swagger'
+import { GetReportLog } from './Models/Get/ReportLog.swagger'
+import { PostReport } from './Models/Post/Report.swagger'
+import { PutReportLog } from './Models/Put/ReportLog.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { ProfessorPaths } from './Paths/Professor.swagger'
 import { LecturingPaths } from './Paths/Lecturing.swagger'
@@ -52,6 +58,7 @@ import { FeedbackPaths } from './Paths/Feedback.swagger'
 import { HasVotePaths } from './Paths/HasVote.swagger'
 import { TagPaths } from './Paths/Tag.swagger'
 import { NotificationPaths } from './Paths/Notification.swagger'
+import { ReportPaths } from './Paths/Report.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -112,6 +119,10 @@ export const swaggerDocument = {
         {
           "name": "Notification",
           "description": "Todos os endpoints relacionados com notificações."
+        },
+        {
+          "name": "Report",
+          "description": "Todos os endpoints relacionados com denúncias."
         }
     ],
     "paths": {
@@ -126,6 +137,7 @@ export const swaggerDocument = {
       ...HasVotePaths,
       ...TagPaths,
       ...NotificationPaths,
+      ...ReportPaths,
     },
     "components": {
       "schemas":{
@@ -160,6 +172,11 @@ export const swaggerDocument = {
         PostTag,
         PutTag,
         GetNotification,
+        Report,
+        GetReport,
+        GetReportLog,
+        PostReport,
+        PutReportLog,
       },
       "securitySchemes": {
         "Bearer": {
