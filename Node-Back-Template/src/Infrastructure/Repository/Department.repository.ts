@@ -135,7 +135,7 @@ export class DepartmentRepository {
             values.push(`%${deparmentFilter.name}%`)
             sqlWithFilter += ` AND name LIKE $${values.length}`
         }
-        console.log({ sqlWithFilter, valuesWithFilter })
+        
         return { sqlWithFilter, valuesWithFilter }
     }
 }
