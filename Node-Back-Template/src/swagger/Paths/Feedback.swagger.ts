@@ -2,7 +2,7 @@ export const FeedbackPaths = {
     "/feedback": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks.",
+            "summary": "Obtém todos os feedbacks. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "disciplineCode",
@@ -146,7 +146,7 @@ export const FeedbackPaths = {
         },
         "post": {
             "tags": ["Feedback"],
-            "summary": "Cria um novo feedback com os dados especificados. Necessita de autenticação de estudante.",
+            "summary": "Cria um novo feedback com os dados especificados. Necessita de autenticação de estudante. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -299,7 +299,7 @@ export const FeedbackPaths = {
     "/feedback/{feedbackId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém o feedback especificado.",
+            "summary": "Obtém o feedback especificado. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "feedbackId",
@@ -404,7 +404,7 @@ export const FeedbackPaths = {
         },
         "delete":{
             "tags": ["Feedback"],
-            "summary": "Deleta um feedback especificado. Necessita da autenticação do estudante criador.",
+            "summary": "Deleta um feedback especificado. Necessita da autenticação do estudante criador. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -525,7 +525,7 @@ export const FeedbackPaths = {
     "/feedback/student/{studentId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks autorados por um aluno.",
+            "summary": "Obtém todos os feedbacks autorados por um aluno. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "studentId",
@@ -679,7 +679,7 @@ export const FeedbackPaths = {
     "/feedback/professor/{professorId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks feitos a um professor.",
+            "summary": "Obtém todos os feedbacks feitos a um professor. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "professorId",

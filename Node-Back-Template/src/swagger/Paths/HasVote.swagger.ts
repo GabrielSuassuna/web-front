@@ -2,7 +2,7 @@ export const HasVotePaths = {
     "/hasVote/{feedbackId}": {
         "delete": {
             "tags": ["HasVote"],
-            "summary": "Deletar uma interação com feedback especificado. Necessita da autenticação do estudante autor da interação.",
+            "summary": "Deletar uma interação com feedback especificado. Necessita da autenticação do estudante autor da interação. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -121,7 +121,7 @@ export const HasVotePaths = {
         },
         "post": {
             "tags": ["HasVote"],
-            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante.",
+            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -254,7 +254,7 @@ export const HasVotePaths = {
         },
         "put": {
             "tags": ["HasVote"],
-            "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação.",
+            "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],

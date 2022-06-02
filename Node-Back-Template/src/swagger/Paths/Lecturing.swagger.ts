@@ -2,7 +2,7 @@ export const LecturingPaths = {
     "/lecturing": {
         "get": {
             "tags": ["Lecturing"],
-            "summary": "Obtém todas as disciplinas ministradas.",
+            "summary": "Obtém todas as disciplinas ministradas. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "disciplineName",
@@ -148,7 +148,7 @@ export const LecturingPaths = {
     "/lecturing/{lecturingId}": {
         "get": {
             "tags": ["Lecturing"],
-            "summary": "Obtém os dados de uma disciplina ministrada especificada.",
+            "summary": "Obtém os dados de uma disciplina ministrada especificada. (Ainda não implementado)",
             "parameters": [
                 {
                     "name": "lecturingId",
@@ -256,7 +256,7 @@ export const LecturingPaths = {
         },
         "delete": {
             "tags": ["Lecturing"],
-            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado. Necessita da autenticação do professor da disciplina.",
+            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado. Necessita da autenticação do professor da disciplina. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],

@@ -675,7 +675,7 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeCoordinator": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
+            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -840,7 +840,7 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeDepartmentChief": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",            
+            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. (Ainda não implementado)",            
             "security": [{
                 "Bearer": []
             }],

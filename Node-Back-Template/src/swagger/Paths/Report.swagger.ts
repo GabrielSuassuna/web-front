@@ -2,7 +2,7 @@ export const ReportPaths = {
     "/report": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém todos as denúncias. Necessita de autenticação de docente.",
+            "summary": "Obtém todos as denúncias. Necessita de autenticação de docente. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -175,7 +175,7 @@ export const ReportPaths = {
         },
         "post": {
             "tags": ["Report"],
-            "summary": "Cria uma nova denúncia com os dados especificados. Necessita de autenticação de docente.",
+            "summary": "Cria uma nova denúncia com os dados especificados. Necessita de autenticação de docente. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -309,7 +309,7 @@ export const ReportPaths = {
     "/report/{reportId}": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém os dados de uma denúncia especificada. Necessita de autenticação de docente.",
+            "summary": "Obtém os dados de uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -483,7 +483,7 @@ export const ReportPaths = {
         },
         "delete": {
             "tags": ["Report"],
-            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente.",
+            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
@@ -604,7 +604,7 @@ export const ReportPaths = {
     "report/update/{reportId}": {
         "put": {
             "tags": ["Report"],
-            "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente.",
+            "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
             "security": [{
                 "Bearer": []
             }],
