@@ -41,7 +41,7 @@ export class FAQRepository {
             INSERT INTO faq(
                 id,
                 question,
-                answer,
+                answer
             )
             VALUES (
                 $1,

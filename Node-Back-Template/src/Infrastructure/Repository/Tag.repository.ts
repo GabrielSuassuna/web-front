@@ -41,7 +41,7 @@ export class TagRepository {
             INSERT INTO tag(
                 id,
                 name,
-                description,
+                description
             )
             VALUES (
                 $1,
