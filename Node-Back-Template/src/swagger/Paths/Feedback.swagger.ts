@@ -1,25 +1,39 @@
-export const ProfessorPaths = {
-    "/professor": {
+export const FeedbackPaths = {
+    "/feedback": {
         "get": {
-            "tags": ["Professor"],
-            "summary": "Obtém todos os professores.",
+            "tags": ["Feedback"],
+            "summary": "Obtém todos os feedbacks.",
             "parameters": [
                 {
-                    "name": "departmentId",
+                    "name": "disciplineCode",
                     "in": "query",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "name": "name",
+                    "name": "disciplineName",
                     "in": "query",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "name": "siape",
+                    "name": "professorSiape",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "title",
                     "in": "query",
                     "schema": {
                         "type": "string"
@@ -28,7 +42,7 @@ export const ProfessorPaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Professores obtidos com sucesso",
+                    "description": "OK - Feedbacks obtidos com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -38,24 +52,36 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Ótimo professor!",
+                                            "generalScore": 10,
+                                            "date": "01/01/2022",
+                                            "upvotes": 5,
+                                            "downvotes": 2,
                                         },
                                         {
-                                            "id": "5",
-                                            "departmentId": "5",
-                                            "siape": "03148",
-                                            "name": "Ricardo Martins",
+                                            "id": "2",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Péssimo professor!",
+                                            "generalScore": 1,
+                                            "date": "02/01/2022",
+                                            "upvotes": 0,
+                                            "downvotes": 20,
                                         },
                                     ],
-                                    "message" : "Professores obtidos com sucesso"
+                                    "message" : "Feedbacks obtidos com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/Professor"
+                                            "$ref": "#/components/schemas/Feedback"
                                         }
                                     },    
                                     "message": {
@@ -67,7 +93,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Professores não encontrados",
+                    "description": "Not found - Feedbacks não encontrados",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -75,7 +101,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Professores não encontrados"
+                                    "message" : "Feedbacks não encontrados"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -92,7 +118,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter professores",
+                    "description": "Bad request - Erro ao obter feedbacks",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -100,7 +126,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter professores"
+                                    "message" : "Erro ao obter feedbacks"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -118,42 +144,35 @@ export const ProfessorPaths = {
                 }
             }
         },
-    },
-    "/professor/{departmentId}": {
         "post": {
-            "tags": ["Professor"],
-            "summary": "Cria um novo professor no departamento com os dados especificados.",
-            "parameters": [
-                {
-                    "name": "departmentId",
-                    "in": "path",
-                    "description": "ID do departamento",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-            ],
+            "tags": ["Feedback"],
+            "summary": "Cria um novo feedback com os dados especificados.",
             "requestBody": {
                 "content": {
                     "application/json": {
                         "required": ["data", "message"],
-                        "example": {    
-                            "siape": "03042",
-                            "name": "Rodrigo Marques",
-                            "about": "Rodrigo Marques é professor do departamento...",
-                            "lattes_url": "lattes.cnpq.br/...",
-                            "is_head_of_department": false,
-                            "is_course_coordinator": false,
+                        "example": {
+                            "id": "1",
+                            "lecturingId": "1",
+                            "studentId": "1",
+                            "title": "Ótimo professor!",
+                            "description": "O professor é...",
+                            "period":"2020.2",
+                            "generalScore": 10,
+                            "assiduityScore": 10,
+                            "clarityScore": 10,
+                            "relationshipScore": 10,
+                            "date": "01/01/2022",
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PostProfessor"
+                            "$ref": "#/components/schemas/PostFeedback"
                         }
                     }
                 }
             },
             "responses": {
                 "200": {
-                    "description": "OK - Professor criado com sucesso",
+                    "description": "OK - Feedback criado com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -163,22 +182,28 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
-                                            "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
+                                            "lecturingId": "1",
+                                            "studentId": "1",
+                                            "title": "Ótimo professor!",
+                                            "description": "O professor é...",
+                                            "period":"2020.2",
+                                            "generalScore": 10,
+                                            "assiduityScore": 10,
+                                            "clarityScore": 10,
+                                            "relationshipScore": 10,
+                                            "date": "01/01/2022",
+                                            "upvotes": 0,
+                                            "downvotes": 0,
+                                            "hasVoted": 'NONE',
                                         }
                                     ],
-                                    "message" : "Professor criado com sucesso"
+                                    "message" : "Feedback criado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
+                                            "$ref": "#/components/schemas/GetFeedback"
                                         }
                                     },    
                                     "message": {
@@ -190,7 +215,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao criar professor",
+                    "description": "Bad request - Erro ao criar feedback",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -198,7 +223,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao criar professor"
+                                    "message" : "Erro ao criar feedback"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -268,15 +293,15 @@ export const ProfessorPaths = {
             }
         },
     },
-    "/professor/{professorId}": {
+    "/feedback/{feedbackId}": {
         "get": {
-            "tags": ["Professor"],
-            "summary": "Obtém os dados de um professor especificado.",
+            "tags": ["Feedback"],
+            "summary": "Obtém o feedback especificado.",
             "parameters": [
                 {
-                    "name": "professorId",
+                    "name": "feedbackId",
                     "in": "path",
-                    "description": "ID do professor",
+                    "description": "ID do feedback",
                     "schema": {
                         "type": "string"
                     }
@@ -284,7 +309,7 @@ export const ProfessorPaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Professor obtido com sucesso",
+                    "description": "OK - Feedback obtido com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -294,22 +319,24 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
-                                            "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Ótimo professor!",
+                                            "generalScore": 10,
+                                            "date": "01/01/2022",
+                                            "upvotes": 5,
+                                            "downvotes": 2,
                                         }
                                     ],
-                                    "message" : "Professor obtido com sucesso"
+                                    "message" : "Feedback obtido com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
+                                            "$ref": "#/components/schemas/Feedback"
                                         }
                                     },    
                                     "message": {
@@ -321,7 +348,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "404": {
-                    "description": "Not found - Professor não encontrado",
+                    "description": "Not found - Feedback não encontrado",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -329,7 +356,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Professor não encontrado"
+                                    "message" : "Feedback não encontrado"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -346,7 +373,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao obter professor",
+                    "description": "Bad request - Erro ao obter feedback",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -354,7 +381,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao obter professor"
+                                    "message" : "Erro ao obter feedback"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -372,190 +399,17 @@ export const ProfessorPaths = {
                 }
             }
         },
-        "put": {
-            "tags": ["Professor"],
-            "summary": "Atualiza os dados de um professor especificado.",
-            "parameters": [
-                {
-                    "name": "professorId",
-                    "in": "path",
-                    "description": "ID do professor",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-            ],
-            "requestBody": {
-                "content": {
-                    "application/json": {
-                        "required": ["data", "message"],
-                        "example": {    
-                            "id": "1",
-                            "departmentId": "5",
-                            "siape": "03042",
-                            "name": "Rodrigo Marques",
-                            "about": "Rodrigo Marques é professor do departamento...",
-                            "lattes_url": "lattes.cnpq.br/...",
-                            "is_head_of_department": false,
-                            "is_course_coordinator": false,
-                        },
-                        "schema": {
-                            "$ref": "#/components/schemas/PutProfessor"
-                        }
-                    }
-                }
-            },
-            "responses": {
-                "200": {
-                    "description": "OK - Professor atualizado com sucesso",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [
-                                        {
-                                            "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
-                                            "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
-                                        }
-                                    ],
-                                    "message" : "Professor atualizado com sucesso"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "404": {
-                    "description": "Not found - Professor não encontrado",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Professor não encontrado"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "400": {
-                    "description": "Bad request - Erro ao atualizar professor",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Erro ao atualizar professor"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "401": {
-                    "description": "Unauthorized - Problema ao decodificar o token",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Problema ao decodificar o token"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "500": {
-                    "description": "Internal Server Error - Falha ao processar a requisição",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Falha ao processar a requisição"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-            }
-        },
-        "delete": {
-            "tags": ["Professor"],
-            "summary": "Deletar um professor especificado.",
+        "delete":{
+            "tags": ["Feedback"],
+            "summary": "Deletar um feedback especificado.",
             "security": [{
                 "Bearer": []
             }],
             "parameters": [
                 {
-                    "name": "professorId",
+                    "name": "feedbackId",
                     "in": "path",
-                    "description": "ID do Professor",
+                    "description": "ID do Feedback",
                     "schema": {
                         "type": "text"
                     }
@@ -563,7 +417,7 @@ export const ProfessorPaths = {
             ],
             "responses": {
                 "200": {
-                    "description": "OK - Professor deletado com sucesso",
+                    "description": "OK - Feedback deletado com sucesso",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -571,7 +425,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Professor deletado com sucesso"
+                                    "message" : "Feedback deletado com sucesso"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -588,7 +442,7 @@ export const ProfessorPaths = {
                     },
                 },
                 "400": {
-                    "description": "Bad request - Erro ao deletar professor",
+                    "description": "Bad request - Erro ao deletar feedback",
                     "content": {
                         "application/json": {
                             "required": ["data", "message"],
@@ -596,7 +450,7 @@ export const ProfessorPaths = {
                                 "type": "object",
                                 "example": {
                                     "data": [],
-                                    "message" : "Erro ao deletar professor"
+                                    "message" : "Erro ao deletar feedback"
                                 }, 
                                 "properties": {
                                     "data": {
@@ -665,4 +519,298 @@ export const ProfessorPaths = {
             }
         },
     },
+    "/feedback/student/{studentId}": {
+        "get": {
+            "tags": ["Feedback"],
+            "summary": "Obtém todos os feedbacks autorados por um aluno.",
+            "parameters": [
+                {
+                    "name": "studentId",
+                    "in": "path",
+                    "description": "ID do estudante autor do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "disciplineCode",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "disciplineName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorSiape",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "title",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Feedbacks obtidos com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Ótimo professor!",
+                                            "generalScore": 10,
+                                            "date": "01/01/2022",
+                                            "upvotes": 5,
+                                            "downvotes": 2,
+                                        },
+                                        {
+                                            "id": "2",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Péssimo professor!",
+                                            "generalScore": 1,
+                                            "date": "02/01/2022",
+                                            "upvotes": 0,
+                                            "downvotes": 20,
+                                        },
+                                    ],
+                                    "message" : "Feedbacks obtidos com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Feedback"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Feedbacks não encontrados",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Feedbacks não encontrados"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter feedbacks",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter feedbacks"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    },
+    "/feedback/professor/{professorId}": {
+        "get": {
+            "tags": ["Feedback"],
+            "summary": "Obtém todos os feedbacks feitos a um professor.",
+            "parameters": [
+                {
+                    "name": "professorId",
+                    "in": "path",
+                    "description": "ID do professor",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "disciplineCode",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "disciplineName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "title",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Feedbacks obtidos com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Ótimo professor!",
+                                            "generalScore": 10,
+                                            "date": "01/01/2022",
+                                            "upvotes": 5,
+                                            "downvotes": 2,
+                                        },
+                                        {
+                                            "id": "2",
+                                            "disciplineCode": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "professorSiape":"1",
+                                            "professorName": "Renan Marques",
+                                            "title": "Péssimo professor!",
+                                            "generalScore": 1,
+                                            "date": "02/01/2022",
+                                            "upvotes": 0,
+                                            "downvotes": 20,
+                                        },
+                                    ],
+                                    "message" : "Feedbacks obtidos com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Feedback"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Feedbacks não encontrados",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Feedbacks não encontrados"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter feedbacks",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter feedbacks"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    }
 }

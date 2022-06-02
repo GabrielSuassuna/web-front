@@ -4,6 +4,7 @@ import { Professor } from './Models/Professor.swagger'
 import { Lecturing } from './Models/Lecturing.swagger'
 import { Department } from './Models/Department.swagger'
 import { Discipline } from './Models/Discipline.swagger'
+import { Feedback } from './Models/Feedback.swagger'
 
 import { PostClient } from './Models/Post/PostClient.swagger'
 import { GetAddress } from './Models/Get/Address.swagger'
@@ -22,6 +23,7 @@ import { PostProfessor } from './Models/Post/Professor.swagger'
 import { GetLecturing } from './Models/Get/Lecturing.swagger'
 
 import { PostDepartment } from './Models/Post/Department.swagger'
+import { PutDepartment } from './Models/Put/Department.swagger'
 
 import { GetStudent } from './Models/Get/Student.swagger'
 import { PostStudent } from './Models/Post/Student.swagger'
@@ -35,6 +37,9 @@ import { GetFaq } from './Models/Get/Faq.swagger'
 import { PostFaq } from './Models/Post/Faq.swagger'
 import { PutFaq } from './Models/Put/Faq.swagger'
 
+import { GetFeedback } from './Models/Get/Feedback.swagger'
+import { PostFeedback } from './Models/Post/Feedback.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { AddressPaths } from './Paths/Address.swagger'
 import { ClientPaths } from './Paths/Client.swagger'
@@ -44,6 +49,7 @@ import { DepartmentPaths } from './Paths/Department.swagger'
 import { StudentPaths } from './Paths/Student.swagger'
 import { DisciplinePaths } from './Paths/Discipline.swagger'
 import { FaqPaths } from './Paths/Faq.swagger'
+import { FeedbackPaths } from './Paths/Feedback.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -90,6 +96,10 @@ export const swaggerDocument = {
           "description": "Todos os endpoints relacionados com perguntas frequentes (FAQ)."
         },
         {
+          "name": "Feedback",
+          "description": "Todos os endpoints relacionados com feedbacks."
+        },
+        {
           "name": "Client",
           "description": "All Client related endpoints"
         },
@@ -106,6 +116,7 @@ export const swaggerDocument = {
       ...StudentPaths,
       ...DisciplinePaths,
       ...FaqPaths,
+      ...FeedbackPaths,
       ...ClientPaths,
       ...AddressPaths,
     },
@@ -120,6 +131,7 @@ export const swaggerDocument = {
         GetLecturing,
         Department,
         PostDepartment,
+        PutDepartment,
         GetStudent,
         PostStudent,
         PutStudent,
@@ -130,6 +142,9 @@ export const swaggerDocument = {
         GetFaq,
         PostFaq,
         PutFaq,  
+        Feedback,
+        GetFeedback,
+        PostFeedback,
         Client,
         GetClient,
         PostClient,
