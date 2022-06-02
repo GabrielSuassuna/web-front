@@ -5,6 +5,7 @@ import { Client } from "pg"
 import { GetDiscipline } from "../../Interfaces/Get/GetDiscipline.interface"
 import { PostDiscipline } from "../../Interfaces/Post/PostDiscipline.interface"
 import { PutDiscipline } from "../../Interfaces/Put/PutDiscipline.interface"
+import { DisciplineFilter } from "../../Interfaces/Filters/DisciplineFilter.interface"
 
 export class DisciplineRepository {
     queryHandler: QueryHandler<GetDiscipline>
@@ -13,12 +14,16 @@ export class DisciplineRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<DisciplineInterface[]>{
+    public async getAll(disciplineFilter: DisciplineFilter | null = null): Promise<DisciplineInterface[]>{
         const SQL = `
             SELECT * FROM discipline
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        let values: any[] = []
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, disciplineFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(disciplineId: string): Promise<GetDiscipline[]>{
@@ -43,7 +48,7 @@ export class DisciplineRepository {
                 code,
                 name,
                 description,
-                hours,
+                hours
             )
             VALUES (
                 $1,
@@ -98,4 +103,25 @@ export class DisciplineRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    private applyGetAllFilters(SQL: string, values: any[], disciplineFilter: DisciplineFilter | null = null){
+        let sqlWithFilter = SQL
+        let valuesWithFilter = values
+
+        sqlWithFilter += 'WHERE 0=0'
+
+        if(disciplineFilter?.name){
+            values.push(`%${disciplineFilter.name}%`)
+            sqlWithFilter += ` AND name LIKE $${values.length}`
+        }
+        if(disciplineFilter?.code){
+            values.push(`%${disciplineFilter.code}%`)
+            sqlWithFilter += ` AND code LIKE $${values.length}`
+        }
+        if(disciplineFilter?.hours){
+            values.push(disciplineFilter.hours)
+            sqlWithFilter += ` AND hours = $${values.length}`
+        }
+        
+        return { sqlWithFilter, valuesWithFilter }
+    }
 }

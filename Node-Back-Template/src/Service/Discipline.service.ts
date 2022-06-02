@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { DisciplineInterface } from '../Interfaces/Discipline.interface'
+import { DisciplineFilter } from '../Interfaces/Filters/DisciplineFilter.interface'
 import { GetDiscipline } from '../Interfaces/Get/GetDiscipline.interface'
 import { GetTag } from '../Interfaces/Get/GetTag.interface'
 import { PostDiscipline } from '../Interfaces/Post/PostDiscipline.interface'
@@ -22,7 +23,15 @@ export class DisciplineService {
         let result: DisciplineInterface[] = []
     
         try{
-            const toBeFoundDiscipline: DisciplineInterface[] = await this.repositoryUoW.disciplineRepository.getAll()
+            
+            const { 
+                name, 
+                code, 
+                hours
+            } = request.query as any
+            
+            const disciplineFilter: DisciplineFilter = { name, code, hours }
+            const toBeFoundDiscipline: DisciplineInterface[] = await this.repositoryUoW.disciplineRepository.getAll(disciplineFilter)
 
             if(!!toBeFoundDiscipline.length){
                 return response.status(200).json(setApiResponse<DisciplineInterface[]>(toBeFoundDiscipline, sucessMessage))
