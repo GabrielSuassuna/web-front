@@ -10,6 +10,7 @@ export const ReportPaths = {
                 {
                     "name": "authorId",
                     "in": "query",
+                    "description": "ID do autor da denúncia",
                     "schema": {
                         "type": "string"
                     }
@@ -17,6 +18,7 @@ export const ReportPaths = {
                 {
                     "name": "assignedRevisorId",
                     "in": "query",
+                    "description": "ID do revisor que já optou por revisar a denúncia",
                     "schema": {
                         "type": "string"
                     }
@@ -24,6 +26,7 @@ export const ReportPaths = {
                 {
                     "name": "revisorId",
                     "in": "query",
+                    "description": "ID do revisor que está vendo as denúncias abertas",
                     "schema": {
                         "type": "string"
                     }
