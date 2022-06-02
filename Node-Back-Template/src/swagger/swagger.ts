@@ -39,6 +39,8 @@ import { GetTag } from './Models/Get/Tag.swagger'
 import { PostTag } from './Models/Post/Tag.swagger'
 import { PutTag } from './Models/Put/Tag.swagger'
 
+import { GetNotification } from './Models/Get/Notification.swagger'
+
 import { AuthPaths } from './Paths/Auth.swagger'
 import { ProfessorPaths } from './Paths/Professor.swagger'
 import { LecturingPaths } from './Paths/Lecturing.swagger'
@@ -49,6 +51,7 @@ import { FaqPaths } from './Paths/Faq.swagger'
 import { FeedbackPaths } from './Paths/Feedback.swagger'
 import { HasVotePaths } from './Paths/HasVote.swagger'
 import { TagPaths } from './Paths/Tag.swagger'
+import { NotificationPaths } from './Paths/Notification.swagger'
 
 export const swaggerDocument = {
     "openapi": "3.0.1",
@@ -105,6 +108,10 @@ export const swaggerDocument = {
         {
           "name": "Tag",
           "description": "Todos os endpoints relacionados com tags (características)."
+        },
+        {
+          "name": "Notification",
+          "description": "Todos os endpoints relacionados com notificações."
         }
     ],
     "paths": {
@@ -118,6 +125,7 @@ export const swaggerDocument = {
       ...FeedbackPaths,
       ...HasVotePaths,
       ...TagPaths,
+      ...NotificationPaths,
     },
     "components": {
       "schemas":{
@@ -151,6 +159,7 @@ export const swaggerDocument = {
         GetTag,
         PostTag,
         PutTag,
+        GetNotification,
       },
       "securitySchemes": {
         "Bearer": {

@@ -23,7 +23,7 @@ export class ProfessorNotificationRepository {
 
     public async getAllByProfessorId(professorId: string): Promise<GetProfessorNotification[]>{
         const SQL = `
-            SELECT * FROM student_notification WHERE professor_id = $1
+            SELECT * FROM professor_notification WHERE professor_id = $1
         `
 
         const values = [
