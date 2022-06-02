@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: "liven"
       POSTGRES_DB: "liven"
     ports:
-      - 5433:5432
+      - 5432:5432
     volumes:
       - liven:/var/lib/postgresql/data
     networks:
