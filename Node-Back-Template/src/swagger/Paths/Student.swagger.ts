@@ -98,7 +98,6 @@ export const StudentPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "id": "1",
                             "registration": "222222",
                             "name": "Pedro Matrus",
                             "password": "SDCSGERCEFSDC",

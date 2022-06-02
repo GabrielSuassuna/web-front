@@ -1,9 +1,6 @@
 export const PutStudent = {
-    "required": ["id", "registration", "name", "password"],
+    "required": ["registration", "name", "password"],
     "properties": {
-        "id": {
-            "type": "string",
-        },
         "registration": {
             "type": "string",
         },
