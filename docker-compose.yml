@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  # frontend:
+  #   build:
+  #     context: ./frontend/
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   depends_on:
+  #     - backend
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - frontend
+
+  backend:
+    build:
+      context: ./Node-Back-Template/
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+      - backend
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "liven"
+      POSTGRES_PASSWORD: "liven"
+      POSTGRES_DB: "liven"
+    ports:
+      - 5432:5432
+    volumes:
+      - liven:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  liven:
+    driver: local
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
