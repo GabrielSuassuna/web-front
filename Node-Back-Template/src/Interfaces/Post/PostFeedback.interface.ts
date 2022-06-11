@@ -1,4 +1,6 @@
 export interface PostFeedback {
+  lecturing_id: string
+  student_id: string
   title: string
   description: string
   period: string

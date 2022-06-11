@@ -7,6 +7,7 @@ import { NotificationController } from './Notification.controller'
 import { ProfessorController } from './Professor.controller'
 import { StudentController } from './Student.controller'
 import { TagController } from './Tag.controller'
+import { FeedbackController } from './Feedback.controller'
 
 export class ControllerUoW{
 
@@ -21,8 +22,9 @@ export class ControllerUoW{
             new TagController(),
             new DisciplineController(),
             new LecturingController(),
-            new NotificationController(),
-            new DepartmentController()
+            //new NotificationController(),
+            new DepartmentController(),
+            new FeedbackController()
         ]
     }
 

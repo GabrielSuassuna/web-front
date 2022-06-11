@@ -5,6 +5,7 @@ import { Client } from "pg"
 import { GetFeedback } from "../../Interfaces/Get/GetFeedback.interface"
 import { PostFeedback } from "../../Interfaces/Post/PostFeedback.interface"
 import { PutFeedback } from "../../Interfaces/Put/PutFeedback.interface"
+import { FeedbackFilter } from "../../Interfaces/Filters/FeedbackFilter.interface"
 
 export class FeedbackRepository {
     queryHandler: QueryHandler<GetFeedback>
@@ -13,17 +14,97 @@ export class FeedbackRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<FeedbackInterface[]>{
+    public async getAll(feedbackFilter: FeedbackFilter | null = null): Promise<FeedbackInterface[]>{
         const SQL = `
-            SELECT * FROM feedback
+            SELECT 
+                f.id as id,
+                f.title as title,
+                p.name as professor_name,
+                p.siape as professor_siape,
+                d.name as discipline_name,
+                d.code as discipline_code,
+                f.general_score as general_score,
+                f.date as date
+            FROM feedback as f
+                INNER JOIN lecturing as l on f.lecturing_id = l.id
+                INNER JOIN professor as p on l.professor_id = p.id
+                INNER JOIN discipline as d on l.discipline_id = d.id
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        let values: any[] = []
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, feedbackFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
+    }
+
+    public async getStudentFeedbacks(studentId: string, feedbackFilter: FeedbackFilter | null = null): Promise<FeedbackInterface[]>{
+        const SQL = `
+            SELECT 
+                f.id as id,
+                f.title as title,
+                p.name as professor_name,
+                p.siape as professor_siape,
+                d.name as discipline_name,
+                d.code as discipline_code,
+                f.general_score as general_score,
+                f.date as date
+            FROM feedback as f
+                INNER JOIN lecturing as l on f.lecturing_id = l.id
+                INNER JOIN professor as p on l.professor_id = p.id
+                INNER JOIN discipline as d on l.discipline_id = d.id
+            WHERE f.student_id = $1
+        `
+        
+        const values = [
+            studentId
+        ]
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, feedbackFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
+    }
+
+    public async getProfessorFeedbacks(professorId: string, feedbackFilter: FeedbackFilter | null = null): Promise<FeedbackInterface[]>{
+        const SQL = `
+            SELECT 
+                f.id as id,
+                f.title as title,
+                p.name as professor_name,
+                p.siape as professor_siape,
+                d.name as discipline_name,
+                d.code as discipline_code,
+                f.general_score as general_score,
+                f.date as date
+            FROM feedback as f
+                INNER JOIN lecturing as l on f.lecturing_id = l.id
+                INNER JOIN professor as p on l.professor_id = p.id
+                INNER JOIN discipline as d on l.discipline_id = d.id
+            WHERE l.professor_id = $1
+        `
+        
+        const values = [
+            professorId
+        ]
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, feedbackFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(feedbackId: string): Promise<GetFeedback[]>{
         const SQL = `
-            SELECT * FROM feedback WHERE id = $1
+        SELECT 
+            f.*,
+            p.name as professor_name,
+            p.siape as professor_siape,
+            d.name as discipline_name,
+            d.code as discipline_code
+        FROM feedback as f
+            INNER JOIN lecturing as l on f.lecturing_id = l.id
+            INNER JOIN professor as p on l.professor_id = p.id
+            INNER JOIN discipline as d on l.discipline_id = d.id
+        WHERE f.id = $1
         `
 
         const values = [
@@ -49,7 +130,7 @@ export class FeedbackRepository {
                 assiduity_score,
                 clarity_score,
                 relationship_score,
-                date,
+                date
             )
             VALUES (
                 $1,
@@ -84,7 +165,7 @@ export class FeedbackRepository {
         return newId;
     }
     
-    public async update(feedback: PutFeedback, feedbackId: string, lecturingId: string, studentId: string): Promise<void> {
+    public async update(feedback: PutFeedback, feedbackId: string): Promise<void> {
         const SQL = `
             UPDATE feedback
             SET title = $1,
@@ -94,10 +175,8 @@ export class FeedbackRepository {
                 assiduity_score = $5,
                 clarity_score = $6,
                 relationship_score = $7,
-                date = $8,
+                date = $8
             WHERE id = $9
-              AND lecturing_id = $10
-              AND student_id = $11
         `
         const values = [
           feedback.title,
@@ -108,28 +187,53 @@ export class FeedbackRepository {
           feedback.clarity_score,
           feedback.relationship_score,
           feedback.date,
-          feedbackId,
-          lecturingId,
-          studentId
+          feedbackId
         ]
         
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(feedbackId: string, lecturingId: string, studentId: string): Promise<void> {
+    public async delete(feedbackId: string): Promise<void> {
         const SQL = `
             DELETE FROM feedback
             WHERE id = $1
-                AND lecturing_id = $2
-                AND student_id = $3
         `
         const values = [
           feedbackId,
-          lecturingId,
-          studentId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)
+    }
+
+    private applyGetAllFilters(SQL: string, values: any[], feedbackFilter: FeedbackFilter | null = null){
+        let sqlWithFilter = SQL
+        let valuesWithFilter = values
+
+        if(values.length === 0)
+            sqlWithFilter += 'WHERE 0=0'
+
+        if(feedbackFilter?.professorName){
+            values.push(`%${feedbackFilter.professorName}%`)
+            sqlWithFilter += ` AND p.name LIKE $${values.length}`
+        }
+        if(feedbackFilter?.professorSiape){
+            values.push(`%${feedbackFilter.professorSiape}%`)
+            sqlWithFilter += ` AND p.siape LIKE $${values.length}`
+        }
+        if(feedbackFilter?.disciplineName){
+            values.push(`%${feedbackFilter.disciplineName}%`)
+            sqlWithFilter += ` AND d.name LIKE $${values.length}`
+        }
+        if(feedbackFilter?.disciplineCode){
+            values.push(`%${feedbackFilter.disciplineCode}%`)
+            sqlWithFilter += ` AND d.code LIKE $${values.length}`
+        }
+        if(feedbackFilter?.title){
+            values.push(`%${feedbackFilter.title}%`)
+            sqlWithFilter += ` AND f.title LIKE $${values.length}`
+        }
+        
+        return { sqlWithFilter, valuesWithFilter }
     }
 
 }

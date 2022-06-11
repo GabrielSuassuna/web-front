@@ -2,7 +2,7 @@ export const FeedbackPaths = {
     "/feedback": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks. (Ainda não implementado)",
+            "summary": "Obtém todos os feedbacks.",
             "parameters": [
                 {
                     "name": "disciplineCode",
@@ -146,7 +146,7 @@ export const FeedbackPaths = {
         },
         "post": {
             "tags": ["Feedback"],
-            "summary": "Cria um novo feedback com os dados especificados. Necessita de autenticação de estudante. (Ainda não implementado)",
+            "summary": "Cria um novo feedback com os dados especificados. Necessita de autenticação de estudante.",
             "security": [{
                 "Bearer": []
             }],
@@ -156,15 +156,15 @@ export const FeedbackPaths = {
                         "required": ["data", "message"],
                         "example": {
                             "id": "1",
-                            "lecturingId": "1",
-                            "studentId": "1",
+                            "lecturing_id": "1",
+                            "student_id": "1",
                             "title": "Ótimo professor!",
                             "description": "O professor é...",
                             "period":"2020.2",
-                            "generalScore": 10,
-                            "assiduityScore": 10,
-                            "clarityScore": 10,
-                            "relationshipScore": 10,
+                            "general_score": 10,
+                            "assiduity_score": 10,
+                            "clarity_score": 10,
+                            "relationship_score": 10,
                             "date": "01/01/2022",
                         },
                         "schema": {
@@ -299,7 +299,7 @@ export const FeedbackPaths = {
     "/feedback/{feedbackId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém o feedback especificado. (Ainda não implementado)",
+            "summary": "Obtém o feedback especificado.",
             "parameters": [
                 {
                     "name": "feedbackId",
@@ -404,7 +404,7 @@ export const FeedbackPaths = {
         },
         "delete":{
             "tags": ["Feedback"],
-            "summary": "Deleta um feedback especificado. Necessita da autenticação do estudante criador. (Ainda não implementado)",
+            "summary": "Deleta um feedback especificado. Necessita da autenticação do estudante criador.",
             "security": [{
                 "Bearer": []
             }],
@@ -525,7 +525,7 @@ export const FeedbackPaths = {
     "/feedback/student/{studentId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks autorados por um aluno. (Ainda não implementado)",
+            "summary": "Obtém todos os feedbacks autorados por um aluno.",
             "parameters": [
                 {
                     "name": "studentId",
@@ -679,7 +679,7 @@ export const FeedbackPaths = {
     "/feedback/professor/{professorId}": {
         "get": {
             "tags": ["Feedback"],
-            "summary": "Obtém todos os feedbacks feitos a um professor. (Ainda não implementado)",
+            "summary": "Obtém todos os feedbacks feitos a um professor.",
             "parameters": [
                 {
                     "name": "professorId",
