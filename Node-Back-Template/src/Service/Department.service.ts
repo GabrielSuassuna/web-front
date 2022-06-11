@@ -169,6 +169,7 @@ export class DepartmentService {
     public async updateCourseCoordinator(request: Request, response: Response){    
         const sucessMessage: string = "Coordenador de curso atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar coordenador de curso"
+        const departmentError: string = "O coordenador de curso precisa ser um professor do departamento";
         
         let result: GetProfessor[] = []
     
@@ -177,14 +178,17 @@ export class DepartmentService {
             const { 
                 professorId
             } = request.query as any
+
+            result = await this.repositoryUoW.professorRepository.getById(professorId);
+
+            if(result[0].department_id != departmentId)
+                return response.status(400).json(setApiResponse<GetProfessor[]>([], errorMessage, departmentError))
             
             await this.repositoryUoW.beginTransaction();
             
             await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, professorId);
 
             await this.repositoryUoW.commit();
-
-            result = await this.repositoryUoW.professorRepository.getById(professorId);
 
             return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
         }
@@ -197,6 +201,7 @@ export class DepartmentService {
     public async updateDepartmentHead(request: Request, response: Response){    
         const sucessMessage: string = "Coordenador de curso atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar coordenador de curso"
+        const departmentError: string = "O chefe de departamento precisa ser um professor do departamento";
         
         let result: GetProfessor[] = []
     
@@ -206,13 +211,16 @@ export class DepartmentService {
                 professorId
             } = request.query as any
             
+            result = await this.repositoryUoW.professorRepository.getById(professorId);
+
+            if(result[0].department_id != departmentId)
+                return response.status(400).json(setApiResponse<GetProfessor[]>([], errorMessage, departmentError))
+
             await this.repositoryUoW.beginTransaction();
             
             await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, professorId);
 
             await this.repositoryUoW.commit();
-
-            result = await this.repositoryUoW.professorRepository.getById(professorId);
 
             return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
         }

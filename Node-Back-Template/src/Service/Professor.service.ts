@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { ProfessorFilter } from '../Interfaces/Filters/ProfessorFilter.interface'
+import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
 import { PostProfessor } from '../Interfaces/Post/PostProfessor.interface'
 import { ProfessorInterface } from '../Interfaces/Professor.interface'
@@ -130,7 +131,19 @@ export class ProfessorService {
     
         try{
             const professorId: string = request.params.professorId
+            const professor: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(professorId)
+            const departmentId: string = professor[0].department_id
+            const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(departmentId)
             
+            if(professorId == department[0].course_coordinator_id){
+                console.log('Removing course coordinator')
+                await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, undefined)
+            }
+            if(professorId == department[0].department_head_id){
+                console.log('Removing department head')
+                await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, undefined)
+            }
+
             await this.repositoryUoW.beginTransaction();
             await this.repositoryUoW.professorRepository.delete(professorId)
             await this.repositoryUoW.commit();

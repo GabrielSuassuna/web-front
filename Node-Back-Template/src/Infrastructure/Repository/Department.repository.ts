@@ -123,7 +123,7 @@ export class DepartmentRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async updateCourseCoordinator(departmentId: string, professorId: string): Promise<void> {
+    public async updateCourseCoordinator(departmentId: string, professorId?: string): Promise<void> {
         const SQL = `
             UPDATE department
             SET course_coordinator_id = $1
@@ -137,7 +137,7 @@ export class DepartmentRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async updateDepartmentHead(departmentId: string, professorId: string): Promise<void> {
+    public async updateDepartmentHead(departmentId: string, professorId?: string): Promise<void> {
         const SQL = `
             UPDATE department
             SET department_head_id = $1
