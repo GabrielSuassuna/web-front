@@ -7,6 +7,8 @@ import { GetFeedback } from '../Interfaces/Get/GetFeedback.interface'
 import { PostFeedback } from '../Interfaces/Post/PostFeedback.interface'
 import { FeedbackInterface } from '../Interfaces/Feedback.interface'
 import { PutFeedback } from '../Interfaces/Put/PutFeedback.interface'
+import { TagInterface } from '../Interfaces/Tag.interface'
+import { GetHasTag } from '../Interfaces/Get/GetHasTag.interface'
 
 export class FeedbackService {
     private repositoryUoW: RepositoryUoW
@@ -34,8 +36,12 @@ export class FeedbackService {
             
             const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
 
-            const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll(feedbackFilter)
-            //const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll()
+            let toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll(feedbackFilter)
+
+            for(let i = 0; i < toBeFoundFeedbacks.length; i++){
+                const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(toBeFoundFeedbacks[i].id)
+                toBeFoundFeedbacks[i].tags = toBeFoundTags.map(t => t.tag_name)
+            }
 
             if(!!toBeFoundFeedbacks.length){
                 return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
@@ -71,6 +77,11 @@ export class FeedbackService {
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId, feedbackFilter)
           //const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId)
 
+          for(let i = 0; i < toBeFoundFeedbacks.length; i++){
+            const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(toBeFoundFeedbacks[i].id)
+            toBeFoundFeedbacks[i].tags = toBeFoundTags.map(t => t.tag_name)
+          }
+
           if(!!toBeFoundFeedbacks.length){
               return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
           }
@@ -105,10 +116,15 @@ export class FeedbackService {
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId, feedbackFilter)
           //const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId)
 
+          for(let i = 0; i < toBeFoundFeedbacks.length; i++){
+            const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(toBeFoundFeedbacks[i].id)
+            toBeFoundFeedbacks[i].tags = toBeFoundTags.map(t => t.tag_name)
+          }
+          
           if(!!toBeFoundFeedbacks.length){
               return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
           }
-          
+
           return response.status(404).json(setApiResponse<FeedbackInterface[]>(result, notFoundMessage))
       }
       catch(err: any){
@@ -150,13 +166,26 @@ export class FeedbackService {
             const { lecturing_id, student_id } = toBeCreatedFeedback
 
             await this.repositoryUoW.beginTransaction();
-            
+
             const feedbackId: string = await this.repositoryUoW.feedbackRepository.create(toBeCreatedFeedback, lecturing_id, student_id)
 
+            for(let tagIndex in toBeCreatedFeedback.tags){
+                await this.repositoryUoW.hasTagRepository.create(feedbackId, toBeCreatedFeedback.tags[tagIndex])
+            }
+
             const toBeFoundFeedback: GetFeedback[] = await this.repositoryUoW.feedbackRepository.getById(feedbackId)
+            const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(feedbackId)
+
+            const tagsArray = toBeFoundTags.map(t => t.tag_name);
+
+            result = [{
+                ...toBeFoundFeedback[0],
+                tags: tagsArray
+            }]
+
             await this.repositoryUoW.commit();
             
-            return response.status(200).json(setApiResponse<GetFeedback[]>(toBeFoundFeedback, sucessMessage))
+            return response.status(200).json(setApiResponse<GetFeedback[]>(result, sucessMessage))
         }
         catch(err: any){
             await this.repositoryUoW.rollback();

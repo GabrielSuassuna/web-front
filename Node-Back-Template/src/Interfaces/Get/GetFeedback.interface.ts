@@ -14,4 +14,5 @@ export interface GetFeedback {
   clarity_score: number
   relationship_score: number
   date: Date
+  tags: string[]
 }

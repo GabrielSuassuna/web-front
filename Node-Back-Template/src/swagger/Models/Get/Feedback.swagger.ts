@@ -1,5 +1,5 @@
 export const GetFeedback = {
-    "required": ["id", "lecturingId","studentId","title","description", "period", "generalScore", "assiduityScore","clarityScore","relationshipScore","date", "upvotes", "downvotes", "hasVoted"],
+    "required": ["id", "lecturingId","studentId","title","description", "period", "generalScore", "assiduityScore","clarityScore","relationshipScore","date", "upvotes", "downvotes", "hasVoted", "tags"],
     "properties": {
         "id": {
             "type": "string",
@@ -43,5 +43,8 @@ export const GetFeedback = {
         "hasVoted": {
             "type": "string",
         },
+        "tags": {
+            "type": "string[]",
+        }
     }
 }

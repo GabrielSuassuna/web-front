@@ -1,5 +1,5 @@
 export const PostFeedback = {
-    "required": ["lecturingId","studentId","title","description", "period", "generalScore", "assiduityScore","clarityScore","relationshipScore","date"],
+    "required": ["lecturingId","studentId","title","description", "period", "generalScore", "assiduityScore","clarityScore","relationshipScore","date", "tags"],
     "properties": {
         "lecturingId": {
             "type": "string",
@@ -31,5 +31,8 @@ export const PostFeedback = {
         "date": {
             "type": "string",
         },
+        "tags": {
+            "type": "string[]"
+        }
     }
 }

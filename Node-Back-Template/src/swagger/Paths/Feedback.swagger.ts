@@ -166,6 +166,7 @@ export const FeedbackPaths = {
                             "clarity_score": 10,
                             "relationship_score": 10,
                             "date": "01/01/2022",
+                            "tags": [1, 2]
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostFeedback"

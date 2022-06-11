@@ -33,6 +33,24 @@ export class HasTagRepository {
 
     }
 
+    public async getByFeedbackId(feedbackId: string): Promise<GetHasTag[]>{
+        const SQL = `
+            SELECT h.*, t.name as tag_name
+            FROM has_tag as h
+                INNER JOIN tag as t on h.tag_id = t.id
+            WHERE h.feedback_id = $1
+        `
+
+        const values = [
+            feedbackId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
+   
+
     public async create(feedbackId: string, tagId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("has_tag")
         
@@ -40,7 +58,7 @@ export class HasTagRepository {
             INSERT INTO has_tag(
                 id,
                 feedback_id,
-                tag_id,
+                tag_id
             )
             VALUES (
                 $1,

@@ -7,4 +7,5 @@ export interface FeedbackInterface {
   discipline_code: string
   general_score: number
   date: Date
+  tags: string[]
 }
