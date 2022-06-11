@@ -50,9 +50,7 @@ export class ProfessorRepository {
                 password,
                 name,
                 about,
-                lattes_url,
-                is_head_of_department,
-                is_course_coordinator
+                lattes_url
             )
             VALUES (
                 $1,
@@ -61,9 +59,7 @@ export class ProfessorRepository {
                 $4,
                 $5,
                 $6,
-                $7,
-                $8,
-                $9
+                $7
             )
         `
         const values = [
@@ -73,9 +69,7 @@ export class ProfessorRepository {
           professor.password,
           professor.name,
           professor.about,
-          professor.lattes_url,
-          professor.is_head_of_department,
-          professor.is_course_coordinator
+          professor.lattes_url
         ]
 
         await this.queryHandler.runQuery(SQL, values)
@@ -83,7 +77,7 @@ export class ProfessorRepository {
         return newId;
     }
     
-    public async update(professor: PutProfessor, professorId: string, departmentId: string): Promise<void> {
+    public async update(professor: PutProfessor, professorId: string): Promise<void> {
         const SQL = `
             UPDATE professor
             SET siape = $1,
@@ -91,10 +85,8 @@ export class ProfessorRepository {
                 name = $3,
                 about = $4,
                 lattes_url = $5,
-                is_head_of_department = $6,
-                is_course_coordinator =$7
-            WHERE id = $8
-              AND department_id = $9
+                department_id = $6
+            WHERE id = $7 
         `
         const values = [
           professor.siape,
@@ -102,10 +94,8 @@ export class ProfessorRepository {
           professor.name,
           professor.about,
           professor.lattes_url,
-          professor.is_head_of_department,
-          professor.is_course_coordinator,
+          professor.department_id,
           professorId,
-          departmentId
         ]
         
         await this.queryHandler.runQuery(SQL, values)

@@ -1,7 +1,7 @@
 export const PutProfessor = {
-    "required": ["departmentId", "siape", "name", "password","about", "lattes_url", "is_head_of_department", "is_course_coordinator"],
+    "required": ["departmentId", "siape", "name", "password","about", "lattes_url"],
     "properties": {
-        "departmentId": {
+        "department_id": {
             "type": "string",
         },
         "siape": {
@@ -18,12 +18,6 @@ export const PutProfessor = {
         },
         "lattes_url": {
             "type": "string"
-        },
-        "is_head_of_department": {
-            "type": "boolean"
-        },
-        "is_course_coordinator": {
-            "type": "boolean"
-        },
+        }
     }
 }

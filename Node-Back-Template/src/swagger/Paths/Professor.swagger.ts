@@ -38,13 +38,13 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
+                                            "department_id": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
                                         },
                                         {
                                             "id": "5",
-                                            "departmentId": "5",
+                                            "department_id": "5",
                                             "siape": "03148",
                                             "name": "Ricardo Martins",
                                         },
@@ -129,14 +129,12 @@ export const ProfessorPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "departmentId": "1",
+                            "department_id": "1",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
                             "password": "ASDXASACASX",
                             "about": "Rodrigo Marques é professor do departamento...",
                             "lattes_url": "lattes.cnpq.br/...",
-                            "is_head_of_department": false,
-                            "is_course_coordinator": false,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostProfessor"
@@ -156,13 +154,11 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
+                                            "department_id": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
                                             "about": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
                                         }
                                     ],
                                     "message" : "Professor criado com sucesso"
@@ -287,13 +283,11 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
+                                            "department_id": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
                                             "about": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
                                         }
                                     ],
                                     "message" : "Professor obtido com sucesso"
@@ -386,14 +380,12 @@ export const ProfessorPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "departmentId": "5",
+                            "department_id": "5",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
                             "password": "ADVBSNHAD",
                             "about": "Rodrigo Marques é professor do departamento...",
                             "lattes_url": "lattes.cnpq.br/...",
-                            "is_head_of_department": false,
-                            "is_course_coordinator": false,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutProfessor"
@@ -413,13 +405,11 @@ export const ProfessorPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "departmentId": "5",
+                                            "department_id": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
                                             "about": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": false,
                                         }
                                     ],
                                     "message" : "Professor atualizado com sucesso"

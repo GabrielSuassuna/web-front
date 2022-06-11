@@ -75,17 +75,16 @@ export class ProfessorService {
     
         try{
             const toBeCreatedProfessor: PostProfessor = request.body
-            const { departmentId } = toBeCreatedProfessor
+            const { department_id } = toBeCreatedProfessor
 
             await this.repositoryUoW.beginTransaction();
             
-            const professorId: string = await this.repositoryUoW.professorRepository.create(toBeCreatedProfessor, departmentId)
+            const professorId: string = await this.repositoryUoW.professorRepository.create(toBeCreatedProfessor, department_id)
 
             await this.repositoryUoW.commit();
             
             result.push({
                 id: professorId,
-                department_id: departmentId,
                 ...toBeCreatedProfessor, 
             })
             
@@ -106,11 +105,10 @@ export class ProfessorService {
         try{
             const toBeupdatedProfessor: PutProfessor = request.body
             const professorId: string = request.params.professorId
-            const { departmentId } = toBeupdatedProfessor
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.professorRepository.update(toBeupdatedProfessor, professorId, departmentId)
+            await this.repositoryUoW.professorRepository.update(toBeupdatedProfessor, professorId)
 
             await this.repositoryUoW.commit();
 

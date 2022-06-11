@@ -13,6 +13,8 @@ export class DepartmentMigration implements Migration{
         const SQL = `
             CREATE TABLE department(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
+                department_head_id serial,
+                course_coordinator_id serial,
                 name TEXT NOT NULL,
                 description TEXT NOT NULL
             );
@@ -20,6 +22,9 @@ export class DepartmentMigration implements Migration{
             CREATE SEQUENCE department_seq
             START 1
             INCREMENT 1;
+
+            ALTER TABLE department ALTER COLUMN department_head_id DROP NOT NULL;
+            ALTER TABLE department ALTER COLUMN course_coordinator_id DROP NOT NULL;
         `
 
         return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
 export const GetProfessor = {
-    "required": ["id", "departmentId", "siape", "name", "about", "lattes_url", "is_head_of_department", "is_course_coodinator"],
+    "required": ["id", "departmentId", "siape", "name", "about", "lattes_url"],
     "properties": {
         "id": {
             "type": "string",
@@ -18,12 +18,6 @@ export const GetProfessor = {
         },
         "lattes_url": {
             "type": "string"
-        },
-        "is_head_of_department": {
-            "type": "boolean"
-        },
-        "is_course_coordinator": {
-            "type": "boolean"
         },
     }
 }

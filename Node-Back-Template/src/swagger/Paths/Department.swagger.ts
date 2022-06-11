@@ -25,10 +25,14 @@ export const DepartmentPaths = {
                                         {
                                             "id": "1",
                                             "name": "Departamento de Computação",
+                                            "course_coodinator_id": "1",
+                                            "department_head": "2"
                                         },
                                         {
                                             "id": "2",
                                             "name": "Departamento de Matemática Industrial",
+                                            "course_coodinator_id": "4",
+                                            "department_head": "3"
                                         },
                                     ],
                                     "message" : "Departamentos obtidos com sucesso"
@@ -112,7 +116,9 @@ export const DepartmentPaths = {
                         "required": ["data", "message"],
                         "example": {    
                             "name": "Departamento de Estatística",
-                            "description": "Departamento especializado em estatística aplicada"
+                            "description": "Departamento especializado em estatística aplicada",
+                            "course_coodinator_id": undefined,
+                            "department_head": undefined
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostDepartment"
@@ -132,7 +138,7 @@ export const DepartmentPaths = {
                                     "data": [
                                         {
                                             "id": "3",
-                                            "about": "Departamento de Estatística",
+                                            "description": "Departamento de Estatística",
                                         }
                                     ],
                                     "message" : "Departamento criado com sucesso"
@@ -253,6 +259,9 @@ export const DepartmentPaths = {
                         "required": ["data", "message"],
                         "example": {    
                             "name": "Departamento de Computação",
+                            "description": "O departamento da computação...",
+                            "course_coodinator_id": "1",
+                            "department_head": "2"
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutDepartment"
@@ -273,6 +282,9 @@ export const DepartmentPaths = {
                                         {
                                             "id": "1",
                                             "name": "Departamento de Computação",
+                                            "description": "O departamento da computação...",
+                                            "course_coodinator_id": "1",
+                                            "department_head": "2"
                                         }
                                     ],
                                     "message" : "Departamento atualizado com sucesso"
@@ -492,7 +504,7 @@ export const DepartmentPaths = {
                                             "departmentId": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
+                                            "description": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
                                             "is_head_of_department": false,
                                             "is_course_coordinator": true,
@@ -596,7 +608,7 @@ export const DepartmentPaths = {
                                             "departmentId": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
+                                            "description": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
                                             "is_head_of_department": true,
                                             "is_course_coordinator": false,
@@ -675,7 +687,7 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeCoordinator": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. (Ainda não implementado)",
+            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
             "security": [{
                 "Bearer": []
             }],
@@ -691,6 +703,7 @@ export const DepartmentPaths = {
                 {
                     "name": "professorId",
                     "in": "query",
+                    "description": "ID do novo coordenador do curso",
                     "schema": {
                         "type": "string"
                     }
@@ -711,7 +724,7 @@ export const DepartmentPaths = {
                                             "departmentId": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
+                                            "description": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
                                             "is_head_of_department": false,
                                             "is_course_coordinator": true,
@@ -837,10 +850,10 @@ export const DepartmentPaths = {
             }
         },
     },
-    "/department/{departmentId}/changeDepartmentChief": {
+    "/department/{departmentId}/changeDepartmentHead": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. (Ainda não implementado)",            
+            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",            
             "security": [{
                 "Bearer": []
             }],
@@ -856,6 +869,7 @@ export const DepartmentPaths = {
                 {
                     "name": "professorId",
                     "in": "query",
+                    "description": "ID do novo chefe do departamento",
                     "schema": {
                         "type": "string"
                     }
@@ -876,7 +890,7 @@ export const DepartmentPaths = {
                                             "departmentId": "5",
                                             "siape": "03042",
                                             "name": "Rodrigo Marques",
-                                            "about": "Rodrigo Marques é professor do departamento...",
+                                            "description": "Rodrigo Marques é professor do departamento...",
                                             "lattes_url": "lattes.cnpq.br/...",
                                             "is_head_of_department": true,
                                             "is_course_coordinator": false,

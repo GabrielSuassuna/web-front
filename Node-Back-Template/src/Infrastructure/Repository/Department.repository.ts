@@ -41,10 +41,11 @@ export class DepartmentRepository {
 
     public async getDepartmentCoordinator(departmentId: string): Promise<GetDepartment[]>{
         const SQL = `
-            SELECT * 
-              FROM professor 
-             WHERE department_id = $1
-               AND is_course_coordinator = TRUE
+            SELECT p.*
+              FROM professor as p
+              INNER JOIN department as d 
+              ON p.id = d.course_coordinator_id
+             WHERE d.id = $1
         `
 
         const values = [
@@ -57,10 +58,11 @@ export class DepartmentRepository {
 
     public async getDepartmentChief(departmentId: string): Promise<GetDepartment[]>{
         const SQL = `
-            SELECT * 
-              FROM professor 
-             WHERE department_id = $1
-               AND is_head_of_department = TRUE
+            SELECT p.*
+              FROM professor as p
+              INNER JOIN department as d 
+              ON p.id = d.department_head_id
+             WHERE d.id = $1
         `
 
         const values = [
@@ -78,12 +80,16 @@ export class DepartmentRepository {
             INSERT INTO department(
                 id,
                 name,
-                description
+                description,
+                department_head_id,
+                course_coordinator_id
             )
             VALUES (
                 $1,
                 $2,
-                $3
+                $3,
+                NULL,
+                NULL
             )
         `
         const values = [
@@ -101,12 +107,44 @@ export class DepartmentRepository {
         const SQL = `
             UPDATE department
             SET name = $1,
-                description = $2
-            WHERE id = $3
+                description = $2,
+                course_coordinator_id = $3,
+                department_head_id = $4
+            WHERE id = $5
         `
         const values = [
             department.name,
             department.description,
+            department.course_coordinator_id,
+            department.department_head_id,
+            departmentId
+        ]
+        
+        await this.queryHandler.runQuery(SQL, values)
+    }
+
+    public async updateCourseCoordinator(departmentId: string, professorId: string): Promise<void> {
+        const SQL = `
+            UPDATE department
+            SET course_coordinator_id = $1
+            WHERE id = $2
+        `
+        const values = [
+            professorId,
+            departmentId
+        ]
+        
+        await this.queryHandler.runQuery(SQL, values)
+    }
+
+    public async updateDepartmentHead(departmentId: string, professorId: string): Promise<void> {
+        const SQL = `
+            UPDATE department
+            SET department_head_id = $1
+            WHERE id = $2
+        `
+        const values = [
+            professorId,
             departmentId
         ]
         

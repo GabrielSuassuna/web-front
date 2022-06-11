@@ -4,6 +4,7 @@ import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { DepartmentInterface } from '../Interfaces/Department.interface'
 import { DepartmentFilter } from '../Interfaces/Filters/DepartmentFilter.interface'
 import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
+import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
 import { PostDepartment } from '../Interfaces/Post/PostDepartment.interface'
 import { PutDepartment } from '../Interfaces/Put/PutDepartment.interface'
 
@@ -106,6 +107,8 @@ export class DepartmentService {
             result.push({
                 id: departmentId,
                 ...toBeCreatedDepartment, 
+                course_coordinator_id: undefined,
+                department_head_id: undefined,
             })
             
             return response.status(200).json(setApiResponse<GetDepartment[]>(result, sucessMessage))
@@ -160,6 +163,62 @@ export class DepartmentService {
         catch(err: any){
             await this.repositoryUoW.rollback();
             return response.status(400).json(setApiResponse<GetDepartment[]>(result, errorMessage, err.message))
+        }
+    }
+
+    public async updateCourseCoordinator(request: Request, response: Response){    
+        const sucessMessage: string = "Coordenador de curso atualizado com sucesso"
+        const errorMessage: string = "Erro ao atualizar coordenador de curso"
+        
+        let result: GetProfessor[] = []
+    
+        try{
+            const departmentId: string = request.params.departmentId
+            const { 
+                professorId
+            } = request.query as any
+            
+            await this.repositoryUoW.beginTransaction();
+            
+            await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, professorId);
+
+            await this.repositoryUoW.commit();
+
+            result = await this.repositoryUoW.professorRepository.getById(professorId);
+
+            return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
+        }
+        catch(err: any){
+            await this.repositoryUoW.rollback();
+            return response.status(400).json(setApiResponse<GetProfessor[]>(result, errorMessage, err.message))
+        }
+    }
+
+    public async updateDepartmentHead(request: Request, response: Response){    
+        const sucessMessage: string = "Coordenador de curso atualizado com sucesso"
+        const errorMessage: string = "Erro ao atualizar coordenador de curso"
+        
+        let result: GetProfessor[] = []
+    
+        try{
+            const departmentId: string = request.params.departmentId
+            const { 
+                professorId
+            } = request.query as any
+            
+            await this.repositoryUoW.beginTransaction();
+            
+            await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, professorId);
+
+            await this.repositoryUoW.commit();
+
+            result = await this.repositoryUoW.professorRepository.getById(professorId);
+
+            return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
+        }
+        catch(err: any){
+            await this.repositoryUoW.rollback();
+            return response.status(400).json(setApiResponse<GetProfessor[]>(result, errorMessage, err.message))
         }
     }
 }

@@ -19,14 +19,15 @@ export class ProfessorMigration implements Migration{
                 name TEXT NOT NULL,
                 about TEXT NOT NULL,
                 lattes_url TEXT NOT NULL,
-                is_head_of_department BOOLEAN NOT NULL,
-                is_course_coordinator BOOLEAN NOT NULL,
                 FOREIGN KEY (department_id) REFERENCES department (id)
             );
 
             CREATE SEQUENCE professor_seq
             START 1
             INCREMENT 1;
+
+            ALTER TABLE department ADD CONSTRAINT department_head_fk FOREIGN KEY (department_head_id) REFERENCES professor (id);
+            ALTER TABLE department ADD CONSTRAINT course_coordinator_fk FOREIGN KEY (course_coordinator_id) REFERENCES professor (id);
         `
 
         return new Promise((resolve, reject) => {
