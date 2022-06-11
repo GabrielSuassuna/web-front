@@ -2,7 +2,7 @@ export const LecturingPaths = {
     "/lecturing": {
         "get": {
             "tags": ["Lecturing"],
-            "summary": "Obtém todas as disciplinas ministradas. (Ainda não implementado)",
+            "summary": "Obtém todas as disciplinas ministradas.",
             "parameters": [
                 {
                     "name": "disciplineName",
@@ -19,13 +19,6 @@ export const LecturingPaths = {
                     }
                 },
                 {
-                    "name": "disciplineHours",
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
                     "name": "professorName",
                     "in": "query",
                     "schema": {
@@ -34,6 +27,13 @@ export const LecturingPaths = {
                 },
                 {
                     "name": "professorSiape",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorDepartment",
                     "in": "query",
                     "schema": {
                         "type": "string"
@@ -144,11 +144,152 @@ export const LecturingPaths = {
                 }
             }
         },
+        "post": {
+            "tags": ["Lecturing"],
+            "summary": "Estabelece uma nova disciplina ministrada. Necessita de autenticação do professor ou administrador.",
+            "security": [{
+                "Bearer": []
+            }],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "required": ["data", "message"],
+                        "example": {    
+                            "discipline_id": "1",
+                            "professor_id": "1",
+                        },
+                        "schema": {
+                            "$ref": "#/components/schemas/PostProfessor"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "OK - Disciplina ministrada criada com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "disciplineId": "1",
+                                            "disciplineName": "Algoritmos Aproximativos",
+                                            "disciplineCode": "CK0101",
+                                            "professorId": "1",
+                                            "professorName": "Rodrigo Marques",
+                                            "professorSiape": "1234",
+                                            "professorDepartment": "Departamento de Computação",
+                                            "averageScore": 0,
+                                            "numberOfFeedbacks": 0,
+                                            "assiduityScore": 0,
+                                            "clarityScore": 0,
+                                            "relationshipScore": 0,
+                                        }
+                                    ],
+                                    "message" : "Disciplina ministrada criada com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetLecturing"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao criar disciplina ministrada",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao criar disciplina ministrada"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+
+            }
+        },
     },
     "/lecturing/{lecturingId}": {
         "get": {
             "tags": ["Lecturing"],
-            "summary": "Obtém os dados de uma disciplina ministrada especificada. (Ainda não implementado)",
+            "summary": "Obtém os dados de uma disciplina ministrada especificada.",
             "parameters": [
                 {
                     "name": "lecturingId",
@@ -256,7 +397,7 @@ export const LecturingPaths = {
         },
         "delete": {
             "tags": ["Lecturing"],
-            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado. Necessita da autenticação do professor da disciplina. (Ainda não implementado)",
+            "summary": "Deletar um relacionamento de disciplina ministrada por um professor especificado. Necessita da autenticação do professor da disciplina.",
             "security": [{
                 "Bearer": []
             }],

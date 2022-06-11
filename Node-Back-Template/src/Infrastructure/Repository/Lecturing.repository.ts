@@ -4,6 +4,7 @@ import { LecturingInterface } from "../../Interfaces/Lecturing.interface"
 import { Client } from "pg"
 import { GetLecturing } from "../../Interfaces/Get/GetLecturing.interface"
 import { PutLecturing } from "../../Interfaces/Put/PutLecturing.interface"
+import { LecturingFilter } from "../../Interfaces/Filters/LecturingFilter.interface"
 
 export class LecturingRepository {
     queryHandler: QueryHandler<GetLecturing>
@@ -12,12 +13,27 @@ export class LecturingRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<LecturingInterface[]>{
+    public async getAll(lecturingFilter: LecturingFilter | null = null): Promise<LecturingInterface[]>{
         const SQL = `
-            SELECT * FROM lecturing
+            SELECT
+                l.id as id,
+                d.name as discipline_name,
+                d.code as discipline_code,
+                p.name as professor_name,
+                p.siape as professor_siape,
+                dpt.name as professor_department
+            FROM
+                lecturing as l
+                inner join discipline as d on l.discipline_id = d.id
+                inner join professor as p on l.professor_id = p.id
+                inner join department as dpt on p.department_id = dpt.id
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        let values: any[] = []
+
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, lecturingFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(lecturingId: string): Promise<GetLecturing[]>{
@@ -40,7 +56,7 @@ export class LecturingRepository {
             INSERT INTO lecturing(
                 id,
                 professor_id,
-                discipline_id,
+                discipline_id
             )
             VALUES (
                 $1,
@@ -76,20 +92,46 @@ export class LecturingRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(lecturingId: string, professorId: string, disciplineId: string): Promise<void> {
+    public async delete(lecturingId: string): Promise<void> {
         const SQL = `
             DELETE FROM lecturing
             WHERE id = $1
-                AND professor_id = $2
-                AND discipline_id = $3
         `
         const values = [
-          lecturingId,
-          professorId,
-          disciplineId
+          lecturingId
         ]
 
         await this.queryHandler.runQuery(SQL, values)
+    }
+
+    private applyGetAllFilters(SQL: string, values: any[], lecturingFilter: LecturingFilter | null = null){
+        let sqlWithFilter = SQL
+        let valuesWithFilter = values
+
+        sqlWithFilter += 'WHERE 0=0'
+
+        if(lecturingFilter?.disciplineName){
+            values.push(`%${lecturingFilter.disciplineName}%`)
+            sqlWithFilter += ` AND d.name LIKE $${values.length}`
+        }
+        if(lecturingFilter?.disciplineCode){
+            values.push(`%${lecturingFilter.disciplineCode}%`)
+            sqlWithFilter += ` AND d.code LIKE $${values.length}`
+        }
+        if(lecturingFilter?.professorName){
+            values.push(`%${lecturingFilter.professorName}%`)
+            sqlWithFilter += ` AND p.name LIKE $${values.length}`
+        }
+        if(lecturingFilter?.professorSiape){
+            values.push(`%${lecturingFilter.professorSiape}%`)
+            sqlWithFilter += ` AND p.siape LIKE $${values.length}`
+        }
+        if(lecturingFilter?.professorDepartment){
+            values.push(`%${lecturingFilter.professorDepartment}%`)
+            sqlWithFilter += ` AND dpt.name LIKE $${values.length}`
+        }
+        
+        return { sqlWithFilter, valuesWithFilter }
     }
 
 }

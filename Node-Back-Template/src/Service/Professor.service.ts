@@ -135,6 +135,8 @@ export class ProfessorService {
             const departmentId: string = professor[0].department_id
             const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(departmentId)
             
+            await this.repositoryUoW.beginTransaction();
+            
             if(professorId == department[0].course_coordinator_id){
                 console.log('Removing course coordinator')
                 await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, undefined)
@@ -144,7 +146,6 @@ export class ProfessorService {
                 await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, undefined)
             }
 
-            await this.repositoryUoW.beginTransaction();
             await this.repositoryUoW.professorRepository.delete(professorId)
             await this.repositoryUoW.commit();
 
