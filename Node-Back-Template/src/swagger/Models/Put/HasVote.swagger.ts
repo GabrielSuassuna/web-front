@@ -1,13 +1,7 @@
 export const PutHasVote = {
-    "required": ["feedbackId", "studentId", "isUpvote"],
+    "required": ["isUpvote"],
     "properties": {
-        "feedbackId": {
-            "type": "string",
-        },
-        "studentId": {
-            "type": "string"
-        },
-        "isUpvote": {
+        "is_upvote": {
             "type": "boolean"
         },
     }

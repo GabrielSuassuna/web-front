@@ -75,7 +75,6 @@ export class FeedbackService {
           const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId, feedbackFilter)
-          //const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId)
 
           for(let i = 0; i < toBeFoundFeedbacks.length; i++){
             const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(toBeFoundFeedbacks[i].id)
@@ -114,7 +113,6 @@ export class FeedbackService {
           const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId, feedbackFilter)
-          //const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId)
 
           for(let i = 0; i < toBeFoundFeedbacks.length; i++){
             const toBeFoundTags: GetHasTag[] = await this.repositoryUoW.hasTagRepository.getByFeedbackId(toBeFoundFeedbacks[i].id)

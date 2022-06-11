@@ -2,7 +2,7 @@ export const HasVotePaths = {
     "/hasVote/{feedbackId}": {
         "delete": {
             "tags": ["HasVote"],
-            "summary": "Deletar uma interação com feedback especificado. Necessita da autenticação do estudante autor da interação. (Ainda não implementado)",
+            "summary": "Deletar uma interação com feedback especificado. Necessita da autenticação do estudante autor da interação.",
             "security": [{
                 "Bearer": []
             }],
@@ -10,9 +10,17 @@ export const HasVotePaths = {
                 {
                     "name": "feedbackId",
                     "in": "path",
-                    "description": "ID do Feedback",
+                    "description": "ID do feedback",
                     "schema": {
-                        "type": "text"
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "studentId",
+                    "in": "query",
+                    "description": "ID do estudante",
+                    "schema": {
+                        "type": "string"
                     }
                 },
             ],
@@ -121,7 +129,7 @@ export const HasVotePaths = {
         },
         "post": {
             "tags": ["HasVote"],
-            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante. (Ainda não implementado)",
+            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante.",
             "security": [{
                 "Bearer": []
             }],
@@ -130,9 +138,9 @@ export const HasVotePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "feedbackId": "1",
-                            "studentId": "1",
-                            "isUpvote": true,
+                            "feedback_id": "1",
+                            "student_id": "1",
+                            "is_upvote": true,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostHasVote"
@@ -254,15 +262,23 @@ export const HasVotePaths = {
         },
         "put": {
             "tags": ["HasVote"],
-            "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação. (Ainda não implementado)",
+            "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação.",
             "security": [{
                 "Bearer": []
             }],
             "parameters": [
                 {
-                    "name": "hasVoteId",
+                    "name": "feedbackId",
                     "in": "path",
-                    "description": "ID da interação",
+                    "description": "ID do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "studentId",
+                    "in": "query",
+                    "description": "ID do estudante",
                     "schema": {
                         "type": "string"
                     }
@@ -273,9 +289,7 @@ export const HasVotePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "feedbackId": "1",
-                            "studentId": "1",
-                            "isUpvote": true,
+                            "is_upvote": true,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutHasVote"

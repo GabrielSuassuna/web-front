@@ -23,11 +23,28 @@ export class HasVoteRepository {
 
     public async getById(hasVoteId: string): Promise<GetHasVote[]>{
         const SQL = `
-            SELECT * FROM has_vote WHERE id = $1
+            SELECT * FROM has_vote 
+            WHERE id = $1
         `
 
         const values = [
             hasVoteId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
+    public async getByFeedbackAndStudent(feedbackId: string, studentId: string): Promise<GetHasVote[]>{
+        const SQL = `
+            SELECT * FROM has_vote 
+            WHERE feedback_id = $1
+                AND student_id = $2
+        `
+
+        const values = [
+            feedbackId,
+            studentId,
         ]
         
         return await this.queryHandler.runQuery(SQL, values)
@@ -63,35 +80,33 @@ export class HasVoteRepository {
         return newId;
     }
     
-    public async update(hasVote: PutHasVote, hasVoteId: string, feedbackId: string, studentId: string): Promise<void> {
+    public async update(hasVote: PutHasVote, feedbackId: string, studentId: string): Promise<void> {
         const SQL = `
             UPDATE has_vote
             SET is_upvote = $1
-            WHERE id = $2
-                AND feedback_id = $3
-                AND student_id = $4
+            WHERE feedback_id = $2
+                AND student_id = $3
         `
         const values = [
           hasVote.is_upvote,
-          hasVoteId,
           feedbackId,
           studentId,
         ]
+
+        console.log(values)
         
         await this.queryHandler.runQuery(SQL, values)
     }
 
-    public async delete(hasVoteId: string, feedbackId: string, studentId: string): Promise<void> {
+    public async delete(feedbackId: string, studentId: string): Promise<void> {
         const SQL = `
             DELETE FROM has_vote
-            WHERE id = $1
-                AND feedback_id = $2
-                AND student_id = $3
+            WHERE feedback_id = $1
+                AND student_id = $2
         `
         const values = [
-          hasVoteId,
-          feedbackId,
-          studentId,
+            feedbackId,
+            studentId,
         ]
 
         await this.queryHandler.runQuery(SQL, values)

@@ -4,13 +4,13 @@ export const GetHasVote = {
         "id": {
             "type": "string",
         },
-        "feedbackId": {
+        "feedback_id": {
             "type": "string",
         },
-        "studentId": {
+        "student_id": {
             "type": "string",
         },
-        "isUpvote": {
+        "is_upvote": {
             "type": "boolean",
         }
     }
