@@ -13,12 +13,22 @@ export class ReportLogRepository {
         this.queryHandler = new QueryHandler(client)
     }
 
-    public async getAll(): Promise<ReportLogInterface[]>{
+    public async getAll(reportId: string): Promise<GetReportLog[]>{
         const SQL = `
-            SELECT * FROM report_log
+            SELECT 
+                r.*,
+                p.name as author_name,
+                p.name as author_siape
+            FROM report_log as r 
+                INNER JOIN professor as p on r.author_id = p.id
+            WHERE r.report_id = $1
         `
 
-        return await this.queryHandler.runQuery(SQL)
+        const values = [
+            reportId
+        ]
+
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async getById(reportLogId: string): Promise<GetReportLog[]>{
@@ -107,4 +117,15 @@ export class ReportLogRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    public async deleteByReportId(reportId: string): Promise<void> {
+        const SQL = `
+            DELETE FROM report_log
+            WHERE report_id = $1
+        `
+        const values = [
+          reportId,
+        ]
+
+        await this.queryHandler.runQuery(SQL, values)
+    }
 }

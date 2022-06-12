@@ -9,6 +9,7 @@ import { StudentController } from './Student.controller'
 import { TagController } from './Tag.controller'
 import { FeedbackController } from './Feedback.controller'
 import { HasVoteController } from './HasVote.controller'
+import { ReportController } from './Report.controller'
 
 export class ControllerUoW{
 
@@ -18,15 +19,16 @@ export class ControllerUoW{
         this.controllers = [
             new AuthController(),
             new ProfessorController(),
-            new StudentController(),
+            //new StudentController(),
             //new FAQController(),
             //new TagController(),
-            new DisciplineController(),
+            //new DisciplineController(),
             new LecturingController(),
             //new NotificationController(),
             new DepartmentController(),
             new FeedbackController(),
             new HasVoteController(),
+            new ReportController(),
         ]
     }
 

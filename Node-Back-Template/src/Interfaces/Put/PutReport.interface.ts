@@ -1,4 +1,7 @@
 export interface PutReport {
-  reviewer_id: string
-  status: string
+  author_id: string,
+  status: string,
+  date: Date,
+  title: string,
+  description: string,
 }

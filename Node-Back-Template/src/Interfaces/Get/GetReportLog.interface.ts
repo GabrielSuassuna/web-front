@@ -5,4 +5,6 @@ export interface GetReportLog {
   date: Date
   title: string
   description: string
+  author_name: string
+  author_siape: string
 }

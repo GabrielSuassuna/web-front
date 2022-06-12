@@ -25,6 +25,8 @@ export class ReportMigration implements Migration{
             CREATE SEQUENCE report_seq
             START 1
             INCREMENT 1;
+            
+            ALTER TABLE report ALTER COLUMN reviewer_id DROP NOT NULL;
         `
 
         return new Promise((resolve, reject) => {

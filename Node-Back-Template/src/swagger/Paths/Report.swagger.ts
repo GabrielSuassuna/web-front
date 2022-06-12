@@ -2,31 +2,39 @@ export const ReportPaths = {
     "/report": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém todos as denúncias. Necessita de autenticação de docente. (Ainda não implementado)",
+            "summary": "Obtém todos as denúncias em aberto que podem ser revisadas. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
             "parameters": [
                 {
-                    "name": "authorId",
+                    "name": "viewerId",
                     "in": "query",
-                    "description": "ID do autor da denúncia",
+                    "description": "Id do usuário atual",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "name": "assignedRevisorId",
+                    "name": "feedbackName",
                     "in": "query",
-                    "description": "ID do revisor que já optou por revisar a denúncia",
+                    "description": "Nome do feedback",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "name": "revisorId",
+                    "name": "authorName",
                     "in": "query",
-                    "description": "ID do revisor que está vendo as denúncias abertas",
+                    "description": "Nome do autor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "authorSiape",
+                    "in": "query",
+                    "description": "SIAPE do autor da denúncia",
                     "schema": {
                         "type": "string"
                     }
@@ -47,14 +55,14 @@ export const ReportPaths = {
                                             "feedbackName": "Odeio esse professor",
                                             "authorName": "Rodrigo Marques",
                                             "authorSiape": "03042",
-                                            "revisorName": "Ricardo Martins",
-                                            "revisorSiape": "1242",
+                                            "status": "ABERTA"
                                         },
                                         {
                                             "id": "1",
                                             "feedbackName": "Odeio esse professor",
                                             "authorName": "Rodrigo Marques",
                                             "authorSiape": "03042",
+                                            "status": "ABERTA"
                                         },
                                     ],
                                     "message" : "Denúnias obtidas com sucesso"
@@ -178,7 +186,7 @@ export const ReportPaths = {
         },
         "post": {
             "tags": ["Report"],
-            "summary": "Cria uma nova denúncia com os dados especificados. Necessita de autenticação de docente. (Ainda não implementado)",
+            "summary": "Cria uma nova denúncia com os dados especificados. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
@@ -187,8 +195,10 @@ export const ReportPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "feedbackId": "1",
-                            "authorId": "1",
+                            "feedback_id": "1",
+                            "author_id": "1",
+                            "description": "O feedback contém...",
+                            "date": "01/01/2020"
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostReport"
@@ -210,7 +220,7 @@ export const ReportPaths = {
                                             "id": "1",
                                             "feedbackId": "1",
                                             "authorId": "1",
-                                            "status": "OPEN"
+                                            "status": "ABERTA"
                                         }
                                     ],
                                     "message" : "Denúncia criada com sucesso"
@@ -309,10 +319,404 @@ export const ReportPaths = {
             }
         },
     },
+    "/report/professor/{professorId}": {
+        "get": {
+            "tags": ["Report"],
+            "summary": "Obtém todos as denúncias feitas pelo professor especificado. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
+            "parameters": [
+                {
+                    "name": "professorId",
+                    "in": "path",
+                    "description": "ID do autor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "feedbackName",
+                    "in": "query",
+                    "description": "Nome do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "reviewerName",
+                    "in": "query",
+                    "description": "Nome do revisor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "reviewerSiape",
+                    "in": "query",
+                    "description": "SIAPE do revisor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "status",
+                    "in": "query",
+                    "description": "Status da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Denúncias obtidas com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "feedbackName": "Odeio esse professor",
+                                            "authorName": "Rodrigo Marques",
+                                            "authorSiape": "03042",
+                                            "reviewerName": "Ricardo Martins",
+                                            "reviewerSiape": "1242",
+                                            "status": "EM REVISÃO"
+                                        },
+                                        {
+                                            "id": "2",
+                                            "feedbackName": "Odeio muito esse professor",
+                                            "authorName": "Rodrigo Marques",
+                                            "authorSiape": "03042",
+                                            "reviewerName": "Ricardo Martins",
+                                            "reviewerSiape": "1242",
+                                            "status": "EM REVISÃO"
+                                        },
+                                    ],
+                                    "message" : "Denúnias obtidas com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Report"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Denúncias não encontradas",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Denúncias não encontradas"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter denúncias",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter denúncias"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+            }
+        },
+    },
+    "/report/reviewer/{professorId}": {
+        "get": {
+            "tags": ["Report"],
+            "summary": "Obtém todos as denúncias que estão sendo revisadas pelo professor especificado. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
+            "parameters": [
+                {
+                    "name": "professorId",
+                    "in": "path",
+                    "description": "ID do revisor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "feedbackName",
+                    "in": "query",
+                    "description": "Nome do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "authorName",
+                    "in": "query",
+                    "description": "Nome do autor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "authorSiape",
+                    "in": "query",
+                    "description": "SIAPE do autor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "status",
+                    "in": "query",
+                    "description": "Status da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Denúncias obtidas com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "feedbackName": "Odeio esse professor",
+                                            "authorName": "Rodrigo Marques",
+                                            "authorSiape": "03042",
+                                            "reviewerName": "Ricardo Martins",
+                                            "reviewerSiape": "1242",
+                                        },
+                                        {
+                                            "id": "2",
+                                            "feedbackName": "Odeio muito esse professor",
+                                            "authorName": "Rodrigo Marques",
+                                            "authorSiape": "03042",
+                                            "reviewerName": "Ricardo Martins",
+                                            "reviewerSiape": "1242",
+                                        },
+                                    ],
+                                    "message" : "Denúnias obtidas com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Report"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Denúncias não encontradas",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Denúncias não encontradas"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter denúncias",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter denúncias"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+            }
+        },
+    },
     "/report/{reportId}": {
         "get": {
             "tags": ["Report"],
-            "summary": "Obtém os dados de uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
+            "summary": "Obtém os dados de uma denúncia especificada. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
@@ -486,7 +890,7 @@ export const ReportPaths = {
         },
         "delete": {
             "tags": ["Report"],
-            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
+            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
@@ -607,7 +1011,7 @@ export const ReportPaths = {
     "report/update/{reportId}": {
         "put": {
             "tags": ["Report"],
-            "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente. (Ainda não implementado)",
+            "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente.",
             "security": [{
                 "Bearer": []
             }],
@@ -626,10 +1030,11 @@ export const ReportPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "status": "REVOKE",
+                            "author_id": "1234",
+                            "status": "REVOGADA",
                             "date": "01/01/2020",
+                            "title": "Denúncia revogada",
                             "description": "Estou revogando essa deúncia",
-                            "authorId": "Rodrigo Marques",
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutReportLog"

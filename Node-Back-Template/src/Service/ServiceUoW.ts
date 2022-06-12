@@ -7,6 +7,7 @@ import { HasVoteService } from './HasVote.service'
 import { LecturingService } from './Lecturing.service'
 import { ProfessorService } from './Professor.service'
 import { ProfessorNotificationService } from './ProfessorNotification.service'
+import { ReportService } from './Report.service'
 import { StudentService } from './Student.service'
 import { StudentNotificationService } from './StudentNotification.service'
 import { TagService } from './Tag.service'
@@ -24,6 +25,7 @@ export class ServiceUoW {
     public departmentService: DepartmentService
     public feedbackService: FeedbackService
     public hasVoteService: HasVoteService
+    public reportService: ReportService
     
     constructor(){
         this.authService = new AuthService()
@@ -38,6 +40,7 @@ export class ServiceUoW {
         this.departmentService = new DepartmentService()
         this.feedbackService = new FeedbackService()
         this.hasVoteService = new HasVoteService()
+        this.reportService = new ReportService()
     }
 
 }
