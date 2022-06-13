@@ -95,7 +95,16 @@ export class FeedbackRepository {
     public async getById(feedbackId: string): Promise<GetFeedback[]>{
         const SQL = `
         SELECT 
-            f.*,
+            f.id as id,
+            f.lecturing_id as lecturing_id,
+            f.title as title,
+            f.description as description,
+            f.period as period,
+            f.general_score as general_score,
+            f.assiduity_score as assiduity_score,
+            f.clarity_score as clarity_score,
+            f.relationship_score as relationship_score,
+            f.date as date,
             p.name as professor_name,
             p.siape as professor_siape,
             d.name as discipline_name,
