@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express'
+import { authHandler } from '../ApiHandlers/Authorization.handler'
 
 import { ServiceUoW } from '../Service/ServiceUoW'
 
@@ -15,9 +16,9 @@ export class LecturingController {
  
     public getRouter() {
         this.router.get(`${this.prefixPath}`, (request: Request, response: Response) => this.getAll(request, response));
-        this.router.post(`${this.prefixPath}`, (request: Request, response: Response) => this.create(request, response));
+        this.router.post(`${this.prefixPath}`, authHandler, (request: Request, response: Response) => this.create(request, response));
         this.router.get(`${this.prefixPath}/:lecturingId`, (request: Request, response: Response) => this.getById(request, response));
-        this.router.delete(`${this.prefixPath}/:lecturingId`, (request: Request, response: Response) => this.delete(request, response));
+        this.router.delete(`${this.prefixPath}/:lecturingId`, authHandler, (request: Request, response: Response) => this.delete(request, response));
         
         return this.router
     }

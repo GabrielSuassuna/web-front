@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express'
+import { authHandler } from '../ApiHandlers/Authorization.handler'
 
 import { ServiceUoW } from '../Service/ServiceUoW'
 
@@ -15,8 +16,8 @@ export class StudentController {
  
     public getRouter() {
         this.router.post(`${this.prefixPath}`, (request: Request, response: Response) => this.create(request, response));
-        this.router.put(`${this.prefixPath}/:studentId`, (request: Request, response: Response) => this.update(request, response));
-        this.router.delete(`${this.prefixPath}/:studentId`, (request: Request, response: Response) => this.delete(request, response));
+        this.router.put(`${this.prefixPath}/:studentId`, authHandler,(request: Request, response: Response) => this.update(request, response));
+        this.router.delete(`${this.prefixPath}/:studentId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
         
         return this.router
     }

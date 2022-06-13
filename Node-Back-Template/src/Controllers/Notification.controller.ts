@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express'
+import { authHandler } from '../ApiHandlers/Authorization.handler'
 
 import { ServiceUoW } from '../Service/ServiceUoW'
 
@@ -14,10 +15,10 @@ export class NotificationController {
     }
  
     public getRouter() {
-        this.router.get(`${this.prefixPath}/student/:studentId`, (request: Request, response: Response) => this.getStudentNotification(request, response));
-        this.router.get(`${this.prefixPath}/professor/:professorId`, (request: Request, response: Response) => this.getProfessorNotification(request, response));
-        this.router.delete(`${this.prefixPath}/student/:notificationId`, (request: Request, response: Response) => this.deleteStudentNotification(request, response));
-        this.router.delete(`${this.prefixPath}/professor/:notificationId`, (request: Request, response: Response) => this.deleteProfessorNotification(request, response));
+        this.router.get(`${this.prefixPath}/student/:studentId`, authHandler,(request: Request, response: Response) => this.getStudentNotification(request, response));
+        this.router.get(`${this.prefixPath}/professor/:professorId`, authHandler,(request: Request, response: Response) => this.getProfessorNotification(request, response));
+        this.router.delete(`${this.prefixPath}/student/:notificationId`, authHandler,(request: Request, response: Response) => this.deleteStudentNotification(request, response));
+        this.router.delete(`${this.prefixPath}/professor/:notificationId`, authHandler,(request: Request, response: Response) => this.deleteProfessorNotification(request, response));
         
 
         

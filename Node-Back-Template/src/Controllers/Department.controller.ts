@@ -19,10 +19,10 @@ export class DepartmentController {
         this.router.get(`${this.prefixPath}/:departmentId/getCoordinator`, (request: Request, response: Response) => this.getDepartmentCoordinator(request, response));
         this.router.get(`${this.prefixPath}/:departmentId/getDepartmentChief`, (request: Request, response: Response) => this.getDepartmentChief(request, response));
         this.router.post(`${this.prefixPath}`, authHandler, (request: Request, response: Response) => this.create(request, response));
-        this.router.put(`${this.prefixPath}/:departmentId`, (request: Request, response: Response) => this.update(request, response));
-        this.router.delete(`${this.prefixPath}/:departmentId`, (request: Request, response: Response) => this.delete(request, response));
-        this.router.put(`${this.prefixPath}/:departmentId/changeCoordinator`, (request: Request, response: Response) => this.updateCourseCoordinator(request, response));
-        this.router.put(`${this.prefixPath}/:departmentId/changeDepartmentHead`, (request: Request, response: Response) => this.updateDepartmentHead(request, response));
+        this.router.put(`${this.prefixPath}/:departmentId`, authHandler, (request: Request, response: Response) => this.update(request, response));
+        this.router.delete(`${this.prefixPath}/:departmentId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
+        this.router.put(`${this.prefixPath}/:departmentId/changeCoordinator`, authHandler,(request: Request, response: Response) => this.updateCourseCoordinator(request, response));
+        this.router.put(`${this.prefixPath}/:departmentId/changeDepartmentHead`, authHandler, (request: Request, response: Response) => this.updateDepartmentHead(request, response));
         
         return this.router
     }

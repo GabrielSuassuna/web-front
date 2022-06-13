@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express'
+import { authHandler } from '../ApiHandlers/Authorization.handler'
 
 import { ServiceUoW } from '../Service/ServiceUoW'
 
@@ -14,9 +15,9 @@ export class HasVoteController {
     }
  
     public getRouter() {
-        this.router.post(`${this.prefixPath}/:feedbackId`, (request: Request, response: Response) => this.create(request, response));
-        this.router.delete(`${this.prefixPath}/:feedbackId`, (request: Request, response: Response) => this.delete(request, response));
-        this.router.put(`${this.prefixPath}/:feedbackId`, (request: Request, response: Response) => this.update(request, response));
+        this.router.post(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.create(request, response));
+        this.router.delete(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
+        this.router.put(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.update(request, response));
         
         return this.router
     }
