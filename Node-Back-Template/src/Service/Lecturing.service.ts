@@ -92,6 +92,7 @@ export class LecturingService {
             result.push({
                 id: lecturingId,
                 ...toBeCreatedLecturing, 
+                feedback_count: 0
             })
             
             return response.status(200).json(setApiResponse<GetLecturing[]>(result, sucessMessage))

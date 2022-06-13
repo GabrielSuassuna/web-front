@@ -21,12 +21,20 @@ export class LecturingRepository {
                 d.code as discipline_code,
                 p.name as professor_name,
                 p.siape as professor_siape,
-                dpt.name as professor_department
+                dpt.name as professor_department,
+                fc.feedback_count as feedback_count
             FROM
                 lecturing as l
                 inner join discipline as d on l.discipline_id = d.id
                 inner join professor as p on l.professor_id = p.id
                 inner join department as dpt on p.department_id = dpt.id
+                inner join (
+                    SELECT le.id as lecturing_id,
+                        count(DISTINCT fe.id) as feedback_count 
+                    FROM lecturing as le
+                        LEFT OUTER JOIN feedback as fe  on fe.lecturing_id = le.id
+                    GROUP BY le.id
+                ) as fc on l.id = fc.lecturing_id
         `
 
         let values: any[] = []
@@ -38,7 +46,12 @@ export class LecturingRepository {
 
     public async getById(lecturingId: string): Promise<GetLecturing[]>{
         const SQL = `
-            SELECT * FROM lecturing WHERE id = $1
+            SELECT l.* as lecturing_id,
+                count(DISTINCT f.id) as feedback_count 
+            FROM lecturing as l
+                LEFT OUTER JOIN feedback as f  on f.lecturing_id = l.id
+            WHERE l.id = $1
+            GROUP BY l.id
         `
 
         const values = [
