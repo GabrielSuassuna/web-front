@@ -33,7 +33,14 @@ export const LecturingPaths = {
                     }
                 },
                 {
-                    "name": "professorDepartment",
+                    "name": "professorDepartmentName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorDepartmentId",
                     "in": "query",
                     "schema": {
                         "type": "string"

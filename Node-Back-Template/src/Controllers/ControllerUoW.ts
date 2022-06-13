@@ -23,7 +23,7 @@ export class ControllerUoW{
             //new FAQController(),
             //new TagController(),
             //new DisciplineController(),
-            new LecturingController(),
+            //new LecturingController(),
             //new NotificationController(),
             new DepartmentController(),
             new FeedbackController(),

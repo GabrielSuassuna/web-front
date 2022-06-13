@@ -147,7 +147,7 @@ export class ReportService {
                     logs: toBeFoundLogs
                   }
                 ]
-                return response.status(200).json(setApiResponse<GetReport[]>(toBeFoundReport, sucessMessage))
+                return response.status(200).json(setApiResponse<GetReport[]>(result, sucessMessage))
             }
             
             return response.status(404).json(setApiResponse<GetReport[]>(result, notFoundMessage))
@@ -221,11 +221,11 @@ export class ReportService {
             await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, toBeupdatedReport.author_id)
 
             const toBeUpdatedReportLog:PutReportUpdate = {
-              reviewer_id: toBeupdatedReport.status === "EM REVISÂO" ? toBeupdatedReport.author_id : undefined,
+              reviewer_id: toBeupdatedReport.status === "EM REVISÃO" ? toBeupdatedReport.author_id : undefined,
               status: toBeupdatedReport.status
             }
-
-            await this.repositoryUoW.reportRepository.update(toBeupdatedReport, reportId)
+            
+            await this.repositoryUoW.reportRepository.update(toBeUpdatedReportLog, reportId)
             
             const toBeFoundReport: GetReport[] = await this.repositoryUoW.reportRepository.getById(reportId)
             const toBeFoundFeedback: GetFeedback[] = await this.repositoryUoW.feedbackRepository.getById(toBeFoundReport[0].feedback_id)

@@ -888,127 +888,6 @@ export const ReportPaths = {
                 },
             }
         },
-        "delete": {
-            "tags": ["Report"],
-            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente.",
-            "security": [{
-                "Bearer": []
-            }],
-            "parameters": [
-                {
-                    "name": "reportId",
-                    "in": "path",
-                    "description": "ID da Denúncia",
-                    "schema": {
-                        "type": "text"
-                    }
-                },
-            ],
-            "responses": {
-                "200": {
-                    "description": "OK - Denúncia deletada com sucesso",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Denúncia deletada com sucesso"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "400": {
-                    "description": "Bad request - Erro ao deletar denúncia",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Erro ao deletar denúncia"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "401": {
-                    "description": "Unauthorized - Problema ao decodificar o token",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Problema ao decodificar o token"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "500": {
-                    "description": "Internal Server Error - Falha ao processar a requisição",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Falha ao processar a requisição"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-            }
-        },
-    },
-    "report/update/{reportId}": {
         "put": {
             "tags": ["Report"],
             "summary": "Atualiza uma denúncia especificada. Necessita de autenticação de docente.",
@@ -1140,6 +1019,125 @@ export const ReportPaths = {
                                 "example": {
                                     "data": [],
                                     "message" : "Erro ao atualizar denúncia"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+            }
+        },
+        "delete": {
+            "tags": ["Report"],
+            "summary": "Deletar uma denúncia especificada. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
+            "parameters": [
+                {
+                    "name": "reportId",
+                    "in": "path",
+                    "description": "ID da Denúncia",
+                    "schema": {
+                        "type": "text"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Denúncia deletada com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Denúncia deletada com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao deletar denúncia",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao deletar denúncia"
                                 }, 
                                 "properties": {
                                     "data": {

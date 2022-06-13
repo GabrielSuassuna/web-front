@@ -29,11 +29,13 @@ export class LecturingService {
               disciplineCode,
               professorName,
               professorSiape,
-              professorDepartment,
+              professorDepartmentName,
+              professorDepartmentId,
             } = request.query as any
             
-            const lecturingFilter: LecturingFilter = { disciplineName, disciplineCode, professorName, professorSiape, professorDepartment, }
+            const lecturingFilter: LecturingFilter = { disciplineName, disciplineCode, professorName, professorSiape, professorDepartmentName, professorDepartmentId}
 
+            console.log(lecturingFilter)
             //const toBeFoundLecturings: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll()
             const toBeFoundLecturings: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll(lecturingFilter)
 

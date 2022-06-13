@@ -155,7 +155,6 @@ export const FeedbackPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "id": "1",
                             "lecturing_id": "1",
                             "student_id": "1",
                             "title": "Ótimo professor!",

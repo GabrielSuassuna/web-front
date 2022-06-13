@@ -7,6 +7,7 @@ import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
 import { PostDepartment } from '../Interfaces/Post/PostDepartment.interface'
 import { PutDepartment } from '../Interfaces/Put/PutDepartment.interface'
+import { ReportInterface } from '../Interfaces/Report.interface'
 
 export class DepartmentService {
     private repositoryUoW: RepositoryUoW
@@ -186,7 +187,26 @@ export class DepartmentService {
             
             await this.repositoryUoW.beginTransaction();
             
+            const department:GetDepartment[] =  await this.repositoryUoW.departmentRepository.getById(departmentId);
+            const coordinatorId = department[0].course_coordinator_id;
+            
+            // Transferência de revisões devido a troca de coordenador de curso
+            if(coordinatorId){
+                const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(coordinatorId)
+                toBeFoundReports.map( async (r) => {
+                    await this.repositoryUoW.reportRepository.update({
+                        status: "ABERTO"
+                    }, r.id);
+                    await this.repositoryUoW.reportLogRepository.create({
+                        date: new Date(),
+                        title: "Feedback denunciado",
+                        description: "Revisão cancelada devido à troca de coordenador de curso"
+                    }, r.id, coordinatorId);
+                })
+            }
+
             await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, professorId);
+    
 
             await this.repositoryUoW.commit();
 
@@ -217,6 +237,25 @@ export class DepartmentService {
                 return response.status(400).json(setApiResponse<GetProfessor[]>([], errorMessage, departmentError))
 
             await this.repositoryUoW.beginTransaction();
+
+            const department:GetDepartment[] =  await this.repositoryUoW.departmentRepository.getById(departmentId);
+            const departmentHeadId = department[0].department_head_id;
+            console.log(departmentHeadId)
+            // Transferência de revisões devido a troca de chefe de departamento
+            if(departmentHeadId){
+                const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(departmentHeadId)
+                toBeFoundReports.map( async (r) => {
+                    console.log(r)
+                    await this.repositoryUoW.reportRepository.update({
+                        status: "ABERTO"
+                    }, r.id);
+                    await this.repositoryUoW.reportLogRepository.create({
+                        date: new Date(),
+                        title: "Feedback denunciado",
+                        description: "Revisão cancelada devido à troca de chefe de departamento"
+                    }, r.id, departmentHeadId);
+                })
+            }
             
             await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, professorId);
 

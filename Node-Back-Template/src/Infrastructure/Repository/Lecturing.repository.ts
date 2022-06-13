@@ -126,9 +126,13 @@ export class LecturingRepository {
             values.push(`%${lecturingFilter.professorSiape}%`)
             sqlWithFilter += ` AND p.siape LIKE $${values.length}`
         }
-        if(lecturingFilter?.professorDepartment){
-            values.push(`%${lecturingFilter.professorDepartment}%`)
+        if(lecturingFilter?.professorDepartmentName){
+            values.push(`%${lecturingFilter.professorDepartmentName}%`)
             sqlWithFilter += ` AND dpt.name LIKE $${values.length}`
+        }
+        if(lecturingFilter?.professorDepartmentId){
+            values.push(`%${lecturingFilter.professorDepartmentId}%`)
+            sqlWithFilter += ` AND p.department_id = $${values.length}`
         }
         
         return { sqlWithFilter, valuesWithFilter }

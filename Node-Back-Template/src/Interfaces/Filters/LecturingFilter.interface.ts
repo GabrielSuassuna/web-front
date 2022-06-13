@@ -3,5 +3,6 @@ export interface LecturingFilter {
   disciplineCode: string
   professorName: string
   professorSiape: string
-  professorDepartment: string
+  professorDepartmentName: string
+  professorDepartmentId: string
 }
