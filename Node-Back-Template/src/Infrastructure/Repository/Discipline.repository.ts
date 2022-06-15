@@ -71,7 +71,7 @@ export class DisciplineRepository {
         return newId;
     }
     
-    public async update(discipline: PutDiscipline, disciplineId: string): Promise<void> {
+    public async update(discipline: PutDiscipline, disciplineId: string): Promise<GetDiscipline[]> {
         const SQL = `
             UPDATE discipline
             SET code = $1,
@@ -79,6 +79,7 @@ export class DisciplineRepository {
                 description = $3,
                 hours = $4
             WHERE id = $5
+            RETURNING *
         `
         const values = [
             discipline.code,
@@ -88,7 +89,7 @@ export class DisciplineRepository {
             disciplineId
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(disciplineId: string): Promise<void> {

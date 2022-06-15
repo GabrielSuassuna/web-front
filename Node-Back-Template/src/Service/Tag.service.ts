@@ -88,6 +88,7 @@ export class TagService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Tag atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar tag"
+        const notFoundMessage: string = "Tag não encontrada"
         
         let result: GetTag[] = []
     
@@ -97,11 +98,16 @@ export class TagService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.tagRepository.update(toBeupdatedTag, tagId)
+            const updatedTags = await this.repositoryUoW.tagRepository.update(toBeupdatedTag, tagId)
 
+            if(updatedTags.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetTag[]>(result, errorMessage, notFoundMessage))
+            }
+            
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.tagRepository.getById(tagId)
+            result = updatedTags
 
             return response.status(200).json(setApiResponse<GetTag[]>(result, sucessMessage))
         }

@@ -103,7 +103,7 @@ export class DepartmentRepository {
         return newId;
     }
     
-    public async update(department: PutDepartment, departmentId: string): Promise<void> {
+    public async update(department: PutDepartment, departmentId: string): Promise<GetDepartment[]> {
         const SQL = `
             UPDATE department
             SET name = $1,
@@ -111,6 +111,7 @@ export class DepartmentRepository {
                 course_coordinator_id = $3,
                 department_head_id = $4
             WHERE id = $5
+            RETURNING *
         `
         const values = [
             department.name,
@@ -120,7 +121,7 @@ export class DepartmentRepository {
             departmentId
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async updateCourseCoordinator(departmentId: string, professorId?: string): Promise<void> {

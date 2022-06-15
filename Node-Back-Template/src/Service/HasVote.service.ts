@@ -44,6 +44,7 @@ export class HasVoteService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Interação atualizada com sucesso"
         const errorMessage: string = "Erro ao atualizar interação"
+        const notFoundMessage: string = "Interação não encontrada"
         
         let result: GetHasVote[] = []
     
@@ -56,11 +57,16 @@ export class HasVoteService {
 
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.hasVoteRepository.update(toBeupdatedHasVote, feedbackId, studentId)
+            const updatedVotes = await this.repositoryUoW.hasVoteRepository.update(toBeupdatedHasVote, feedbackId, studentId)
+
+            if(updatedVotes.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetHasVote[]>(result, errorMessage, notFoundMessage))
+            }
 
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.hasVoteRepository.getByFeedbackAndStudent(feedbackId, studentId)
+            result = updatedVotes
 
             return response.status(200).json(setApiResponse<GetHasVote[]>(result, sucessMessage))
         }

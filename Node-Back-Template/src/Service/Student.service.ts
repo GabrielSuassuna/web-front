@@ -43,6 +43,7 @@ export class StudentService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Estudante atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar estudante"
+        const notFoundMessage: string = "Estudante não encontrado"
         
         let result: GetStudent[] = []
     
@@ -52,11 +53,16 @@ export class StudentService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.studentRepository.update(toBeupdatedStudent, studentId)
+            const updatedStudents = await this.repositoryUoW.studentRepository.update(toBeupdatedStudent, studentId)
 
+            if(updatedStudents.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetStudent[]>(result, errorMessage, notFoundMessage))
+            }
+            
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.studentRepository.getById(studentId)
+            result = updatedStudents
 
             return response.status(200).json(setApiResponse<GetStudent[]>(result, sucessMessage))
         }

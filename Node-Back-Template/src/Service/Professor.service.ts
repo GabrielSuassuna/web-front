@@ -100,6 +100,7 @@ export class ProfessorService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Professor atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar professor"
+        const notFoundMessage: string = "Professor não encontrado"
         
         let result: GetProfessor[] = []
     
@@ -109,11 +110,16 @@ export class ProfessorService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.professorRepository.update(toBeupdatedProfessor, professorId)
+            const updatedProfessors = await this.repositoryUoW.professorRepository.update(toBeupdatedProfessor, professorId)
+
+            if(updatedProfessors.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetProfessor[]>(result, errorMessage, notFoundMessage))
+            }
 
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.professorRepository.getById(professorId)
+            result = updatedProfessors
 
             return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage))
         }

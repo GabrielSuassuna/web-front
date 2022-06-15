@@ -36,6 +36,7 @@ export class ReportService {
                 authorName, 
                 authorSiape
             } = request.query as any
+
             
             const reportFilter: ReportFilter = { feedbackName, authorName, authorSiape }
 
@@ -45,8 +46,8 @@ export class ReportService {
             if(viewerId != department[0].course_coordinator_id && viewerId != department[0].department_head_id)
               return response.status(401).json(setApiResponse<ReportInterface[]>(result, notAuthorizedMessage))
 
-            //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAll(reportFilter)
-            const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id)
+            const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id, reportFilter)
+            //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id)
 
             if(!!toBeFoundReports.length){
                 return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))
@@ -203,6 +204,7 @@ export class ReportService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Report atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar report"
+        const notFoundMessage: string = "Report não encontrado"
         
         let result: GetReport[] = []
     
@@ -225,8 +227,13 @@ export class ReportService {
               status: toBeupdatedReport.status
             }
             
-            await this.repositoryUoW.reportRepository.update(toBeUpdatedReportLog, reportId)
+            const updatedReports = await this.repositoryUoW.reportRepository.update(toBeUpdatedReportLog, reportId)
             
+            if(updatedReports.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetReport[]>(result, errorMessage, notFoundMessage))
+            }
+
             const toBeFoundReport: GetReport[] = await this.repositoryUoW.reportRepository.getById(reportId)
             const toBeFoundFeedback: GetFeedback[] = await this.repositoryUoW.feedbackRepository.getById(toBeFoundReport[0].feedback_id)
             const toBeFoundLogs: GetReportLog[] = await this.repositoryUoW.reportLogRepository.getAll(reportId)

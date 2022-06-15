@@ -98,6 +98,7 @@ export class DisciplineService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Disciplina atualizada com sucesso"
         const errorMessage: string = "Erro ao atualizar disciplina"
+        const notFoundMessage: string = "Disciplina não encontrada"
         
         let result: GetDiscipline[] = []
     
@@ -107,11 +108,16 @@ export class DisciplineService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.disciplineRepository.update(toBeupdatedDiscipline, disciplineId)
+            const updatedDisciplines = await this.repositoryUoW.disciplineRepository.update(toBeupdatedDiscipline, disciplineId)
+
+            if(updatedDisciplines.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetDiscipline[]>(result, errorMessage, notFoundMessage))
+            }
 
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.disciplineRepository.getById(disciplineId)
+            result = updatedDisciplines
 
             return response.status(200).json(setApiResponse<GetDiscipline[]>(result, sucessMessage))
         }

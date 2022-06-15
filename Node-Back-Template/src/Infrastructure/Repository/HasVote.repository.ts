@@ -80,12 +80,13 @@ export class HasVoteRepository {
         return newId;
     }
     
-    public async update(hasVote: PutHasVote, feedbackId: string, studentId: string): Promise<void> {
+    public async update(hasVote: PutHasVote, feedbackId: string, studentId: string): Promise<GetHasVote[]> {
         const SQL = `
             UPDATE has_vote
             SET is_upvote = $1
             WHERE feedback_id = $2
                 AND student_id = $3
+            RETURNING *
         `
         const values = [
           hasVote.is_upvote,
@@ -95,7 +96,7 @@ export class HasVoteRepository {
 
         console.log(values)
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(feedbackId: string, studentId: string): Promise<void> {

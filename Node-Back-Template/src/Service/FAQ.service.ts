@@ -65,6 +65,7 @@ export class FAQService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Pergunta atualizada com sucesso"
         const errorMessage: string = "Erro ao atualizar pergunta"
+        const notFoundMessage: string = "Pergunta não encontrada"
         
         let result: GetFAQ[] = []
     
@@ -74,11 +75,16 @@ export class FAQService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.faqRepository.update(toBeupdatedStudent, faqId)
+            const updatedFaqs = await this.repositoryUoW.faqRepository.update(toBeupdatedStudent, faqId)
+
+            if(updatedFaqs.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetFAQ[]>(result, errorMessage, notFoundMessage))
+            }
 
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.faqRepository.getById(faqId)
+            result = updatedFaqs
 
             return response.status(200).json(setApiResponse<GetFAQ[]>(result, sucessMessage))
         }

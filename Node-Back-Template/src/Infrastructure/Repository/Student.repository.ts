@@ -63,13 +63,14 @@ export class StudentRepository {
         return newId;
     }
     
-    public async update(student: PutStudent, studentId: string): Promise<void> {
+    public async update(student: PutStudent, studentId: string): Promise<GetStudent[]> {
         const SQL = `
-            UPDATE student
-            SET registration = $1,
-                name = $2,
-                password = $3
-            WHERE id = $4
+        UPDATE student
+        SET registration = $1,
+            name = $2,
+            password = $3
+        WHERE id = $4
+        RETURNING *
         `
         const values = [
             student.registration,
@@ -78,7 +79,7 @@ export class StudentRepository {
             studentId
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(studentId: string): Promise<void> {

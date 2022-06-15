@@ -60,12 +60,13 @@ export class TagRepository {
         return newId;
     }
     
-    public async update(tag: PutTag, tagId: string): Promise<void> {
+    public async update(tag: PutTag, tagId: string): Promise<GetTag[]> {
         const SQL = `
             UPDATE tag
             SET name = $1,
                 description = $2
             WHERE id = $3
+            RETURNING *
         `
         const values = [
             tag.name,
@@ -73,7 +74,7 @@ export class TagRepository {
             tagId
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(tagId: string): Promise<void> {

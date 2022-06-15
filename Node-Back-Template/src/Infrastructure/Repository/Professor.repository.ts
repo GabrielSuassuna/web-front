@@ -77,7 +77,7 @@ export class ProfessorRepository {
         return newId;
     }
     
-    public async update(professor: PutProfessor, professorId: string): Promise<void> {
+    public async update(professor: PutProfessor, professorId: string): Promise<GetProfessor[]> {
         const SQL = `
             UPDATE professor
             SET siape = $1,
@@ -87,6 +87,7 @@ export class ProfessorRepository {
                 lattes_url = $5,
                 department_id = $6
             WHERE id = $7 
+            RETURNING *
         `
         const values = [
           professor.siape,
@@ -98,7 +99,7 @@ export class ProfessorRepository {
           professorId,
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(professorId: string): Promise<void> {

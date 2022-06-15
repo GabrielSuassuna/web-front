@@ -60,12 +60,13 @@ export class FAQRepository {
         return newId;
     }
     
-    public async update(faq: PutFAQ, faqId: string): Promise<void> {
+    public async update(faq: PutFAQ, faqId: string): Promise<GetFAQ[]> {
         const SQL = `
             UPDATE faq
             SET question = $1,
                 answer = $2
             WHERE id = $3
+            RETURNING *
         `
         const values = [
             faq.question,
@@ -73,7 +74,7 @@ export class FAQRepository {
             faqId
         ]
         
-        await this.queryHandler.runQuery(SQL, values)
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(faqId: string): Promise<void> {

@@ -123,6 +123,7 @@ export class DepartmentService {
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Departamento atualizado com sucesso"
         const errorMessage: string = "Erro ao atualizar departamento"
+        const notFoundMessage: string = "Departamento não encontrado"
         
         let result: GetDepartment[] = []
     
@@ -132,11 +133,16 @@ export class DepartmentService {
             
             await this.repositoryUoW.beginTransaction();
             
-            await this.repositoryUoW.departmentRepository.update(toBeupdatedDepartment, departmentId)
+            const updatedDepartments = await this.repositoryUoW.departmentRepository.update(toBeupdatedDepartment, departmentId)
+
+            if(updatedDepartments.length == 0){
+                await this.repositoryUoW.rollback();
+                return response.status(404).json(setApiResponse<GetDepartment[]>(result, errorMessage, notFoundMessage))
+            }
 
             await this.repositoryUoW.commit();
 
-            result = await this.repositoryUoW.departmentRepository.getById(departmentId)
+            result = updatedDepartments
 
             return response.status(200).json(setApiResponse<GetDepartment[]>(result, sucessMessage))
         }
