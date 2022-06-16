@@ -8,4 +8,6 @@ export interface FeedbackInterface {
   general_score: number
   date: Date
   tags: string[]
+  upvote_count: number
+  downvote_count: number
 }

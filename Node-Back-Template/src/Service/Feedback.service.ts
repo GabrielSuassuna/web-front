@@ -43,6 +43,8 @@ export class FeedbackService {
                 toBeFoundFeedbacks[i].tags = toBeFoundTags.map(t => t.tag_name)
             }
 
+            console.log(toBeFoundFeedbacks[0])
+
             if(!!toBeFoundFeedbacks.length){
                 return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
             }
