@@ -76,6 +76,7 @@ export class LecturingService {
     public async create(request: Request, response: Response){    
         const sucessMessage: string = "Disciplina ministrada criada com sucesso"
         const errorMessage: string = "Erro ao criar disciplina ministrada"
+        const alreadyExistsMsg: string = "Disciplina ministrada já registrada no sistema"
         
         let result: GetLecturing[] = []
     
@@ -84,6 +85,12 @@ export class LecturingService {
             const { discipline_id, professor_id } = toBeCreatedLecturing
 
             await this.repositoryUoW.beginTransaction();
+            
+            const numberOfReg = await this.repositoryUoW.lecturingRepository.getByProfessorAndDiscipline(professor_id, discipline_id);
+            if(numberOfReg.length != 0){
+                await this.repositoryUoW.rollback();
+                return response.status(400).json(setApiResponse<GetLecturing[]>(numberOfReg, errorMessage, alreadyExistsMsg))
+            }
             
             const lecturingId: string = await this.repositoryUoW.lecturingRepository.create(professor_id, discipline_id)
 

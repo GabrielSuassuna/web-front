@@ -18,15 +18,15 @@ export class ControllerUoW{
     constructor(){
         this.controllers = [
             new AuthController(),
-            new ProfessorController(),
-            //new StudentController(),
+            //new ProfessorController(),
+            new StudentController(),
             //new FAQController(),
             //new TagController(),
             new DisciplineController(),
             new LecturingController(),
             //new NotificationController(),
             new DepartmentController(),
-            new FeedbackController(),
+            //new FeedbackController(),
             //new HasVoteController(),
             new ReportController(),
         ]

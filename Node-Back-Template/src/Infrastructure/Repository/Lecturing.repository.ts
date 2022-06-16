@@ -62,6 +62,23 @@ export class LecturingRepository {
 
     }
 
+    public async getByProfessorAndDiscipline(professorId: string, disciplineId: string): Promise<GetLecturing[]>{
+        const SQL = `
+            SELECT *
+            FROM lecturing as l
+            WHERE l.professor_id = $1
+                AND l.discipline_id = $2
+        `
+
+        const values = [
+            professorId,
+            disciplineId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
     public async create(professorId: string, disciplineId: string): Promise<string> {
         const newId = await this.queryHandler.getSequence("lecturing")
         
