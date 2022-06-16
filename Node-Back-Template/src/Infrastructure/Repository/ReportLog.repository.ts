@@ -128,4 +128,18 @@ export class ReportLogRepository {
 
         await this.queryHandler.runQuery(SQL, values)
     }
+
+    public async deleteByFeedbackId(feedbackId: string): Promise<void> {
+        const SQL = `
+            DELETE FROM report_log
+            USING report_log as rl
+                INNER JOIN report as r ON rl.report_id = r.id
+            WHERE r.feedback_id = $1
+        `
+        const values = [
+            feedbackId,
+        ]
+
+        await this.queryHandler.runQuery(SQL, values)
+    }
 }

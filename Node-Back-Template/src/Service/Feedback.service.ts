@@ -178,6 +178,9 @@ export class FeedbackService {
 
             const tagsArray = toBeFoundTags.map(t => t.tag_name);
 
+            console.log(feedbackId)
+            console.log(toBeFoundFeedback)
+
             result = [{
                 ...toBeFoundFeedback[0],
                 tags: tagsArray
@@ -204,6 +207,10 @@ export class FeedbackService {
             
             await this.repositoryUoW.beginTransaction();
 
+            await this.repositoryUoW.reportLogRepository.deleteByFeedbackId(feedbackId)
+            await this.repositoryUoW.reportRepository.deleteByFeedbackId(feedbackId)
+            await this.repositoryUoW.hasTagRepository.deleteByFeedbackId(feedbackId)
+            await this.repositoryUoW.hasVoteRepository.deleteByFeedbackId(feedbackId)
             await this.repositoryUoW.feedbackRepository.delete(feedbackId)
             await this.repositoryUoW.commit();
 

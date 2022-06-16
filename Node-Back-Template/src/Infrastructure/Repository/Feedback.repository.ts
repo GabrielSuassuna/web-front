@@ -34,9 +34,15 @@ export class FeedbackRepository {
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
-                        SUM(CASE WHEN hv.is_upvote IS TRUE THEN 0 ELSE 1 END) as downvote_count
+                        SUM(
+                            CASE 
+                                WHEN hv.is_upvote IS TRUE THEN 0 
+                                WHEN hv.is_upvote IS NULL THEN 0
+                                ELSE 1
+                            END
+                        ) as downvote_count
                     FROM feedback as fe
-                        INNER JOIN has_vote as hv on fe.id = hv.feedback_id
+                        LEFT OUTER JOIN has_vote as hv on fe.id = hv.feedback_id
                     GROUP BY fe.id
                 ) as i on i.feedback_id = f.id
         `
@@ -68,9 +74,15 @@ export class FeedbackRepository {
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
-                        SUM(CASE WHEN hv.is_upvote IS TRUE THEN 0 ELSE 1 END) as downvote_count
+                        SUM(
+                            CASE 
+                                WHEN hv.is_upvote IS TRUE THEN 0 
+                                WHEN hv.is_upvote IS NULL THEN 0
+                                ELSE 1
+                            END
+                        ) as downvote_count
                     FROM feedback as fe
-                        INNER JOIN has_vote as hv on fe.id = hv.feedback_id
+                        LEFT OUTER JOIN has_vote as hv on fe.id = hv.feedback_id
                     GROUP BY fe.id
                 ) as i on i.feedback_id = f.id
             WHERE f.student_id = $1
@@ -105,9 +117,15 @@ export class FeedbackRepository {
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
-                        SUM(CASE WHEN hv.is_upvote IS TRUE THEN 0 ELSE 1 END) as downvote_count
+                        SUM(
+                            CASE 
+                                WHEN hv.is_upvote IS TRUE THEN 0 
+                                WHEN hv.is_upvote IS NULL THEN 0
+                                ELSE 1
+                            END
+                        ) as downvote_count
                     FROM feedback as fe
-                        INNER JOIN has_vote as hv on fe.id = hv.feedback_id
+                        LEFT OUTER JOIN has_vote as hv on fe.id = hv.feedback_id
                     GROUP BY fe.id
                 ) as i on i.feedback_id = f.id
             WHERE l.professor_id = $1
@@ -148,9 +166,15 @@ export class FeedbackRepository {
             INNER JOIN (
                 SELECT fe.id as feedback_id, 
                     SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
-                    SUM(CASE WHEN hv.is_upvote IS TRUE THEN 0 ELSE 1 END) as downvote_count
+                    SUM(
+                        CASE 
+                            WHEN hv.is_upvote IS TRUE THEN 0 
+                            WHEN hv.is_upvote IS NULL THEN 0
+                            ELSE 1
+                        END
+                    ) as downvote_count
                 FROM feedback as fe
-                    INNER JOIN has_vote as hv on fe.id = hv.feedback_id
+                    LEFT OUTER JOIN has_vote as hv on fe.id = hv.feedback_id
                 GROUP BY fe.id
             ) as i on i.feedback_id = f.id
         WHERE f.id = $1

@@ -113,4 +113,16 @@ export class HasVoteRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    public async deleteByFeedbackId(feedbackId: string): Promise<void> {
+        const SQL = `
+            DELETE FROM has_vote
+            WHERE feedback_id = $1
+        `
+        const values = [
+            feedbackId,
+        ]
+
+        await this.queryHandler.runQuery(SQL, values)
+    }
+
 }

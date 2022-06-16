@@ -158,6 +158,18 @@ export class ReportRepository {
         await this.queryHandler.runQuery(SQL, values)
     }
 
+    public async deleteByFeedbackId(feedbackId: string): Promise<void> {
+        const SQL = `
+            DELETE FROM report
+            WHERE feedback_id = $1
+        `
+        const values = [
+            feedbackId,
+        ]
+
+        await this.queryHandler.runQuery(SQL, values)
+    }
+
     private applyGetAllFilters(SQL: string, values: any[], reportFilter: ReportFilter | null = null){
         let sqlWithFilter = SQL
         let valuesWithFilter = values
