@@ -132,9 +132,9 @@ export class ReportLogRepository {
     public async deleteByFeedbackId(feedbackId: string): Promise<void> {
         const SQL = `
             DELETE FROM report_log
-            USING report_log as rl
-                INNER JOIN report as r ON rl.report_id = r.id
-            WHERE r.feedback_id = $1
+            USING report
+            WHERE report_log.report_id = report.id
+                AND report.feedback_id = $1
         `
         const values = [
             feedbackId,
