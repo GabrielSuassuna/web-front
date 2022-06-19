@@ -32,13 +32,12 @@ export class ReportService {
             
             const { 
                 viewerId,
-                feedbackName, 
                 authorName, 
                 authorSiape
             } = request.query as any
 
             
-            const reportFilter: ReportFilter = { feedbackName, authorName, authorSiape }
+            const reportFilter: ReportFilter = { authorName, authorSiape }
 
             const viewer: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(viewerId);
             const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(viewer[0].department_id);
@@ -71,16 +70,15 @@ export class ReportService {
         
           const authorId: string = request.params.professorId
           const { 
-              feedbackName, 
               reviewerName, 
               reviewerSiape,
               status,
           } = request.query as any
           
-          const reportFilter: ReportFilter = { feedbackName, reviewerName, reviewerSiape, status }
+          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status }
 
           //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
-          const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId)
+          const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
 
           if(!!toBeFoundReports.length){
               return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))
@@ -104,16 +102,15 @@ export class ReportService {
         
           const reviewerId: string = request.params.professorId
           const { 
-              feedbackName, 
               authorName, 
               authorSiape,
               status,
           } = request.query as any
           
-          const reportFilter: ReportFilter = { feedbackName, authorName, authorSiape, status }
+          const reportFilter: ReportFilter = { authorName, authorSiape, status }
 
           //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
-          const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId)
+          const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
 
           if(!!toBeFoundReports.length){
               return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))

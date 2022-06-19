@@ -26,13 +26,13 @@ export class ReportRepository {
     public async getAllOpen(viewerId: string, departmentId: string, reportFilter: ReportFilter | null = null): Promise<ReportInterface[]>{
         const SQL = `
             SELECT r.*, 
-                p.name as author_name,
-                p.siape as author_siape  
+                au.name as author_name,
+                au.siape as author_siape  
             FROM report as r
-                INNER JOIN professor as p on r.author_id = p.id
+                INNER JOIN professor as au on r.author_id = au.id
             WHERE status like $1
                 AND r.author_id != $2
-                AND p.department_id = $3
+                AND au.department_id = $3
         `
 
         const values = [
@@ -41,7 +41,9 @@ export class ReportRepository {
             departmentId,
         ]
 
-        return await this.queryHandler.runQuery(SQL, values)
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, reportFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getAllByAuthor(authorId: string, reportFilter: ReportFilter | null = null): Promise<ReportInterface[]>{
@@ -61,7 +63,9 @@ export class ReportRepository {
             authorId
         ]
 
-        return await this.queryHandler.runQuery(SQL, values)
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, reportFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getAllByReviewer(reviewerId: string, reportFilter: ReportFilter | null = null): Promise<ReportInterface[]>{
@@ -81,7 +85,9 @@ export class ReportRepository {
             reviewerId
         ]
 
-        return await this.queryHandler.runQuery(SQL, values)
+        const { sqlWithFilter, valuesWithFilter } = this.applyGetAllFilters(SQL, values, reportFilter)
+        
+        return await this.queryHandler.runQuery(sqlWithFilter, valuesWithFilter)
     }
 
     public async getById(reportId: string): Promise<GetReport[]>{
@@ -176,30 +182,25 @@ export class ReportRepository {
 
         if(values.length === 0)
             sqlWithFilter += 'WHERE 0=0'
-
-        if(reportFilter?.feedbackName){
-            values.push(`%${reportFilter.feedbackName}%`)
-            sqlWithFilter += ` AND p.name LIKE $${values.length}`
-        }
         if(reportFilter?.authorName){
             values.push(`%${reportFilter.authorName}%`)
-            sqlWithFilter += ` AND p.siape LIKE $${values.length}`
+            sqlWithFilter += ` AND au.name LIKE $${values.length}`
         }
         if(reportFilter?.authorSiape){
             values.push(`%${reportFilter.authorSiape}%`)
-            sqlWithFilter += ` AND d.name LIKE $${values.length}`
+            sqlWithFilter += ` AND au.siape LIKE $${values.length}`
         }
         if(reportFilter?.reviewerName){
             values.push(`%${reportFilter.reviewerName}%`)
-            sqlWithFilter += ` AND d.code LIKE $${values.length}`
+            sqlWithFilter += ` AND re.name LIKE $${values.length}`
         }
         if(reportFilter?.reviewerSiape){
             values.push(`%${reportFilter.reviewerSiape}%`)
-            sqlWithFilter += ` AND f.title LIKE $${values.length}`
+            sqlWithFilter += ` AND re.siape LIKE $${values.length}`
         }
         if(reportFilter?.status){
             values.push(`%${reportFilter.status}%`)
-            sqlWithFilter += ` AND f.title LIKE $${values.length}`
+            sqlWithFilter += ` AND r.status LIKE $${values.length}`
         }
         
         return { sqlWithFilter, valuesWithFilter }

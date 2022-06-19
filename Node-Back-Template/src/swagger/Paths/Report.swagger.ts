@@ -16,14 +16,6 @@ export const ReportPaths = {
                     }
                 },
                 {
-                    "name": "feedbackName",
-                    "in": "query",
-                    "description": "Nome do feedback",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
                     "name": "authorName",
                     "in": "query",
                     "description": "Nome do autor da denúncia",
@@ -336,14 +328,6 @@ export const ReportPaths = {
                     }
                 },
                 {
-                    "name": "feedbackName",
-                    "in": "query",
-                    "description": "Nome do feedback",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
                     "name": "reviewerName",
                     "in": "query",
                     "description": "Nome do revisor da denúncia",
@@ -534,14 +518,6 @@ export const ReportPaths = {
                     }
                 },
                 {
-                    "name": "feedbackName",
-                    "in": "query",
-                    "description": "Nome do feedback",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
                     "name": "authorName",
                     "in": "query",
                     "description": "Nome do autor da denúncia",
@@ -553,14 +529,6 @@ export const ReportPaths = {
                     "name": "authorSiape",
                     "in": "query",
                     "description": "SIAPE do autor da denúncia",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "status",
-                    "in": "query",
-                    "description": "Status da denúncia",
                     "schema": {
                         "type": "string"
                     }
