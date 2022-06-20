@@ -43,6 +43,23 @@ export class StudentRepository {
 
     }
 
+    public async getByFeedbackId(feedbackId: string): Promise<GetStudent[]>{
+        const SQL = `   
+        SELECT 
+            s.id
+        FROM student as s
+            INNER JOIN feedback as f on s.id = f.student_id
+        WHERE f.id = $1
+        `
+
+        const values = [
+            feedbackId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
     public async create(student: PostStudent): Promise<string> {
         const newId = await this.queryHandler.getSequence("student")
         

@@ -12,6 +12,8 @@ import { PostReportLog } from '../Interfaces/Post/PostReportLog.interface'
 import { PutReportUpdate } from '../Interfaces/Put/PutReportUpdate.interface'
 import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
+import { PostStudentNotification } from '../Interfaces/Post/PostStudentNotification.interface'
+import { PostProfessorNotification } from '../Interfaces/Post/PostProfessorNotification.interface'
 
 export class ReportService {
     private repositoryUoW: RepositoryUoW
@@ -190,6 +192,14 @@ export class ReportService {
                 logs: toBeFoundLogs
               }
             ]
+
+            const student = await this.repositoryUoW.studentRepository.getByFeedbackId(feedbackId)
+            const notification: PostStudentNotification = {
+                student_id: student[0].id,
+                message: "Seu feedback foi denunciado, não se preocupe, você permanece anônimo, mas tente não fazer isso de novo."
+            }
+            await this.repositoryUoW.studentNotificationRepository.create(notification, student[0].id);
+
             return response.status(200).json(setApiResponse<GetReport[]>(toBeFoundReport, sucessMessage))
         }
         catch(err: any){
@@ -244,6 +254,14 @@ export class ReportService {
                 logs: toBeFoundLogs
               }
             ]
+
+            if(toBeupdatedReport.authorId != toBeFoundReport[0].author_id){
+                const notification: PostProfessorNotification = {
+                    professor_id: toBeFoundReport[0].author_id,
+                    message: "Houve uma atualização na sua denúncia."
+                }
+                await this.repositoryUoW.professorNotificationRepository.create(notification, toBeFoundReport[0].author_id);
+            }
 
             return response.status(200).json(setApiResponse<GetReport[]>(result, sucessMessage))
         }
