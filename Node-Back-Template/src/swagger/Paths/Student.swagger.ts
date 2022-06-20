@@ -102,7 +102,7 @@ export const StudentPaths = {
                         "required": ["data", "message"],
                         "example": {    
                             "registration": "222222",
-                            "name": "Pedro Matrus",
+                            "name": "Pedro Mateus",
                             "password": "SDCSGERCEFSDC",
                         },
                         "schema": {
@@ -124,7 +124,7 @@ export const StudentPaths = {
                                         {    
                                             "id": "1",
                                             "registration": "222222",
-                                            "name": "Pedro Matrus",
+                                            "name": "Pedro Mateus",
                                         }
                                     ],
                                     "message" : "Estudante atualizado com sucesso"

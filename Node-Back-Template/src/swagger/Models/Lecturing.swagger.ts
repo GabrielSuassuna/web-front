@@ -1,34 +1,28 @@
 export const Lecturing = {
-    "required": ["id", "disciplineId", "disciplineName", "disciplineCode", "professorId", "professorName", "professorSiape", "professorDepartment", "averageScore", "numberOfFeedbacks"],
+    "required": ["id", "discipline_id", "discipline_name", "discipline_code", "professor_id", "professor_name", "professor_siape", "professor_department", "average_score", "feedback_count"],
     "properties": {
         "id": {
             "type": "string",
         },
-        "disciplineId": {
+        "discipline_name": {
             "type": "string",
         },
-        "disciplineName": {
-            "type": "string",
-        },
-        "disciplineCode": {
+        "discipline_code": {
             "type": "string"
         },
-        "professorId": {
+        "professor_name": {
             "type": "string"
         },
-        "professorName": {
+        "professor_siape": {
             "type": "string"
         },
-        "professorSiape": {
+        "professor_department": {
             "type": "string"
         },
-        "professorDepartment": {
-            "type": "string"
-        },
-        "averageScore": {
+        "average_score": {
             "type": "number"
         },
-        "numberOfFeedbacks": {
+        "feedback_count": {
             "type": "number"
         },
     }

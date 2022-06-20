@@ -25,12 +25,14 @@ export const DepartmentPaths = {
                                         {
                                             "id": "1",
                                             "name": "Departamento de Computação",
+                                            "descriprion": "Departamento de...",
                                             "course_coodinator_id": "1",
                                             "department_head": "2"
                                         },
                                         {
                                             "id": "2",
                                             "name": "Departamento de Matemática Industrial",
+                                            "descriprion": "Departamento de...",
                                             "course_coodinator_id": "4",
                                             "department_head": "3"
                                         },
@@ -116,9 +118,7 @@ export const DepartmentPaths = {
                         "required": ["data", "message"],
                         "example": {    
                             "name": "Departamento de Estatística",
-                            "description": "Departamento especializado em estatística aplicada",
-                            "course_coodinator_id": undefined,
-                            "department_head": undefined
+                            "description": "Departamento de...",
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostDepartment"
@@ -138,7 +138,10 @@ export const DepartmentPaths = {
                                     "data": [
                                         {
                                             "id": "3",
-                                            "description": "Departamento de Estatística",
+                                            "name": "Departamento de Estatística",
+                                            "descriprion": "Departamento de...",
+                                            "course_coodinator_id": null,
+                                            "department_head_id": null
                                         }
                                     ],
                                     "message" : "Departamento criado com sucesso"
@@ -260,8 +263,8 @@ export const DepartmentPaths = {
                         "example": {    
                             "name": "Departamento de Computação",
                             "description": "O departamento da computação...",
-                            "course_coodinator_id": "1",
-                            "department_head": "2"
+                            "courseCoodinatorId": "1",
+                            "departmentHeadId": "2"
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutDepartment"
@@ -280,11 +283,11 @@ export const DepartmentPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
+                                            "id": "3",
                                             "name": "Departamento de Computação",
                                             "description": "O departamento da computação...",
                                             "course_coodinator_id": "1",
-                                            "department_head": "2"
+                                            "department_head_id": "2"
                                         }
                                     ],
                                     "message" : "Departamento atualizado com sucesso"
@@ -479,7 +482,7 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeCoordinator": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",
+            "summary": "Atualiza o coordenador de curso do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. OBS: Mudar o coordenador de curso vai atualizar todas as suas denúncias revisadas para o status 'EM ABERTO'.",
             "security": [{
                 "Bearer": []
             }],
@@ -512,14 +515,11 @@ export const DepartmentPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
-                                            "description": "Rodrigo Marques é professor do departamento...",
-                                            "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": false,
-                                            "is_course_coordinator": true,
+                                            "id": "3",
+                                            "name": "Departamento de Computação",
+                                            "description": "O departamento da computação...",
+                                            "course_coodinator_id": "1",
+                                            "department_head_id": "2"
                                         }
                                     ],
                                     "message" : "Coordenador de curso atualizado com sucesso"
@@ -528,7 +528,7 @@ export const DepartmentPaths = {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
+                                            "$ref": "#/components/schemas/Department"
                                         }
                                     },    
                                     "message": {
@@ -645,7 +645,7 @@ export const DepartmentPaths = {
     "/department/{departmentId}/changeDepartmentHead": {
         "put": {
             "tags": ["Department"],
-            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador.",            
+            "summary": "Atualiza o chefe do departamento. Necessita de autenticação do chefe de departamento, coordenador ou administrador. OBS: Mudar o chefe de departamento vai atualizar todas as suas denúncias revisadas para o status 'EM ABERTO'.",            
             "security": [{
                 "Bearer": []
             }],
@@ -678,14 +678,11 @@ export const DepartmentPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "departmentId": "5",
-                                            "siape": "03042",
-                                            "name": "Rodrigo Marques",
-                                            "description": "Rodrigo Marques é professor do departamento...",
-                                            "lattes_url": "lattes.cnpq.br/...",
-                                            "is_head_of_department": true,
-                                            "is_course_coordinator": false,
+                                            "id": "3",
+                                            "name": "Departamento de Computação",
+                                            "description": "O departamento da computação...",
+                                            "course_coodinator_id": "1",
+                                            "department_head_id": "2"
                                         }
                                     ],
                                     "message" : "Chefe de departamento atualizado com sucesso"
@@ -694,7 +691,7 @@ export const DepartmentPaths = {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
+                                            "$ref": "#/components/schemas/Department"
                                         }
                                     },    
                                     "message": {

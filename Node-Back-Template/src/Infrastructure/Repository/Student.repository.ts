@@ -15,15 +15,24 @@ export class StudentRepository {
 
     public async getAll(): Promise<StudentInterface[]>{
         const SQL = `
-            SELECT * FROM student
+            SELECT 
+                id,
+                registration,
+                name
+            FROM student
         `
 
         return await this.queryHandler.runQuery(SQL)
     }
 
     public async getById(studentId: string): Promise<GetStudent[]>{
-        const SQL = `
-            SELECT * FROM student WHERE id = $1
+        const SQL = `   
+        SELECT 
+            id,
+            registration,
+            name
+        FROM student 
+        WHERE id = $1
         `
 
         const values = [

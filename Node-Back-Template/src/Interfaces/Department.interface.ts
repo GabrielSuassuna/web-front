@@ -2,6 +2,6 @@ export interface DepartmentInterface {
   id: string
   name: string
   description: string
-  courseCoordinatorId?: string
-  departmentHeadId?: string
+  course_coordinator_id?: string
+  department_head_id?: string
 }

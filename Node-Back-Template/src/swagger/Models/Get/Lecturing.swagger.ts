@@ -1,44 +1,20 @@
 export const GetLecturing = {
-    "required": ["id", "disciplineId", "disciplineName", "disciplineCode", "professorId", "professorName", "professorSiape", "professorDepartment", "averageScore","numberOfFeedbacks","assiduityScore","clarityScore","relationshipScore",],
+    "required": ["id", "professor_id", "discipline_id", "feedback_count", "average_score"],
     "properties": {
         "id": {
             "type": "string",
         },
-        "disciplineId": {
+        "professor_id": {
             "type": "string",
         },
-        "disciplineName": {
+        "discipline_id": {
             "type": "string",
         },
-        "disciplineCode": {
-            "type": "string"
+        "feedback_count": {
+            "type": "string",
         },
-        "professorId": {
-            "type": "string"
-        },
-        "professorName": {
-            "type": "string"
-        },
-        "professorSiape": {
-            "type": "string"
-        },
-        "professorDepartment": {
-            "type": "string"
-        },
-        "averageScore": {
-            "type": "number"
-        },
-        "numberOfFeedbacks": {
-            "type": "number"
-        },
-        "assiduityScore": {
-            "type": "number"
-        },
-        "clarityScore": {
-            "type": "number"
-        },
-        "relationshipScore": {
-            "type": "number"
+        "average_score": {
+            "type": "string",
         },
     }
 }

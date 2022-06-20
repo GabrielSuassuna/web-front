@@ -1,6 +1,6 @@
 export interface PostReport {
-  feedback_id: string
-  author_id: string
+  feedbackId: string
+  authorId: string
   description: string
   date: Date
 }

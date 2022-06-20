@@ -47,7 +47,7 @@ export class DisciplineService {
     public async getById(request: Request, response: Response){
         const sucessMessage: string = "Disciplina encontrado com sucesso"
         const errorMessage: string = "Erro ao encontrar disciplina"
-        const notFoundMessage: string = "Disciplina não encontrado"
+        const notFoundMessage: string = "Disciplina não encontrada"
     
         let result: GetDiscipline[] = []
     

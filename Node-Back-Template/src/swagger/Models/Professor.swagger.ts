@@ -1,10 +1,10 @@
 export const Professor = {
-    "required": ["id", "departmentId", "siape", "name"],
+    "required": ["id", "department_id", "siape", "name"],
     "properties": {
         "id": {
             "type": "string",
         },
-        "departmentId": {
+        "department_id": {
             "type": "string",
         },
         "siape": {

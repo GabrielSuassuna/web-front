@@ -7,10 +7,10 @@ export const PutDepartment = {
         "description": {
             "type": "string"
         },
-        "course_coordinator_id": {
+        "courseCoordinatorId": {
             "type": "string"
         },
-        "department_head_id": {
+        "departmentHeadId": {
             "type": "string"
         },
     }

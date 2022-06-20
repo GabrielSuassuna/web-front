@@ -15,7 +15,10 @@ export class TagRepository {
 
     public async getAll(): Promise<TagInterface[]>{
         const SQL = `
-            SELECT * FROM tag
+            SELECT
+                id,
+                name
+            FROM tag
         `
 
         return await this.queryHandler.runQuery(SQL)

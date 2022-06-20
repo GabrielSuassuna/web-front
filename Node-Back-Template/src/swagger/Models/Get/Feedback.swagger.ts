@@ -4,10 +4,10 @@ export const GetFeedback = {
         "id": {
             "type": "string",
         },
-        "lecturingId": {
+        "lecturing_id": {
             "type": "string",
         },
-        "studentId": {
+        "student_id": {
             "type": "string",
         },
         "title": {
@@ -19,28 +19,28 @@ export const GetFeedback = {
         "period": {
             "type": "string",
         },
-        "generalScore": {
+        "general_score": {
             "type": "string",
         },
-        "assiduityScore": {
+        "assiduity_score": {
             "type": "string",
         },
-        "clarityScore": {
+        "clarity_score": {
             "type": "string",
         },
-        "relationshipScore": {
+        "relationship_score": {
             "type": "string",
         },
         "date": {
             "type": "string",
         },
-        "upvotes": {
-            "type": "string",
+        "upvote_count": {
+            "type": "number",
         },
-        "downvotes": {
-            "type": "string",
+        "downvote_count": {
+            "type": "number",
         },
-        "hasVoted": {
+        "has_voted": {
             "type": "string",
         },
         "tags": {

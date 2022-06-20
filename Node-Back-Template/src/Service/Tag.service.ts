@@ -14,9 +14,9 @@ export class TagService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Tags encontrados com sucesso"
+        const sucessMessage: string = "Tags encontradas com sucesso"
         const errorMessage: string = "Erro ao encontrar tags"
-        const notFoundMessage: string = "Tags não encontrados"
+        const notFoundMessage: string = "Tags não encontradas"
     
         let result: TagInterface[] = []
     
@@ -35,9 +35,9 @@ export class TagService {
     }
 
     public async getById(request: Request, response: Response){
-        const sucessMessage: string = "Tag encontrado com sucesso"
+        const sucessMessage: string = "Tag encontrada com sucesso"
         const errorMessage: string = "Erro ao encontrar tag"
-        const notFoundMessage: string = "Tag não encontrado"
+        const notFoundMessage: string = "Tag não encontrada"
     
         let result: GetTag[] = []
     
@@ -58,7 +58,7 @@ export class TagService {
     }
 
     public async create(request: Request, response: Response){    
-        const sucessMessage: string = "Tag criado com sucesso"
+        const sucessMessage: string = "Tag criada com sucesso"
         const errorMessage: string = "Erro ao criar tag"
         
         let result: GetTag[] = []
@@ -86,7 +86,7 @@ export class TagService {
     }
     
     public async update(request: Request, response: Response){    
-        const sucessMessage: string = "Tag atualizado com sucesso"
+        const sucessMessage: string = "Tag atualizada com sucesso"
         const errorMessage: string = "Erro ao atualizar tag"
         const notFoundMessage: string = "Tag não encontrada"
         
@@ -118,7 +118,7 @@ export class TagService {
     }
 
     public async delete(request: Request, response: Response){    
-        const sucessMessage: string = "Tag deletado com sucesso"
+        const sucessMessage: string = "Tag deletada com sucesso"
         const errorMessage: string = "Erro ao deletar tag"
         
         let result: GetTag[] = []

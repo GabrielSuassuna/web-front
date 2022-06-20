@@ -2,11 +2,9 @@ import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { LecturingFilter } from '../Interfaces/Filters/LecturingFilter.interface'
-import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetLecturing } from '../Interfaces/Get/GetLecturing.interface'
 import { PostLecturing } from '../Interfaces/Post/PostLecturing.interface'
 import { LecturingInterface } from '../Interfaces/Lecturing.interface'
-import { PutLecturing } from '../Interfaces/Put/PutLecturing.interface'
 
 export class LecturingService {
     private repositoryUoW: RepositoryUoW
@@ -35,8 +33,6 @@ export class LecturingService {
             
             const lecturingFilter: LecturingFilter = { disciplineName, disciplineCode, professorName, professorSiape, professorDepartmentName, professorDepartmentId}
 
-            console.log(lecturingFilter)
-            //const toBeFoundLecturings: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll()
             const toBeFoundLecturings: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll(lecturingFilter)
 
             if(!!toBeFoundLecturings.length){
@@ -82,52 +78,22 @@ export class LecturingService {
     
         try{
             const toBeCreatedLecturing: PostLecturing = request.body
-            const { discipline_id, professor_id } = toBeCreatedLecturing
+            const { disciplineId, professorId } = toBeCreatedLecturing
 
             await this.repositoryUoW.beginTransaction();
             
-            const numberOfReg = await this.repositoryUoW.lecturingRepository.getByProfessorAndDiscipline(professor_id, discipline_id);
+            const numberOfReg = await this.repositoryUoW.lecturingRepository.getByProfessorAndDiscipline(professorId, disciplineId);
             if(numberOfReg.length != 0){
                 await this.repositoryUoW.rollback();
                 return response.status(400).json(setApiResponse<GetLecturing[]>(numberOfReg, errorMessage, alreadyExistsMsg))
             }
             
-            const lecturingId: string = await this.repositoryUoW.lecturingRepository.create(professor_id, discipline_id)
+            const lecturingId: string = await this.repositoryUoW.lecturingRepository.create(professorId, disciplineId)
 
             await this.repositoryUoW.commit();
             
-            result.push({
-                id: lecturingId,
-                ...toBeCreatedLecturing, 
-                feedback_count: 0
-            })
-            
-            return response.status(200).json(setApiResponse<GetLecturing[]>(result, sucessMessage))
-        }
-        catch(err: any){
-            await this.repositoryUoW.rollback();
-            return response.status(400).json(setApiResponse<GetLecturing[]>(result, errorMessage, err.message))
-        }
-    }
-    
-    public async update(request: Request, response: Response){    
-        const sucessMessage: string = "Disciplina ministrada atualizada com sucesso"
-        const errorMessage: string = "Erro ao atualizar disciplina ministrada"
-        
-        let result: GetLecturing[] = []
-    
-        try{
-            const toBeupdatedLecturing: PutLecturing = request.body
-            const lecturingId: string = request.params.lecturingId
-            
-            await this.repositoryUoW.beginTransaction();
-            
-            await this.repositoryUoW.lecturingRepository.update(toBeupdatedLecturing, lecturingId)
-
-            await this.repositoryUoW.commit();
-
             result = await this.repositoryUoW.lecturingRepository.getById(lecturingId)
-
+            
             return response.status(200).json(setApiResponse<GetLecturing[]>(result, sucessMessage))
         }
         catch(err: any){

@@ -76,18 +76,15 @@ export class ProfessorService {
     
         try{
             const toBeCreatedProfessor: PostProfessor = request.body
-            const { department_id } = toBeCreatedProfessor
+            const { departmentId } = toBeCreatedProfessor
 
             await this.repositoryUoW.beginTransaction();
             
-            const professorId: string = await this.repositoryUoW.professorRepository.create(toBeCreatedProfessor, department_id)
+            const professorId: string = await this.repositoryUoW.professorRepository.create(toBeCreatedProfessor, departmentId)
 
             await this.repositoryUoW.commit();
             
-            result.push({
-                id: professorId,
-                ...toBeCreatedProfessor, 
-            })
+            result = await this.repositoryUoW.professorRepository.getById(professorId)
             
             return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage))
         }

@@ -226,10 +226,10 @@ export class FeedbackRepository {
           feedback.title,
           feedback.description,
           feedback.period,
-          feedback.general_score,
-          feedback.assiduity_score,
-          feedback.clarity_score,
-          feedback.relationship_score,
+          feedback.generalScore,
+          feedback.assiduityScore,
+          feedback.clarityScore,
+          feedback.relationshipScore,
           feedback.date,
         ]
 

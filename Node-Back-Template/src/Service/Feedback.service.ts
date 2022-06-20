@@ -2,12 +2,9 @@ import { Request, Response } from 'express'
 import { setApiResponse } from '../ApiHandlers/ApiResponse.handler'
 import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { FeedbackFilter } from '../Interfaces/Filters/FeedbackFilter.interface'
-import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetFeedback } from '../Interfaces/Get/GetFeedback.interface'
 import { PostFeedback } from '../Interfaces/Post/PostFeedback.interface'
 import { FeedbackInterface } from '../Interfaces/Feedback.interface'
-import { PutFeedback } from '../Interfaces/Put/PutFeedback.interface'
-import { TagInterface } from '../Interfaces/Tag.interface'
 import { GetHasTag } from '../Interfaces/Get/GetHasTag.interface'
 
 export class FeedbackService {
@@ -163,11 +160,11 @@ export class FeedbackService {
     
         try{
             const toBeCreatedFeedback: PostFeedback = request.body
-            const { lecturing_id, student_id } = toBeCreatedFeedback
+            const { lecturingId, studentId } = toBeCreatedFeedback
 
             await this.repositoryUoW.beginTransaction();
 
-            const feedbackId: string = await this.repositoryUoW.feedbackRepository.create(toBeCreatedFeedback, lecturing_id, student_id)
+            const feedbackId: string = await this.repositoryUoW.feedbackRepository.create(toBeCreatedFeedback, lecturingId, studentId)
 
             for(let tagIndex in toBeCreatedFeedback.tags){
                 await this.repositoryUoW.hasTagRepository.create(feedbackId, toBeCreatedFeedback.tags[tagIndex])

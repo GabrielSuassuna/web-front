@@ -22,7 +22,8 @@ export class LecturingRepository {
                 p.name as professor_name,
                 p.siape as professor_siape,
                 dpt.name as professor_department,
-                fc.feedback_count as feedback_count
+                fc.feedback_count as feedback_count,
+                av.average_score as average_score
             FROM
                 lecturing as l
                 inner join discipline as d on l.discipline_id = d.id
@@ -35,6 +36,13 @@ export class LecturingRepository {
                         LEFT OUTER JOIN feedback as fe  on fe.lecturing_id = le.id
                     GROUP BY le.id
                 ) as fc on l.id = fc.lecturing_id
+                inner join (
+                    SELECT le.id as lecturing_id,
+                        avg(CASE WHEN fe.general_score IS NULL THEN -1 ELSE fe.general_score END) as average_score 
+                    FROM lecturing as le
+                        LEFT OUTER JOIN feedback as fe  on fe.lecturing_id = le.id
+                    GROUP BY le.id
+                ) as av on l.id = av.lecturing_id
         `
 
         let values: any[] = []
@@ -47,9 +55,10 @@ export class LecturingRepository {
     public async getById(lecturingId: string): Promise<GetLecturing[]>{
         const SQL = `
             SELECT l.* as lecturing_id,
-                count(DISTINCT f.id) as feedback_count 
+                count(DISTINCT f.id) as feedback_count ,
+                avg(CASE WHEN f.general_score IS NULL THEN -1 ELSE f.general_score END) as average_score 
             FROM lecturing as l
-                LEFT OUTER JOIN feedback as f  on f.lecturing_id = l.id
+                LEFT OUTER JOIN feedback as f on f.lecturing_id = l.id
             WHERE l.id = $1
             GROUP BY l.id
         `
@@ -103,23 +112,6 @@ export class LecturingRepository {
         await this.queryHandler.runQuery(SQL, values)
         
         return newId;
-    }
-    
-    // TODO: Dar uma olhada nesse update e ver se ele é necessário
-    public async update(lecturing: PutLecturing, lecturingId: string): Promise<void> {
-        const SQL = `
-            UPDATE lecturing
-            SET professor_id = $1,
-                discipline_id = $2
-            WHERE id = $3
-        `
-        const values = [
-          lecturing.professor_id,
-          lecturing.discipline_id,
-          lecturingId,
-        ]
-        
-        await this.queryHandler.runQuery(SQL, values)
     }
 
     public async delete(lecturingId: string): Promise<void> {

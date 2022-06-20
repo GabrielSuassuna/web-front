@@ -16,7 +16,12 @@ export class ProfessorRepository {
 
     public async getAll(professorFilter: ProfessorFilter | null = null): Promise<ProfessorInterface[]>{
         const SQL = `
-            SELECT * FROM professor
+            SELECT 
+                id,
+                department_id,
+                siape,
+                name
+            FROM professor
         `
 
         let values: any[] = []
@@ -28,7 +33,14 @@ export class ProfessorRepository {
 
     public async getById(professorId: string): Promise<GetProfessor[]>{
         const SQL = `
-            SELECT * FROM professor WHERE id = $1
+            SELECT 
+                id,
+                department_id,
+                siape,
+                name,
+                about,
+                lattes_url
+            FROM professor WHERE id = $1
         `
 
         const values = [
@@ -69,7 +81,7 @@ export class ProfessorRepository {
           professor.password,
           professor.name,
           professor.about,
-          professor.lattes_url
+          professor.lattesUrl
         ]
 
         await this.queryHandler.runQuery(SQL, values)
@@ -94,8 +106,8 @@ export class ProfessorRepository {
           professor.password,
           professor.name,
           professor.about,
-          professor.lattes_url,
-          professor.department_id,
+          professor.lattesUrl,
+          professor.departmentId,
           professorId,
         ]
         

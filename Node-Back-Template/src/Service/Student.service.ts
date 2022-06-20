@@ -27,10 +27,7 @@ export class StudentService {
 
             await this.repositoryUoW.commit();
             
-            result.push({
-                id: studentId,
-                ...toBeCreatedStudent, 
-            })
+            result = await this.repositoryUoW.studentRepository.getById(studentId)
             
             return response.status(200).json(setApiResponse<GetStudent[]>(result, sucessMessage))
         }
@@ -62,7 +59,7 @@ export class StudentService {
             
             await this.repositoryUoW.commit();
 
-            result = updatedStudents
+            result = await this.repositoryUoW.studentRepository.getById(studentId)
 
             return response.status(200).json(setApiResponse<GetStudent[]>(result, sucessMessage))
         }

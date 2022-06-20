@@ -14,9 +14,9 @@ export class FAQService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Professor encontrados com sucesso"
-        const errorMessage: string = "Erro ao encontrar professor"
-        const notFoundMessage: string = "Professores não encontrados"
+        const sucessMessage: string = "Perguntas encontrados com sucesso"
+        const errorMessage: string = "Erro ao encontrar perguntas"
+        const notFoundMessage: string = "Perguntas não encontrados"
     
         let result: FAQInterface[] = []
     

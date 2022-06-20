@@ -4,17 +4,24 @@ export const GetReport = {
         "id": {
             "type": "string",
         },
-        "feedbackId": {
+        "feedback_id": {
             "type": "string",
         },
-        "authorId": {
+        "author_id": {
             "type": "string",
         },
-        "reviewerId": {
+        "reviewer_id": {
             "type": "string",
         },
         "status": {
             "type": "string",
-        }
+        },
+        "feedback": {
+            "type": "GetFeedback"
+        },
+        "logs": {
+            "type": "GetReportLog[]"
+        },
+
     }
 }

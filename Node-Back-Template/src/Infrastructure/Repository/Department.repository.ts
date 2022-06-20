@@ -116,8 +116,8 @@ export class DepartmentRepository {
         const values = [
             department.name,
             department.description,
-            department.course_coordinator_id,
-            department.department_head_id,
+            department.courseCoordinatorId,
+            department.departmentHeadId,
             departmentId
         ]
         

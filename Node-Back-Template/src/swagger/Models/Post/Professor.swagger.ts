@@ -1,5 +1,5 @@
 export const PostProfessor = {
-    "required": ["departmentId", "siape", "name", "password", "about", "lattes_url"],
+    "required": ["departmentId", "siape", "name", "password", "about", "lattesUrl"],
     "properties": {
         "departmentId": {
             "type": "string",
@@ -16,7 +16,7 @@ export const PostProfessor = {
         "about": {
             "type": "string"
         },
-        "lattes_url": {
+        "lattesUrl": {
             "type": "string"
         },
     }

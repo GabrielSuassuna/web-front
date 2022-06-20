@@ -1,4 +1,4 @@
 export interface PutReportUpdate {
-  reviewer_id?: string,
+  reviewerId?: string,
   status: string,
 }

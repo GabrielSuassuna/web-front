@@ -1,7 +1,7 @@
 export const PutHasVote = {
     "required": ["isUpvote"],
     "properties": {
-        "is_upvote": {
+        "isUpvote": {
             "type": "boolean"
         },
     }

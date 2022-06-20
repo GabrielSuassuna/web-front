@@ -163,11 +163,11 @@ export class ReportService {
     
         try{
             const toBeCreatedReport: PostReport = request.body
-            const { feedback_id, author_id, description, date } = toBeCreatedReport
+            const { feedbackId, authorId, description, date } = toBeCreatedReport
 
             await this.repositoryUoW.beginTransaction();
             
-            const reportId: string = await this.repositoryUoW.reportRepository.create(feedback_id, author_id)
+            const reportId: string = await this.repositoryUoW.reportRepository.create(feedbackId, authorId)
 
             const toBeCreatedReportLog: PostReportLog = {
               date: date,
@@ -175,7 +175,7 @@ export class ReportService {
               description: description,
             }
 
-            await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, author_id)
+            await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, authorId)
             
             const toBeFoundReport: GetReport[] = await this.repositoryUoW.reportRepository.getById(reportId)
             const toBeFoundFeedback: GetFeedback[] = await this.repositoryUoW.feedbackRepository.getById(toBeFoundReport[0].feedback_id)
@@ -217,10 +217,10 @@ export class ReportService {
               description: toBeupdatedReport.description,
             }
 
-            await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, toBeupdatedReport.author_id)
+            await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, toBeupdatedReport.authorId)
 
             const toBeUpdatedReportLog:PutReportUpdate = {
-              reviewer_id: toBeupdatedReport.status === "EM REVISÃO" ? toBeupdatedReport.author_id : undefined,
+              reviewerId: toBeupdatedReport.status === "EM REVISÃO" ? toBeupdatedReport.authorId : undefined,
               status: toBeupdatedReport.status
             }
             

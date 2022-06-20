@@ -1,7 +1,7 @@
 export const PutProfessor = {
-    "required": ["departmentId", "siape", "name", "password","about", "lattes_url"],
+    "required": ["departmentId", "siape", "name", "password","about", "lattesUrl"],
     "properties": {
-        "department_id": {
+        "departmentId": {
             "type": "string",
         },
         "siape": {
@@ -16,7 +16,7 @@ export const PutProfessor = {
         "about": {
             "type": "string"
         },
-        "lattes_url": {
+        "lattesUrl": {
             "type": "string"
         }
     }

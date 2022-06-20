@@ -138,9 +138,9 @@ export const HasVotePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "feedback_id": "1",
-                            "student_id": "1",
-                            "is_upvote": true,
+                            "feedbackId": "1",
+                            "studentId": "1",
+                            "isUpvote": true,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostHasVote"
@@ -160,9 +160,9 @@ export const HasVotePaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "feedbackId": "1",
-                                            "studentId": "1",
-                                            "isUpvote": true,
+                                            "feedback_id": "1",
+                                            "student_id": "1",
+                                            "is_upvote": true,
                                         }
                                     ],
                                     "message" : "Interação criada com sucesso"
@@ -289,7 +289,7 @@ export const HasVotePaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {
-                            "is_upvote": true,
+                            "isUpvote": true,
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutHasVote"
@@ -309,9 +309,9 @@ export const HasVotePaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "feedbackId": "1",
-                                            "studentId": "1",
-                                            "isUpvote": true,
+                                            "feedback_id": "1",
+                                            "student_id": "1",
+                                            "is_upvote": true,
                                         }
                                     ],
                                     "message" : "Interação atualizada com sucesso"

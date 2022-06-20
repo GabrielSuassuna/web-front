@@ -72,7 +72,7 @@ export class HasVoteRepository {
           newId,
           feedbackId,
           studentId,
-          hasVote.is_upvote,
+          hasVote.isUpvote,
         ]
 
         await this.queryHandler.runQuery(SQL, values)
@@ -89,7 +89,7 @@ export class HasVoteRepository {
             RETURNING *
         `
         const values = [
-          hasVote.is_upvote,
+          hasVote.isUpvote,
           feedbackId,
           studentId,
         ]

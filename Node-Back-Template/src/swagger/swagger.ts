@@ -13,6 +13,7 @@ import { PutProfessor } from './Models/Put/Professor.swagger'
 import { PostProfessor } from './Models/Post/Professor.swagger'
 
 import { GetLecturing } from './Models/Get/Lecturing.swagger'
+import { PostLecturing } from './Models/Post/Lecturing.swagger'
 
 import { PostDepartment } from './Models/Post/Department.swagger'
 import { PutDepartment } from './Models/Put/Department.swagger'
@@ -148,6 +149,7 @@ export const swaggerDocument = {
         PostProfessor,
         Lecturing,
         GetLecturing,
+        PostLecturing,
         Department,
         PostDepartment,
         PutDepartment,

@@ -4,19 +4,19 @@ export const Report = {
         "id": {
             "type": "string",
         },
-        "feedbackName": {
+        "feedback_name": {
             "type": "string",
         },
-        "authorName": {
+        "author_name": {
             "type": "string",
         },
-        "authorSiape": {
+        "author_siape": {
             "type": "string",
         },
-        "revisorName": {
+        "revisor_name": {
             "type": "string",
         },
-        "revisorSiape": {
+        "revisor_siape": {
             "type": "string",
         }
     }

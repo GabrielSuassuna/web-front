@@ -13,7 +13,7 @@ export const GetReportLog = {
         "description": {
             "type": "string",
         },
-        "authorName": {
+        "author_name": {
             "type": "string",
         }
     }

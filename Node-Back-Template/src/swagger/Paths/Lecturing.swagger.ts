@@ -58,28 +58,24 @@ export const LecturingPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "disciplineId": "1",
-                                            "disciplineName": "Algoritmos Aproximativos",
-                                            "disciplineCode": "CK0101",
-                                            "professorId": "1",
-                                            "professorName": "Rodrigo Marques",
-                                            "professorSiape": "1234",
-                                            "professorDepartment": "Departamento de Computação",
-                                            "averageScore": 8.7,
-                                            "numberOfFeedbacks": 12,
+                                            "id": 8,
+                                            "discipline_name": "Disciplina 1",
+                                            "discipline_code": "Disciplina1",
+                                            "professor_name": "Professor 2",
+                                            "professor_siape": "123123123",
+                                            "professor_department": "Departamento 1",
+                                            "feedback_count": 1,
+                                            "average_score": 10
                                         },
                                         {
-                                            "id": "2",
-                                            "disciplineId": "1",
-                                            "disciplineName": "Algoritmos Aproximativos",
-                                            "disciplineCode": "CK0101",
-                                            "professorId": "6",
-                                            "professorName": "Rodrigo Silva",
-                                            "professorSiape": "5233",
-                                            "professorDepartment": "Departamento de Estatística",
-                                            "averageScore": "8",
-                                            "numberOfFeedbacks": 1,
+                                            "id": 9,
+                                            "discipline_name": "Disciplina 2",
+                                            "discipline_code": "Disciplina2",
+                                            "professor_name": "Professor 3",
+                                            "professor_siape": "12312454",
+                                            "professor_department": "Departamento 2",
+                                            "feedback_count": 12,
+                                            "average_score": 8.7
                                         },
                                     ],
                                     "message" : "Disciplinas ministradas obtidas com sucesso"
@@ -162,11 +158,11 @@ export const LecturingPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "discipline_id": "1",
-                            "professor_id": "1",
+                            "disciplineId": "1",
+                            "professorId": "1",
                         },
                         "schema": {
-                            "$ref": "#/components/schemas/PostProfessor"
+                            "$ref": "#/components/schemas/PostLecturing"
                         }
                     }
                 }
@@ -182,19 +178,11 @@ export const LecturingPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "disciplineId": "1",
-                                            "disciplineName": "Algoritmos Aproximativos",
-                                            "disciplineCode": "CK0101",
-                                            "professorId": "1",
-                                            "professorName": "Rodrigo Marques",
-                                            "professorSiape": "1234",
-                                            "professorDepartment": "Departamento de Computação",
-                                            "averageScore": 0,
-                                            "numberOfFeedbacks": 0,
-                                            "assiduityScore": 0,
-                                            "clarityScore": 0,
-                                            "relationshipScore": 0,
+                                            "id": 8,
+                                            "professor_id": 1,
+                                            "discipline_id": 1,
+                                            "feedback_count": "0",
+                                            "average_score": 0
                                         }
                                     ],
                                     "message" : "Disciplina ministrada criada com sucesso"
@@ -318,19 +306,11 @@ export const LecturingPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "disciplineId": "1",
-                                            "disciplineName": "Algoritmos Aproximativos",
-                                            "disciplineCode": "CK0101",
-                                            "professorId": "1",
-                                            "professorName": "Rodrigo Marques",
-                                            "professorSiape": "1234",
-                                            "professorDepartment": "Departamento de Computação",
-                                            "averageScore": 9,
-                                            "numberOfFeedbacks": 12,
-                                            "assiduityScore": 9,
-                                            "clarityScore": 10,
-                                            "relationshipScore": 9.5,
+                                            "id": 8,
+                                            "professor_id": 11,
+                                            "discipline_id": 2,
+                                            "feedback_count": "1",
+                                            "average_score": 10
                                         }
                                     ],
                                     "message" : "Disciplina ministrada obtida com sucesso"

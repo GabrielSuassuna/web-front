@@ -1,5 +1,5 @@
 export interface PutReport {
-  author_id: string,
+  authorId: string,
   status: string,
   date: Date,
   title: string,

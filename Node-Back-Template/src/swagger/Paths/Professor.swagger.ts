@@ -129,12 +129,12 @@ export const ProfessorPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "department_id": "1",
+                            "departmentId": "1",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
                             "password": "ASDXASACASX",
                             "about": "Rodrigo Marques é professor do departamento...",
-                            "lattes_url": "lattes.cnpq.br/...",
+                            "lattesUrl": "lattes.cnpq.br/...",
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PostProfessor"
@@ -380,12 +380,12 @@ export const ProfessorPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "department_id": "5",
+                            "departmentId": "5",
                             "siape": "03042",
                             "name": "Rodrigo Marques",
                             "password": "ADVBSNHAD",
                             "about": "Rodrigo Marques é professor do departamento...",
-                            "lattes_url": "lattes.cnpq.br/...",
+                            "lattesUrl": "lattes.cnpq.br/...",
                         },
                         "schema": {
                             "$ref": "#/components/schemas/PutProfessor"

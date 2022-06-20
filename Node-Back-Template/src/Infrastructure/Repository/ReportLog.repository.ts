@@ -1,6 +1,5 @@
 import { QueryHandler } from "../Handlers/Query.handler"
 
-import { ReportLogInterface } from "../../Interfaces/ReportLog.interface"
 import { Client } from "pg"
 import { GetReportLog } from "../../Interfaces/Get/GetReportLog.interface"
 import { PostReportLog } from "../../Interfaces/Post/PostReportLog.interface"

@@ -44,16 +44,18 @@ export const ReportPaths = {
                                     "data": [
                                         {
                                             "id": "1",
-                                            "feedbackName": "Odeio esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
+                                            "feedback_id": 10,
+                                            "feedback_name": "Odeio esse professor",
+                                            "author_name": "Rodrigo Marques",
+                                            "author_siape": "03042",
                                             "status": "ABERTA"
                                         },
                                         {
                                             "id": "1",
-                                            "feedbackName": "Odeio esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
+                                            "feedback_id": 10,
+                                            "feedback_name": "Odeio esse professor",
+                                            "author_name": "Rodrigo Marques",
+                                            "author_siape": "03042",
                                             "status": "ABERTA"
                                         },
                                     ],
@@ -187,8 +189,8 @@ export const ReportPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "feedback_id": "1",
-                            "author_id": "1",
+                            "feedbackId": "1",
+                            "authorId": "1",
                             "description": "O feedback contém...",
                             "date": "01/01/2020"
                         },
@@ -210,8 +212,8 @@ export const ReportPaths = {
                                     "data": [
                                         {    
                                             "id": "1",
-                                            "feedbackId": "1",
-                                            "authorId": "1",
+                                            "feedback_id": "1",
+                                            "author_id": "1",
                                             "status": "ABERTA"
                                         }
                                     ],
@@ -221,7 +223,7 @@ export const ReportPaths = {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetProfessor"
+                                            "$ref": "#/components/schemas/GetReport"
                                         }
                                     },    
                                     "message": {
@@ -363,22 +365,24 @@ export const ReportPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "feedbackName": "Odeio esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
-                                            "reviewerName": "Ricardo Martins",
-                                            "reviewerSiape": "1242",
-                                            "status": "EM REVISÃO"
+                                            "id": 11,
+                                            "feedback_id": 25,
+                                            "author_id": 11,
+                                            "status": "ABERTO",
+                                            "author_name": "Professor 2",
+                                            "author_siape": "123123133",
+                                            "reviewer_name": "Professor 2",
+                                            "reviewer_siape": "123123123"
                                         },
                                         {
-                                            "id": "2",
-                                            "feedbackName": "Odeio muito esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
-                                            "reviewerName": "Ricardo Martins",
-                                            "reviewerSiape": "1242",
-                                            "status": "EM REVISÃO"
+                                            "id": 12,
+                                            "feedback_id": 26,
+                                            "author_id": 12,
+                                            "status": "ABERTO",
+                                            "author_name": "Professor 2",
+                                            "author_siape": "123123133",
+                                            "reviewer_name": "Professor 3",
+                                            "reviewer_siape": "123123123"
                                         },
                                     ],
                                     "message" : "Denúnias obtidas com sucesso"
@@ -545,20 +549,24 @@ export const ReportPaths = {
                                 "example": {
                                     "data": [
                                         {
-                                            "id": "1",
-                                            "feedbackName": "Odeio esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
-                                            "reviewerName": "Ricardo Martins",
-                                            "reviewerSiape": "1242",
+                                            "id": 11,
+                                            "feedback_id": 25,
+                                            "author_id": 11,
+                                            "status": "ABERTO",
+                                            "author_name": "Professor 1",
+                                            "author_siape": "123123133",
+                                            "reviewer_name": "Professor 2",
+                                            "reviewer_siape": "123123123"
                                         },
                                         {
-                                            "id": "2",
-                                            "feedbackName": "Odeio muito esse professor",
-                                            "authorName": "Rodrigo Marques",
-                                            "authorSiape": "03042",
-                                            "reviewerName": "Ricardo Martins",
-                                            "reviewerSiape": "1242",
+                                            "id": 12,
+                                            "feedback_id": 26,
+                                            "author_id": 12,
+                                            "status": "ABERTO",
+                                            "author_name": "Professor 3",
+                                            "author_siape": "123123133",
+                                            "reviewer_name": "Professor 2",
+                                            "reviewer_siape": "123123123"
                                         },
                                     ],
                                     "message" : "Denúnias obtidas com sucesso"
@@ -707,31 +715,46 @@ export const ReportPaths = {
                             "schema": {
                                 "type": "object",
                                 "example": {
-                                    "report": [    
+                                    "data": [
                                         {
-                                            "id": "1",
-                                            "feedbackId": "1",
-                                            "authorId": "1",
-                                            "reviewerId": "1",
-                                            "status": "OPEN",
+                                          "id": 11,
+                                          "feedback_id": 25,
+                                          "author_id": 11,
+                                          "reviewer_id": null,
+                                          "status": "ABERTO",
+                                          "feedback": {
+                                            "id": 25,
+                                            "lecturing_id": 8,
+                                            "title": "Ótimo professor!",
+                                            "description": "O professor é...",
+                                            "period": "2020.2",
+                                            "general_score": 10,
+                                            "assiduity_score": 10,
+                                            "clarity_score": 10,
+                                            "relationship_score": 10,
+                                            "date": "2022-01-01T03:00:00.000Z",
+                                            "professor_name": "Professor 2",
+                                            "professor_siape": "123123123",
+                                            "discipline_name": "Disciplina 1",
+                                            "discipline_code": "Disciplina1",
+                                            "upvote_count": "1",
+                                            "downvote_count": "0"
+                                          },
+                                          "logs": [
+                                            {
+                                              "id": 9,
+                                              "report_id": 11,
+                                              "author_id": 11,
+                                              "date": "2020-01-01T03:00:00.000Z",
+                                              "title": "Feedback denunciado",
+                                              "description": "O feedback contém...",
+                                              "author_name": "Professor 2",
+                                              "author_siape": "Professor 2"
+                                            }
+                                          ]
                                         }
-                                    ],
-                                    "logs": [
-                                        {    
-                                            "id": "1",
-                                            "date": "01/01/2022",
-                                            "title": "Denúncia Aberta",
-                                            "authorName": "Rodrigo Marques",
-                                        },
-                                        {    
-                                            "id": "2",
-                                            "date": "02/01/2022",
-                                            "title": "Denúncia aceita para revisão",
-                                            "description": "Vou dar uma olhada",
-                                            "authorName": "Ricardo Martins",
-                                        }
-                                    ],
-                                    "message" : "Denúncia obtida com sucesso"
+                                      ],
+                                      "message": "Report encontrado com sucesso",
                                 }, 
                                 "properties": {
                                     "report": {
@@ -877,7 +900,7 @@ export const ReportPaths = {
                     "application/json": {
                         "required": ["data", "message"],
                         "example": {    
-                            "author_id": "1234",
+                            "authorId": "1234",
                             "status": "REVOGADA",
                             "date": "01/01/2020",
                             "title": "Denúncia revogada",
@@ -898,37 +921,55 @@ export const ReportPaths = {
                             "schema": {
                                 "type": "object",
                                 "example": {
-                                    "report": [    
+                                    "data": [
                                         {
-                                            "id": "1",
-                                            "feedbackId": "1",
-                                            "authorId": "1",
-                                            "reviewerId": "1",
-                                            "status": "REVOKED",
+                                          "id": 11,
+                                          "feedback_id": 25,
+                                          "author_id": 11,
+                                          "reviewer_id": 10,
+                                          "status": "EM REVISÃO",
+                                          "feedback": {
+                                            "id": 25,
+                                            "lecturing_id": 8,
+                                            "title": "Ótimo professor!",
+                                            "description": "O professor é...",
+                                            "period": "2020.2",
+                                            "general_score": 10,
+                                            "assiduity_score": 10,
+                                            "clarity_score": 10,
+                                            "relationship_score": 10,
+                                            "date": "2022-01-01T03:00:00.000Z",
+                                            "professor_name": "Professor 2",
+                                            "professor_siape": "123123123",
+                                            "discipline_name": "Disciplina 1",
+                                            "discipline_code": "Disciplina1",
+                                            "upvote_count": "1",
+                                            "downvote_count": "0"
+                                          },
+                                          "logs": [
+                                            {
+                                              "id": 10,
+                                              "report_id": 11,
+                                              "author_id": 10,
+                                              "date": "2020-01-01T03:00:00.000Z",
+                                              "title": "Em revisão",
+                                              "description": "Estou revisando essa denúncia",
+                                              "author_name": "Professor 1",
+                                              "author_siape": "Professor 1"
+                                            },
+                                            {
+                                              "id": 9,
+                                              "report_id": 11,
+                                              "author_id": 11,
+                                              "date": "2020-01-01T03:00:00.000Z",
+                                              "title": "Feedback denunciado",
+                                              "description": "O feedback contém...",
+                                              "author_name": "Professor 2",
+                                              "author_siape": "Professor 2"
+                                            }
+                                          ]
                                         }
-                                    ],
-                                    "logs": [
-                                        {    
-                                            "id": "1",
-                                            "date": "01/01/2022",
-                                            "title": "Denúncia Aberta",
-                                            "authorName": "Ricardo Martins",
-                                        },
-                                        {    
-                                            "id": "2",
-                                            "date": "02/01/2022",
-                                            "title": "Denúncia aceita para revisão",
-                                            "description": "Vou dar uma olhada",
-                                            "authorName": "Rodrigo Marques",
-                                        },
-                                        {    
-                                            "id": "3",
-                                            "date": "03/01/2022",
-                                            "title": "Denúncia revogada",
-                                            "description": "Estou revogando essa deúncia",
-                                            "authorName": "Rodrigo Marques",
-                                        }
-                                    ],
+                                      ],
                                     "message" : "Denúncia atualizada com sucesso"
                                 }, 
                                 "properties": {

@@ -35,10 +35,6 @@ export class LecturingController {
         this.serviceUoW.lecturingService.create(request, response)
     }
 
-    private update(request: Request, response: Response){
-        this.serviceUoW.lecturingService.update(request, response)
-    }
-
     private delete(request: Request, response: Response){
         this.serviceUoW.lecturingService.delete(request, response)
     }

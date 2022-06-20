@@ -1,10 +1,10 @@
 export const GetProfessor = {
-    "required": ["id", "departmentId", "siape", "name", "about", "lattes_url"],
+    "required": ["id", "department_id", "siape", "name", "about", "lattes_url"],
     "properties": {
         "id": {
             "type": "string",
         },
-        "departmentId": {
+        "department_id": {
             "type": "string",
         },
         "siape": {

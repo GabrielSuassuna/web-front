@@ -1,13 +1,13 @@
 export interface PostFeedback {
-  lecturing_id: string
-  student_id: string
+  lecturingId: string
+  studentId: string
   title: string
   description: string
   period: string
-  general_score: number
-  assiduity_score: number
-  clarity_score: number
-  relationship_score: number
+  generalScore: number
+  assiduityScore: number
+  clarityScore: number
+  relationshipScore: number
   date: Date
   tags: string[]
 }

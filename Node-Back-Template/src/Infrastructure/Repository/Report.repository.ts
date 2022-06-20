@@ -3,8 +3,6 @@ import { QueryHandler } from "../Handlers/Query.handler"
 import { ReportInterface } from "../../Interfaces/Report.interface"
 import { Client } from "pg"
 import { GetReport } from "../../Interfaces/Get/GetReport.interface"
-import { PostReport } from "../../Interfaces/Post/PostReport.interface"
-import { PutReport } from "../../Interfaces/Put/PutReport.interface"
 import { PutReportUpdate } from "../../Interfaces/Put/PutReportUpdate.interface"
 import { ReportFilter } from "../../Interfaces/Filters/ReportFilter.interface"
 
@@ -144,7 +142,7 @@ export class ReportRepository {
             RETURNING *
         `
         const values = [
-          report.reviewer_id,
+          report.reviewerId,
           report.status,
           reportId,
         ]

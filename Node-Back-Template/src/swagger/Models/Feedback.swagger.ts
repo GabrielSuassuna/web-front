@@ -4,32 +4,32 @@ export const Feedback = {
         "id": {
             "type": "string",
         },
-        "disciplineCode": {
+        "discipline_code": {
             "type": "string",
         },
-        "disciplineName": {
+        "discipline_came": {
             "type": "string",
         },
-        "professorSiape": {
+        "professor_siape": {
             "type": "string",
         },
-        "professorName": {
+        "professor_name": {
             "type": "string",
         },
         "title": {
             "type": "string",
         },
-        "generalScore": {
+        "general_score": {
             "type": "number",
         },
         "date": {
             "type": "Date",
         },
-        "upvotes": {
-            "type": "Date",
+        "upvote_count": {
+            "type": "number",
         },
-        "downvotes": {
-            "type": "Date",
+        "downvote_count": {
+            "type": "number",
         },
     }
 }

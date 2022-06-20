@@ -1,8 +1,8 @@
 export interface PutProfessor {
-  department_id: string
+  departmentId: string
   siape: string
   password: string
   name: string
   about: string
-  lattes_url: string
+  lattesUrl: string
 }

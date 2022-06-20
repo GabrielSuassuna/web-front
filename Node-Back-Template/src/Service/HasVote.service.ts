@@ -20,19 +20,16 @@ export class HasVoteService {
     
         try{
             const toBeCreatedHasVote: PostHasVote = request.body
-            const { feedback_id, student_id } = toBeCreatedHasVote
+            const { feedbackId, studentId } = toBeCreatedHasVote
 
             await this.repositoryUoW.beginTransaction();
             
-            const hasVoteId: string = await this.repositoryUoW.hasVoteRepository.create(toBeCreatedHasVote, feedback_id, student_id)
+            const hasVoteId: string = await this.repositoryUoW.hasVoteRepository.create(toBeCreatedHasVote, feedbackId, studentId)
 
             await this.repositoryUoW.commit();
             
-            result.push({
-                id: hasVoteId,
-                ...toBeCreatedHasVote, 
-            })
-            
+            result = await this.repositoryUoW.hasVoteRepository.getById(hasVoteId) 
+
             return response.status(200).json(setApiResponse<GetHasVote[]>(result, sucessMessage))
         }
         catch(err: any){

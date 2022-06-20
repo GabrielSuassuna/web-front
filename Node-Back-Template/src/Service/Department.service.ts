@@ -178,7 +178,7 @@ export class DepartmentService {
         const errorMessage: string = "Erro ao atualizar coordenador de curso"
         const departmentError: string = "O coordenador de curso precisa ser um professor do departamento";
         
-        let result: GetProfessor[] = []
+        let result: GetDepartment[] = []
     
         try{
             const departmentId: string = request.params.departmentId
@@ -186,10 +186,10 @@ export class DepartmentService {
                 professorId
             } = request.query as any
 
-            result = await this.repositoryUoW.professorRepository.getById(professorId);
+            const newCoord: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(professorId);
 
-            if(result[0].department_id != departmentId)
-                return response.status(400).json(setApiResponse<GetProfessor[]>([], errorMessage, departmentError))
+            if(newCoord[0].department_id != departmentId)
+                return response.status(400).json(setApiResponse<GetDepartment[]>([], errorMessage, departmentError))
             
             await this.repositoryUoW.beginTransaction();
             
@@ -212,24 +212,24 @@ export class DepartmentService {
             }
 
             await this.repositoryUoW.departmentRepository.updateCourseCoordinator(departmentId, professorId);
+            result =  await this.repositoryUoW.departmentRepository.getById(departmentId);
     
-
             await this.repositoryUoW.commit();
 
-            return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
+            return response.status(200).json(setApiResponse<GetDepartment[]>(result, sucessMessage));
         }
         catch(err: any){
             await this.repositoryUoW.rollback();
-            return response.status(400).json(setApiResponse<GetProfessor[]>(result, errorMessage, err.message))
+            return response.status(400).json(setApiResponse<GetDepartment[]>(result, errorMessage, err.message))
         }
     }
 
     public async updateDepartmentHead(request: Request, response: Response){    
-        const sucessMessage: string = "Coordenador de curso atualizado com sucesso"
-        const errorMessage: string = "Erro ao atualizar coordenador de curso"
+        const sucessMessage: string = "Chefe de departamento atualizado com sucesso"
+        const errorMessage: string = "Erro ao atualizar chefe de departamento"
         const departmentError: string = "O chefe de departamento precisa ser um professor do departamento";
         
-        let result: GetProfessor[] = []
+        let result: GetDepartment[] = []
     
         try{
             const departmentId: string = request.params.departmentId
@@ -237,10 +237,10 @@ export class DepartmentService {
                 professorId
             } = request.query as any
             
-            result = await this.repositoryUoW.professorRepository.getById(professorId);
+            const newHead: GetProfessor[] =  await this.repositoryUoW.professorRepository.getById(professorId);
 
-            if(result[0].department_id != departmentId)
-                return response.status(400).json(setApiResponse<GetProfessor[]>([], errorMessage, departmentError))
+            if(newHead[0].department_id != departmentId)
+                return response.status(400).json(setApiResponse<GetDepartment[]>([], errorMessage, departmentError))
 
             await this.repositoryUoW.beginTransaction();
 
@@ -265,13 +265,14 @@ export class DepartmentService {
             
             await this.repositoryUoW.departmentRepository.updateDepartmentHead(departmentId, professorId);
 
+            result =  await this.repositoryUoW.departmentRepository.getById(departmentId);
             await this.repositoryUoW.commit();
 
-            return response.status(200).json(setApiResponse<GetProfessor[]>(result, sucessMessage));
+            return response.status(200).json(setApiResponse<GetDepartment[]>(result, sucessMessage));
         }
         catch(err: any){
             await this.repositoryUoW.rollback();
-            return response.status(400).json(setApiResponse<GetProfessor[]>(result, errorMessage, err.message))
+            return response.status(400).json(setApiResponse<GetDepartment[]>(result, errorMessage, err.message))
         }
     }
 }
