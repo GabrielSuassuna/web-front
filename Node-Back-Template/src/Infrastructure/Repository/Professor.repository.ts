@@ -145,7 +145,16 @@ export class ProfessorRepository {
             values.push(professorFilter.siape)
             sqlWithFilter += ` AND siape = $${values.length}`
         }
+
+        values.push(professorFilter?.limit || 5)
+        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
         
+        values.push(professorFilter?.page || 2)
+        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
+        
+        values.push(professorFilter?.limit || 5)
+        sqlWithFilter += ` * $${values.length}`
+
         return { sqlWithFilter, valuesWithFilter }
     }
 }

@@ -44,6 +44,9 @@ export class ProfessorMigration implements Migration{
 
     drop(): Promise<string>{
         const SQL = `
+            ALTER TABLE department DROP CONSTRAINT department_head_fk;
+            ALTER TABLE department DROP CONSTRAINT course_coordinator_fk;
+            
             DROP TABLE professor;
             
             DROP SEQUENCE professor_seq;

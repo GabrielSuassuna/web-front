@@ -157,6 +157,15 @@ export class LecturingRepository {
             sqlWithFilter += ` AND p.department_id = $${values.length}`
         }
         
+        values.push(lecturingFilter?.limit || 5)
+        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
+
+        values.push(lecturingFilter?.page || 2)
+        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
+
+        values.push(lecturingFilter?.limit || 5)
+        sqlWithFilter += ` * $${values.length}`
+
         return { sqlWithFilter, valuesWithFilter }
     }
 

@@ -29,9 +29,11 @@ export class FeedbackService {
               disciplineName,
               disciplineCode,
               title,
+              page,
+              limit
             } = request.query as any
             
-            const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
+            const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
 
             let toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll(feedbackFilter)
 
@@ -69,9 +71,11 @@ export class FeedbackService {
             disciplineName,
             disciplineCode,
             title,
+            page,
+            limit
           } = request.query as any
           
-          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
+          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId, feedbackFilter)
 
@@ -107,9 +111,11 @@ export class FeedbackService {
             disciplineName,
             disciplineCode,
             title,
+            page,
+            limit
           } = request.query as any
           
-          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title }
+          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId, feedbackFilter)
 

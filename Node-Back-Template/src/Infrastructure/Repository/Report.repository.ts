@@ -201,6 +201,15 @@ export class ReportRepository {
             sqlWithFilter += ` AND r.status LIKE $${values.length}`
         }
         
+        values.push(reportFilter?.limit || 5)
+        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
+
+        values.push(reportFilter?.page || 2)
+        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
+
+        values.push(reportFilter?.limit || 5)
+        sqlWithFilter += ` * $${values.length}`
+
         return { sqlWithFilter, valuesWithFilter }
     }
 

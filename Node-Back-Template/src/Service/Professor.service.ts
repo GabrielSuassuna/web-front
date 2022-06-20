@@ -27,10 +27,12 @@ export class ProfessorService {
             const { 
                 name, 
                 departmentId, 
-                siape
+                siape,
+                page,
+                limit
             } = request.query as any
             
-            const professorFilter: ProfessorFilter = { name, departmentId, siape }
+            const professorFilter: ProfessorFilter = { name, departmentId, siape, page, limit }
 
             const toBeFoundProfessors: ProfessorInterface[] = await this.repositoryUoW.professorRepository.getAll(professorFilter)
 

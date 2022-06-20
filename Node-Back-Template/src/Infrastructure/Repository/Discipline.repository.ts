@@ -127,6 +127,16 @@ export class DisciplineRepository {
             sqlWithFilter += ` AND hours = $${values.length}`
         }
         
+        values.push(disciplineFilter?.limit || 5)
+        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
+
+        values.push(disciplineFilter?.page || 2)
+        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
+
+        values.push(disciplineFilter?.limit || 5)
+        sqlWithFilter += ` * $${values.length}`
+
+
         return { sqlWithFilter, valuesWithFilter }
     }
 }

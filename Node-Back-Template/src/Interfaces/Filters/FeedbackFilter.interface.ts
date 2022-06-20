@@ -1,4 +1,6 @@
-export interface FeedbackFilter {
+import { PaginationFilter } from "./Pagination.interface"
+
+export interface FeedbackFilter extends PaginationFilter {
   professorName: string
   professorSiape: string
   disciplineName: string

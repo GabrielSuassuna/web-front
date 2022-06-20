@@ -27,10 +27,12 @@ export class DisciplineService {
             const { 
                 name, 
                 code, 
-                hours
+                hours,
+                page,
+                limit
             } = request.query as any
             
-            const disciplineFilter: DisciplineFilter = { name, code, hours }
+            const disciplineFilter: DisciplineFilter = { name, code, hours, page, limit }
             const toBeFoundDiscipline: DisciplineInterface[] = await this.repositoryUoW.disciplineRepository.getAll(disciplineFilter)
 
             if(!!toBeFoundDiscipline.length){

@@ -35,11 +35,13 @@ export class ReportService {
             const { 
                 viewerId,
                 authorName, 
-                authorSiape
+                authorSiape,
+                page,
+                limit
             } = request.query as any
 
             
-            const reportFilter: ReportFilter = { authorName, authorSiape }
+            const reportFilter: ReportFilter = { authorName, authorSiape, page, limit }
 
             const viewer: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(viewerId);
             const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(viewer[0].department_id);
@@ -75,9 +77,11 @@ export class ReportService {
               reviewerName, 
               reviewerSiape,
               status,
+              page,
+              limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status }
+          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status, page, limit }
 
           //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
@@ -107,9 +111,11 @@ export class ReportService {
               authorName, 
               authorSiape,
               status,
+              page,
+              limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { authorName, authorSiape, status }
+          const reportFilter: ReportFilter = { authorName, authorSiape, status, page, limit }
 
           //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
