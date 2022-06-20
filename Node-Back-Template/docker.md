@@ -9,3 +9,5 @@
     3. docker exec -it CONTAINER_ID bash
     4. psql -U liven
     5. Execute your psql queries. Don't forget the ; in the end
+    6. Executar ALTER SYSTEM SET max_connections TO '500';
+    7. Reiniciar container
