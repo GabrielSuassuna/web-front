@@ -39,6 +39,22 @@ export const FeedbackPaths = {
                         "type": "string"
                     }
                 },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "description": "Página atual que se deseja obter",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "description": "Número de elementos por página",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
             ],
             "responses": {
                 "200": {
@@ -570,6 +586,22 @@ export const FeedbackPaths = {
                         "type": "string"
                     }
                 },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "description": "Página atual que se deseja obter",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "description": "Número de elementos por página",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
             ],
             "responses": {
                 "200": {
@@ -708,6 +740,22 @@ export const FeedbackPaths = {
                     "in": "query",
                     "schema": {
                         "type": "string"
+                    }
+                },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "description": "Página atual que se deseja obter",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "description": "Número de elementos por página",
+                    "schema": {
+                        "type": "number"
                     }
                 },
             ],

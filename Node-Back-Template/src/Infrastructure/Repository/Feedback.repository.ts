@@ -306,23 +306,16 @@ export class FeedbackRepository {
             sqlWithFilter += ` AND f.title LIKE $${values.length}`
         }
         
-        values.push(feedbackFilter?.limit || 5)
-        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
+        if(feedbackFilter?.limit != null && feedbackFilter?.page != null){
+            values.push(feedbackFilter?.limit || 5)
+            sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
 
-        values.push(feedbackFilter?.page || 2)
-        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
+            values.push(feedbackFilter?.page || 2)
+            sqlWithFilter += ` OFFSET ($${values.length} - 1)`
 
-        values.push(feedbackFilter?.limit || 5)
-        sqlWithFilter += ` * $${values.length}`
-
-        values.push(feedbackFilter?.limit || 5)
-        sqlWithFilter += ` ORDER BY id LIMIT $${values.length}`
-
-        values.push(feedbackFilter?.page || 2)
-        sqlWithFilter += ` OFFSET ($${values.length} - 1)`
-
-        values.push(feedbackFilter?.limit || 5)
-        sqlWithFilter += ` * $${values.length}`
+            values.push(feedbackFilter?.limit || 5)
+            sqlWithFilter += ` * $${values.length}`
+        }
         
         return { sqlWithFilter, valuesWithFilter }
     }

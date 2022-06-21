@@ -24,7 +24,23 @@ export const DisciplinePaths = {
                     "schema": {
                         "type": "string"
                     }
-                }
+                },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "description": "Página atual que se deseja obter",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "description": "Número de elementos por página",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
             ],
             "responses": {
                 "200": {
