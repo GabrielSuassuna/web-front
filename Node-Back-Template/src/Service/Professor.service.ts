@@ -4,6 +4,7 @@ import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { ProfessorFilter } from '../Interfaces/Filters/ProfessorFilter.interface'
 import { GetDepartment } from '../Interfaces/Get/GetDepartment.interface'
 import { GetProfessor } from '../Interfaces/Get/GetProfessor.interface'
+import { GetTag } from '../Interfaces/Get/GetTag.interface'
 import { PostProfessor } from '../Interfaces/Post/PostProfessor.interface'
 import { ProfessorInterface } from '../Interfaces/Professor.interface'
 import { PutProfessor } from '../Interfaces/Put/PutProfessor.interface'
@@ -48,7 +49,7 @@ export class ProfessorService {
     }
 
     public async getById(request: Request, response: Response){
-        const sucessMessage: string = "Professor encontrado com sucesso"
+        const successMessage: string = "Professor encontrado com sucesso"
         const errorMessage: string = "Erro ao encontrar professor"
         const notFoundMessage: string = "Professor não encontrado"
     
@@ -59,11 +60,18 @@ export class ProfessorService {
             
             const toBeFoundProfessor: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(professorId)
             
-            if(!!toBeFoundProfessor.length){
-                return response.status(200).json(setApiResponse<GetProfessor[]>(toBeFoundProfessor, sucessMessage))
+            if(!toBeFoundProfessor.length){
+                return response.status(404).json(setApiResponse<GetProfessor[]>(result, notFoundMessage))
             }
-            
-            return response.status(404).json(setApiResponse<GetProfessor[]>(result, notFoundMessage))
+
+            const topTags: GetTag[] = await this.repositoryUoW.tagRepository.getTopProfessorTags(professorId);
+
+            result = [{
+                ...toBeFoundProfessor[0],
+                tags: topTags
+            }];
+
+            return response.status(200).json(setApiResponse<GetProfessor[]>(result, successMessage))
         }
         catch(err: any){
             return response.status(400).json(setApiResponse<GetProfessor[]>(result, errorMessage, err.message))

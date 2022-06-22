@@ -1,3 +1,5 @@
+import { GetTag } from "./GetTag.interface"
+
 export interface GetProfessor {
   id: string
   department_id: string
@@ -5,4 +7,5 @@ export interface GetProfessor {
   name: string
   about: string
   lattes_url: string
+  tags?: GetTag[]
 }

@@ -34,13 +34,16 @@ export class ProfessorRepository {
     public async getById(professorId: string): Promise<GetProfessor[]>{
         const SQL = `
             SELECT 
-                id,
-                department_id,
-                siape,
-                name,
-                about,
-                lattes_url
-            FROM professor WHERE id = $1
+                p.id,
+                p.department_id,
+                d.name as department_name,
+                p.siape,
+                p.name,
+                p.about,
+                p.lattes_url
+            FROM professor as p
+                INNER JOIN department as d on d.id = p.department_id
+            WHERE p.id = $1
         `
 
         const values = [

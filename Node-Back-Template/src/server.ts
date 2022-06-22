@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import * as swaggerUI from "swagger-ui-express";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import { swaggerDocument } from "./swagger/swagger";
 import { ControllerUoW } from "./Controllers/ControllerUoW";
@@ -21,6 +22,7 @@ export class Server {
   }
 
   async setupServer() {
+    this.server.use(cors());
     this.server.use(express.json());
     if (process.env.SHOULD_RESTART_DATABASE === "true")
       await new MigrationUoW().reset();
