@@ -58,6 +58,26 @@ export class TagRepository {
 
     }
 
+    public async getTopDisciplineTags(disciplineId: string): Promise<GetTag[]>{
+        const SQL = `
+            SELECT t.*, COUNT(DISTINCT f.id) as tag_count FROM tag as t 
+                INNER JOIN has_tag as hf on hf.tag_id = t.id  
+                INNER JOIN feedback as f on hf.feedback_id = f.id
+                INNER JOIN lecturing as l on f.lecturing_id = l.id  
+            WHERE l.discipline_id = $1
+            GROUP BY t.id
+            ORDER BY tag_count DESC
+            LIMIT 3
+        `
+
+        const values = [
+            disciplineId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
     public async create(tag: PostTag): Promise<string> {
         const newId = await this.queryHandler.getSequence("tag")
         

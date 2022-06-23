@@ -32,7 +32,14 @@ export class DisciplineRepository {
 
     public async getById(disciplineId: string): Promise<GetDiscipline[]>{
         const SQL = `
-            SELECT * FROM discipline WHERE id = $1
+            SELECT d.*, 
+                COUNT(DISTINCT f.id) as feedback_count,
+                AVG(f.general_score) as general_score
+            FROM discipline as d
+                LEFT OUTER JOIN lecturing as l on d.id = l.discipline_id
+                LEFT OUTER JOIN feedback as f on l.id = f.lecturing_id
+            WHERE d.id = $1
+            GROUP BY d.id
         `
 
         const values = [

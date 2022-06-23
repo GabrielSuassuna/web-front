@@ -12,6 +12,8 @@ import FeedbackCreationPage from "../pages/FeedbackCreationPage/FeedbackCreation
 import FeedbackDescriptionPage from "../pages/FeedbackDescriptionPage/FeedbackDescriptionPage";
 import FeedbackRevisionPage from "../pages/FeedbackRevisionPage/FeedbackRevisionPage";
 import HomePage from "../pages/HomePage/HomePage";
+import LecturingDescriptionPage from "../pages/LecturingDescriptionPage/LecturingDescriptionPage";
+import LecturingRegisterPage from "../pages/LecturingRegisterPage/LecturingRegisterPage";
 import LoggedHomePage from "../pages/LoggedHomePage/LoggedHomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import MyFeedbacksPage from "../pages/MyFeedbacksPage/MyFeedbacksPage";
@@ -48,6 +50,7 @@ function AppRouter() {
         <Route path="/register/faq" element={<FAQRegisterPage />} />
         <Route path="/register/feedback" element={<FeedbackCreationPage />} />
         <Route path="/register/professor" element={<ProfessorRegisterPage />} />
+        <Route path="/register/lecturing" element={<LecturingRegisterPage />} />
         <Route path="/register/remove" element={<RegisterDeletionPage />} />
         <Route path="/register/student" element={<RegisterPage />} />
         <Route path="/register/tag" element={<TagRegisterPage />} />
@@ -55,6 +58,7 @@ function AppRouter() {
         <Route path="/description/disciplineTaught" element={<DisciplineTaughtDescriptionPage />} />
         <Route path="/description/feedback" element={<FeedbackDescriptionPage />} />
         <Route path="/description/professor" element={<ProfessorDescriptionPage />} />
+        <Route path="/description/lecturing" element={<LecturingDescriptionPage />} />
         <Route path="/revision/feedback" element={<FeedbackRevisionPage />} />
         <Route path="/revision/report" element={<ReportedFeedbackPage />} />
         <Route path="/revision/reports" element={<ReportedFeedbacksPage />} />

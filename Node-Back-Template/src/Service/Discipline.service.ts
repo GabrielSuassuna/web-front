@@ -58,11 +58,18 @@ export class DisciplineService {
             
             const toBeFoundDiscipline: GetDiscipline[] = await this.repositoryUoW.disciplineRepository.getById(disciplineId)
             
-            if(!!toBeFoundDiscipline.length){
-                return response.status(200).json(setApiResponse<GetDiscipline[]>(toBeFoundDiscipline, sucessMessage))
+            if(!toBeFoundDiscipline.length){
+                return response.status(404).json(setApiResponse<GetDiscipline[]>(result, notFoundMessage))
             }
-            
-            return response.status(404).json(setApiResponse<GetDiscipline[]>(result, notFoundMessage))
+
+            const topTags: GetTag[] = await this.repositoryUoW.tagRepository.getTopDisciplineTags(disciplineId);
+
+            result = [{
+                ...toBeFoundDiscipline[0],
+                tags: topTags
+            }];
+
+            return response.status(200).json(setApiResponse<GetDiscipline[]>(result, sucessMessage))
         }
         catch(err: any){
             return response.status(400).json(setApiResponse<GetDiscipline[]>(result, errorMessage, err.message))
