@@ -4,7 +4,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 
 
-function LoginPage() {
+function ProfessorLoginPage() {
   const navigate = useNavigate();
   const registrationRef = useRef(null);
   const passwordRef = useRef(null);
@@ -33,7 +33,7 @@ function LoginPage() {
       password: passwordRef.current.value
     };
 
-    let response = await fetch('http://localhost:3000/auth/student', {
+    let response = await fetch('http://localhost:3000/auth/professor', {
       method: 'POST', 
       mode: 'cors',
       cache: 'no-cache',
@@ -55,9 +55,9 @@ function LoginPage() {
   
   return (
     <div>
-      <h1>LoginPage</h1>
+      <h1>ProfessorLoginPage</h1>
       <ValidationInput
-        label="Matrícula"
+        label="SIAPE"
         hint="ex: 123456"
         type="text"
         name='login'
@@ -77,4 +77,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default ProfessorLoginPage;

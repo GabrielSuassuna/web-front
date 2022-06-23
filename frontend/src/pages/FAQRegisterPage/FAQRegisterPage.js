@@ -53,7 +53,6 @@ function FAQRegisterPage() {
         referrerPolicy: 'no-referrer',
         body: JSON.stringify(requestData) 
       });
-      console.log(await response.json())
       navigate('/faq')
     } catch (e) {
       console.log(e)

@@ -19,6 +19,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import MyFeedbacksPage from "../pages/MyFeedbacksPage/MyFeedbacksPage";
 import MyProfilePage from "../pages/MyProfilePage/MyProfilePage";
 import ProfessorDescriptionPage from "../pages/ProfessorDescriptionPage/ProfessorDescriptionPage";
+import ProfessorLoginPage from "../pages/ProfessorLoginPage/ProfessorLoginPage";
 import ProfessorRegisterPage from "../pages/ProfessorRegisterPage/ProfessorRegisterPage";
 import RegisterDeletionPage from "../pages/RegisterDeletionPage/RegisterDeletionPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -41,6 +42,7 @@ function AppRouter() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/professor/login" element={<ProfessorLoginPage/>} />
         <Route path="/loggedHome" element={<LoggedHomePage />} />
         <Route path="/me" element={<Navigate to="/myProfile" replace />} />
         <Route path="/myProfile" element={<MyProfilePage />} />

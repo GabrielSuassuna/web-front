@@ -42,7 +42,6 @@ export class AuthRepository {
         ]
 
         const result =  await this.queryHandler.runQuery(SQL, values)
-        
         return [result[0].id]
     }
 }

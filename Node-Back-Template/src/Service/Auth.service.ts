@@ -92,7 +92,6 @@ export class AuthService {
 
         try{
             const authCredentials: GetAuth = request.body
-            
             const toBeFoundClient: string[] = await this.repositoryUoW.authRepository.validateStudentCredentials(authCredentials)
             
             if(!!toBeFoundClient.length){
