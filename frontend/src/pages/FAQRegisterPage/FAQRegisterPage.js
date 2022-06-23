@@ -1,11 +1,15 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import useSWR, { useSWRConfig } from 'swr'
+import fetcher from "../../utils/fetcher";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import styles from "./FAQRegisterPage.module.css";
+import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 
 function FAQRegisterPage() {
 
+  const { mutate } = useSWRConfig()
   const navigate = useNavigate();
 
   const faqQuestionRef = useRef(null);
@@ -23,7 +27,7 @@ function FAQRegisterPage() {
     return { isValid: false, message: "Esse campo não pode estar vazio" };
   };
 
-  const registerFAQHandler = () => {
+  const registerFAQHandler = async () => {
     if (
       !validationStringChecker(faqQuestionRef).isValid ||
       !validationStringChecker(faqAnswerRef).isValid
@@ -31,12 +35,30 @@ function FAQRegisterPage() {
       return alert("Dados inválidos!");
     
     let requestData = {
-      question: faqQuestionRef.current.ref,
-      answer: faqAnswerRef.current.id
+      question: faqQuestionRef.current.value,
+      answer: faqAnswerRef.current.value
     };
-    alert("Registro realizado!")
-    console.log(requestData)
-    navigate('/faq')
+
+    try{
+      const response = await fetch('http://localhost:3000/faq/', {
+        method: 'POST', 
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${DUMMY_AUTH_TOKEN}`
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(requestData) 
+      });
+      console.log(await response.json())
+      navigate('/faq')
+    } catch (e) {
+      console.log(e)
+    }
+
   };
 
   return (
