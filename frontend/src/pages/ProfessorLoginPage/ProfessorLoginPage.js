@@ -2,11 +2,12 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import { apiRequest } from "../../utils/apiReq";
 
 
 function ProfessorLoginPage() {
   const navigate = useNavigate();
-  const registrationRef = useRef(null);
+  const siapeRef = useRef(null);
   const passwordRef = useRef(null);
   
   const validationStringChecker = (inputRef) => {
@@ -23,34 +24,26 @@ function ProfessorLoginPage() {
 
   const loginHandler = async () => {
     if (
-      !validationStringChecker(registrationRef).isValid ||
+      !validationStringChecker(siapeRef).isValid ||
       !validationStringChecker(passwordRef).isValid
     )
       return alert("Dados inválidos!");
     
     let requestData = {
-      code: registrationRef.current.value,
+      code: siapeRef.current.value,
       password: passwordRef.current.value
     };
 
-    let response = await fetch('http://localhost:3000/auth/professor', {
-      method: 'POST', 
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(requestData) 
-    })
-    
-    const res_data = await response.json();
-    if(response.ok)
-      navigate('/')
-    else
-      alert(res_data.message)
+    apiRequest(
+      'POST',
+      'http://localhost:3000/auth/professor',
+      requestData,
+      (_) => navigate('/'),
+      (res) => {
+        console.log(res)
+        alert(res.message)
+      }
+    );
   };
   
   return (
@@ -61,7 +54,7 @@ function ProfessorLoginPage() {
         hint="ex: 123456"
         type="text"
         name='login'
-        inputRef={registrationRef}
+        inputRef={siapeRef}
         validation={validationStringChecker}
       />
       <ValidationInput

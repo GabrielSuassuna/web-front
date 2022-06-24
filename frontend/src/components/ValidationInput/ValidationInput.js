@@ -20,6 +20,9 @@ function ValidationInput(props) {
   let [errorMessage, setErrorMessage] = useState("");
 
   const validationCheck = () => {
+    if(!props.validation)
+      return;
+    
     let validation = props.validation(props.inputRef);
     if (validation.isValid) setErrorMessage("");
     else setErrorMessage(validation.message);

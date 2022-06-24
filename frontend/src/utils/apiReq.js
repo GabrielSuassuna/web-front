@@ -1,4 +1,4 @@
-const api_request = async (method, url, requestData, okCallback, errorCallback, authToken) => {
+const apiRequest = async (method, url, requestData, okCallback, errorCallback, authToken) => {
   let headers = {
     'Content-Type': 'application/json',
   };
@@ -27,4 +27,4 @@ const api_request = async (method, url, requestData, okCallback, errorCallback, 
     }
 }
 
-export { api_request };
+export { apiRequest };

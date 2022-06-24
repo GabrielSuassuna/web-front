@@ -42,7 +42,7 @@ function AppRouter() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/professor/login" element={<ProfessorLoginPage/>} />
+        <Route path="/login/professor" element={<ProfessorLoginPage/>} />
         <Route path="/loggedHome" element={<LoggedHomePage />} />
         <Route path="/me" element={<Navigate to="/myProfile" replace />} />
         <Route path="/myProfile" element={<MyProfilePage />} />

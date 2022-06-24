@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import { apiRequest } from "../../utils/apiReq";
 
 
 function LoginPage() {
@@ -32,26 +33,18 @@ function LoginPage() {
       code: registrationRef.current.value,
       password: passwordRef.current.value
     };
-
-    let response = await fetch('http://localhost:3000/auth/student', {
-      method: 'POST', 
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(requestData) 
-    })
     
-    const res_data = await response.json();
-    if(response.ok)
-      navigate('/')
-    else
-      alert(res_data.message)
-  };
+    apiRequest(
+      'POST',
+      'http://localhost:3000/auth/student',
+      requestData,
+      (_) => navigate('/'),
+      (res) => {
+        console.log(res)
+        alert(res.message)
+      }
+    );
+  }
   
   return (
     <div>
