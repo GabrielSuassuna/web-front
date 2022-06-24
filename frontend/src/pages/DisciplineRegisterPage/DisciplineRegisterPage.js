@@ -2,6 +2,9 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import styles from "./DisciplineRegisterPage.module.css";
+import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
+import { apiRequest } from "../../utils/apiReq";
 
 function DisciplineRegisterPage() {
   const navigate = useNavigate();
@@ -9,6 +12,7 @@ function DisciplineRegisterPage() {
   const disciplineNameRef = useRef(null);
   const disciplineCodeRef = useRef(null);
   const disciplineHoursRef = useRef(null);
+  const disciplineDescriptionRef = useRef(null);
 
   const validationStringChecker = (inputRef) => {
     if (
@@ -40,13 +44,27 @@ function DisciplineRegisterPage() {
       return alert("Dados inválidos!");
     
     let requestData = {
-      id: disciplineNameRef.current.ref,
-      name: disciplineCodeRef.current.id,
-      hours: disciplineHoursRef.current.id, // Algo precisa ser feito com essa senha
+      name: disciplineNameRef.current.value,
+      code: disciplineCodeRef.current.value,
+      description: disciplineDescriptionRef.current.value || '',
+      hours: disciplineHoursRef.current.value,
     };
-    alert("Registro realizado!")
-    console.log(requestData)
-    navigate('/description/discipline')
+    apiRequest(
+      'POST',
+      "http://localhost:3000/discipline/",
+      requestData,
+      (res) => {
+        alert("Registro de disciplina realizado!");
+        console.log(res);
+        navigate("/");
+      },
+      (res) => {
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
+      },
+      DUMMY_AUTH_TOKEN
+    );
   };
 
   return (
@@ -65,6 +83,15 @@ function DisciplineRegisterPage() {
         type="text"
         inputRef={disciplineCodeRef}
         validation={validationStringChecker}
+      />
+      <ValidationInput
+        label="Descrição"
+        hint="ex: Esta disciplina tem como foco..."
+        type="text"
+        name="description"
+        inputRef={disciplineDescriptionRef}
+        inputClasses={[styles.inputQuestion]}
+        isTextArea
       />
       <ValidationInput
         label="Carga horária da Disciplina"
