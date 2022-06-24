@@ -1,7 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
+import useSWR from "swr";
+import fetcher from "../../utils/fetcher";
 import { apiRequest } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import styles from "./ProfessorRegisterPage.module.css";
@@ -16,7 +19,30 @@ function ProfessorRegisterPage() {
   const professorPasswordConfirmRef = useRef(null);
   const professorLattesUrlRef = useRef(null);
   const professorAboutRef = useRef(null);
-  const professorDepartmentRef = useRef(null);
+
+  const [professorDepartment, setProfessorDepartment] = useState(null);
+  let [deptOptions, setDeptOptions] = useState([]);
+  let [loaded, setLoaded] = useState(false);
+
+  const { data: departments, error: departmentsError } = useSWR(
+    `http://localhost:3000/department/`,
+    fetcher
+  );
+
+  useEffect(()=>{
+    if(!departments || !departments.data || loaded){
+      return;
+    }
+    let deptOptions = departments.data.map((f) => {
+      console.log(f)
+      return {
+        value: f.id,
+        label: f.name
+      };
+    });
+    setDeptOptions(deptOptions);
+    setLoaded(true);
+  },[deptOptions, departments, loaded]);
 
   const validationStringChecker = (inputRef) => {
     if (
@@ -64,19 +90,13 @@ function ProfessorRegisterPage() {
     if (
       !validationStringChecker(professorNameRef).isValid ||
       !validationStringChecker(professorIdRef).isValid ||
-      !validationStringChecker(professorDepartmentRef).isValid ||
       !validationPasswordChecker(professorPasswordRef).isValid || 
       !validationPasswordConfirmChecker(professorPasswordConfirmRef).isValid
     )
       return alert("Dados inválidos!");
     
-    
-    console.log(professorAboutRef)
-    console.log(professorLattesUrlRef)
-
-    
     let requestData = {
-      departmentId: professorDepartmentRef.current.value,
+      departmentId: professorDepartment,
       siape: professorIdRef.current.value,
       name: professorNameRef.current.value,
       password: professorPasswordRef.current.value,
@@ -153,13 +173,13 @@ function ProfessorRegisterPage() {
         name='lattes'
         inputRef={professorLattesUrlRef}
       />
-      <ValidationInput
-        label="Departamento (A ser mudado)"
-        hint="ex: 1"
-        type="text"
-        name='deptId'
-        inputRef={professorDepartmentRef}
-        validation={validationStringChecker}
+      <ValidationSelect
+        name="dept"
+        label="Departamento"
+        hint="Selecione um departamento"
+        value={professorDepartment}
+        valueHandler={setProfessorDepartment}
+        options={deptOptions}
       />
 
       <IconButton content="Registrar-se" onClick={registerProfessorHandler} />
