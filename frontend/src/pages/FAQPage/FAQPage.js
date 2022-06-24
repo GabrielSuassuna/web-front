@@ -5,7 +5,6 @@ import fetcher from "../../utils/fetcher";
 import { useEffect, useState } from "react";
 
 function FAQPage() {
-  let query = useQuery();
   let [faqState, setFaqState] = useState([]);
   let [loaded, setLoaded] = useState(false);
 

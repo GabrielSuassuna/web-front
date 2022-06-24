@@ -54,7 +54,7 @@ function RegisterPage() {
     return { isValid: false, message: "As senhas não coincidem" };
   };
 
-  const registerStudentHandler = () => {
+  const registerStudentHandler = async () => {
     if (
       !validationStringChecker(studentNameRef).isValid ||
       !validationStringChecker(studentIdRef).isValid ||
@@ -64,13 +64,33 @@ function RegisterPage() {
       return alert("Dados inválidos!");
     
     let requestData = {
-      name: studentNameRef.current.ref,
-      id: studentIdRef.current.id,
-      password: studentPasswordRef.current.id, // Algo precisa ser feito com essa senha
+      registration: studentIdRef.current.value,
+      name: studentNameRef.current.value,
+      password: studentPasswordRef.current.value, // Algo precisa ser feito com essa senha
     };
-    alert("Registro realizado!")
-    console.log(requestData)
-    navigate('/loggedHome')
+    const response = await fetch('http://localhost:3000/student/', {
+        method: 'POST', 
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(requestData) 
+      });
+    const res_data = await response.json();
+    if(response.ok){
+      alert("Registro realizado!")
+      console.log(response)
+      navigate('/loggedHome')
+    }
+    else{
+      alert(res_data.message)
+      console.log(res_data.message)
+      console.log(res_data.errorStack)
+    }
   };
 
   return (
