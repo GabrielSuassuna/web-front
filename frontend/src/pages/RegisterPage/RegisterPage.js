@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import { post_request } from "../../utils/apiReq";
 
 function RegisterPage() {
 
@@ -68,29 +69,21 @@ function RegisterPage() {
       name: studentNameRef.current.value,
       password: studentPasswordRef.current.value, // Algo precisa ser feito com essa senha
     };
-    const response = await fetch('http://localhost:3000/student/', {
-        method: 'POST', 
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(requestData) 
-      });
-    const res_data = await response.json();
-    if(response.ok){
-      alert("Registro realizado!")
-      console.log(response)
-      navigate('/loggedHome')
-    }
-    else{
-      alert(res_data.message)
-      console.log(res_data.message)
-      console.log(res_data.errorStack)
-    }
+
+    post_request(
+      'http://localhost:3000/student/',
+      requestData,
+      (res) => {
+        alert("Registro realizado!")
+        console.log(res)
+        navigate('/loggedHome')
+      },
+      (res) => {
+        alert(res.message)
+        console.log(res.message)
+        console.log(res.errorStack)
+      }
+    );
   };
 
   return (
