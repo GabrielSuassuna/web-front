@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import { post_request } from "../../utils/apiReq";
+import { api_request } from "../../utils/apiReq";
 
 function RegisterPage() {
 
@@ -70,7 +70,8 @@ function RegisterPage() {
       password: studentPasswordRef.current.value, // Algo precisa ser feito com essa senha
     };
 
-    post_request(
+    api_request(
+      'POST',
       'http://localhost:3000/student/',
       requestData,
       (res) => {

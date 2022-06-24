@@ -1,4 +1,4 @@
-const post_request = async (url, requestData, okCallback, errorCallback, authToken) => {
+const api_request = async (method, url, requestData, okCallback, errorCallback, authToken) => {
   let headers = {
     'Content-Type': 'application/json',
   };
@@ -7,7 +7,7 @@ const post_request = async (url, requestData, okCallback, errorCallback, authTok
   }
   
   const response = await fetch(url, {
-      method: 'POST', 
+      method: method, 
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -27,4 +27,4 @@ const post_request = async (url, requestData, okCallback, errorCallback, authTok
     }
 }
 
-export { post_request };
+export { api_request };

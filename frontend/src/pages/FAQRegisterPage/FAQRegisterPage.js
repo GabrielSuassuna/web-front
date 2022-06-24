@@ -4,7 +4,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import styles from "./FAQRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
-import { post_request } from "../../utils/apiReq";
+import { api_request } from "../../utils/apiReq";
 
 function FAQRegisterPage() {
   const navigate = useNavigate();
@@ -36,7 +36,8 @@ function FAQRegisterPage() {
       answer: faqAnswerRef.current.value,
     };
 
-    post_request(
+    api_request(
+      'POST',
       "http://localhost:3000/faq/",
       requestData,
       (res) => {
