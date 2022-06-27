@@ -1,6 +1,7 @@
 import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
+import { Link } from "react-router-dom";
 
 function LecturingDescriptionPage() {
   let query = useQuery();
@@ -22,6 +23,9 @@ function LecturingDescriptionPage() {
       <p>{JSON.stringify(lecturing)}</p>
       <p>{JSON.stringify(professor)}</p>
       <p>{JSON.stringify(discipline)}</p>
+      <Link to={`/register/feedback?lecturingId=${lecturing.data[0].id}`}> 
+        FAZER FEEDBACK PARA ESSA DISCIPLINA
+      </Link>
     </div>
   );
 } 

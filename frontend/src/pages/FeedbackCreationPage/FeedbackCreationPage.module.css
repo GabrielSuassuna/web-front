@@ -1,0 +1,9 @@
+.inputQuestion {
+    width: 400px;
+    height: 200px;
+}
+
+.selected {
+    color: blue;
+    font-weight: bolder;
+}

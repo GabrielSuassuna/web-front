@@ -9,6 +9,8 @@ import styles from "./ValidationInput.module.css";
  *  * hint (String): Dica que aparece quando o campo está vazio
  *  * name (String): Nome do input
  *  * type (String): Tipo do input
+ *  * min (Number): Valor numérico mínimo (apenas para campos numéricos)
+ *  * max (Number): Valor numérico máximo (apenas para campos numéricos)
  *  * inputRef (Ref): Referência do valor do campo
  *  * validation (Function): Função que faz a validação do input e retorna uma mensagem indicando o possível erro de validação.
  *      Retorno da função validation: Object {  isValid: Boolean,  message: String (opcional)  }
@@ -40,6 +42,8 @@ function ValidationInput(props) {
       name={props.name}
       placeholder={props.hint}
       onChange={validationCheck}
+      min={props.min}
+      max={props.max}
     />
   );
   if (props.isTextArea) {
