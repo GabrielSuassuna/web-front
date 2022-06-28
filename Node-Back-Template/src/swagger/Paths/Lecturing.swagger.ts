@@ -19,6 +19,13 @@ export const LecturingPaths = {
                     }
                 },
                 {
+                    "name": "disciplineHours",
+                    "in": "query",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
                     "name": "professorName",
                     "in": "query",
                     "schema": {

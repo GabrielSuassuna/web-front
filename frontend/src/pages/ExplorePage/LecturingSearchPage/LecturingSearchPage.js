@@ -8,9 +8,12 @@ import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
 
-function ProfessorSearchPage() {
+function LecturingSearchPage() {
   const professorNameRef = useRef(null);
   const professorSiapeRef = useRef(null);
+  const disciplineNameRef = useRef(null);
+  const disciplineCodeRef = useRef(null);
+  const disciplineHoursRef = useRef(null);
 
   const [professorDepartment, setProfessorDepartment] = useState(null);
   const [deptOptions, setDeptOptions] = useState([]);
@@ -44,10 +47,13 @@ function ProfessorSearchPage() {
   }, [deptOptions, departments, loaded]);
 
   const handleSearch = (pageNumber) => {
-    let url = "http://localhost:3000/professor?";
-    url += `departmentId=${professorDepartment}`;
-    url += `&name=${professorNameRef.current.value}`;
-    url += `&siape=${professorSiapeRef.current.value}`;
+    let url = "http://localhost:3000/lecturing?";
+    url += `disciplineName=${disciplineNameRef.current.value}`;
+    url += `&disciplineCode=${disciplineCodeRef.current.value}`;
+    url += `&disciplineHours=${disciplineHoursRef.current.value}`;
+    url += `&professorSiape=${professorSiapeRef.current.value}`;
+    url += `&professorName=${professorNameRef.current.value}`;
+    url += `&professorDepartmentId=${professorDepartment}`;
     url += `&page=${pageNumber}`;
     url += `&limit=10`;
     fetch(url)
@@ -89,6 +95,27 @@ function ProfessorSearchPage() {
         valueHandler={setProfessorDepartment}
         options={deptOptions}
       />
+      <ValidationInput
+        label="Nome da Disciplina"
+        hint="ex: Algoritmos Aproximativos"
+        type="text"
+        name="name"
+        inputRef={disciplineNameRef}
+      />
+      <ValidationInput
+        label="Código da Disciplina"
+        hint="ex: CC0101"
+        type="text"
+        name="code"
+        inputRef={disciplineCodeRef}
+      />
+      <ValidationInput
+        label="Carga horária da Disciplina"
+        hint="ex: 64"
+        type="number"
+        name="hours"
+        inputRef={disciplineHoursRef}
+      />
       <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
       {results.length > 0 && (
         <>
@@ -107,7 +134,7 @@ function ProfessorSearchPage() {
       {results.map((result, i) => (
         <div key={i}>
           <SearchResult
-            type={SEARCH_RESULT_TYPES.PROFESSOR}
+            type={SEARCH_RESULT_TYPES.LECTURING}
             resultData={result}
           />{" "}
           <br />{" "}
@@ -117,4 +144,4 @@ function ProfessorSearchPage() {
   );
 }
 
-export default ProfessorSearchPage;
+export default LecturingSearchPage;

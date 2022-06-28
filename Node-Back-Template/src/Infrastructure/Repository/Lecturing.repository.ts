@@ -19,9 +19,13 @@ export class LecturingRepository {
                 l.id as id,
                 d.name as discipline_name,
                 d.code as discipline_code,
+                d.hours as discipline_hours,
+                d.id as discipline_id,
                 p.name as professor_name,
                 p.siape as professor_siape,
+                p.id as professor_id,
                 dpt.name as professor_department,
+                dpt.id as professor_department_id,
                 fc.feedback_count as feedback_count,
                 av.average_score as average_score
             FROM
@@ -140,6 +144,10 @@ export class LecturingRepository {
             values.push(`%${lecturingFilter.disciplineCode}%`)
             sqlWithFilter += ` AND d.code LIKE $${values.length}`
         }
+        if(lecturingFilter?.disciplineHours){
+            values.push(`${lecturingFilter.disciplineHours}`)
+            sqlWithFilter += ` AND d.hours = $${values.length}`
+        }
         if(lecturingFilter?.professorName){
             values.push(`%${lecturingFilter.professorName}%`)
             sqlWithFilter += ` AND p.name LIKE $${values.length}`
@@ -153,7 +161,7 @@ export class LecturingRepository {
             sqlWithFilter += ` AND dpt.name LIKE $${values.length}`
         }
         if(lecturingFilter?.professorDepartmentId){
-            values.push(`%${lecturingFilter.professorDepartmentId}%`)
+            values.push(`${lecturingFilter.professorDepartmentId}`)
             sqlWithFilter += ` AND p.department_id = $${values.length}`
         }
 

@@ -6,6 +6,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import { SEARCH_RESULT_TYPES } from "../../utils/consts";
 import ProfessorSearchPage from "./ProfessorSearchPage/ProfessorSearchPage";
 import DisciplineSearchPage from "./DisciplineSearchPage/DisciplineSearchPage";
+import LecturingSearchPage from "./LecturingSearchPage/LecturingSearchPage";
 
 const DUMMY_RESULTS = [
   {
@@ -161,6 +162,7 @@ function ExplorePage() {
       renderedExplorePage = <DisciplineSearchPage />
       break;
     case SEARCH_RESULT_TYPES.LECTURING:
+      renderedExplorePage = <LecturingSearchPage />
       break;
     case SEARCH_RESULT_TYPES.FEEDBACK:
       break;
