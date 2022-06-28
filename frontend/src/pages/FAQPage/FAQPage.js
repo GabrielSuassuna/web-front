@@ -3,6 +3,7 @@ import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { useEffect, useState } from "react";
+import { checkForErrors } from "../../utils/apiReq";
 
 function FAQPage() {
   let [faqState, setFaqState] = useState([]);
@@ -12,6 +13,8 @@ function FAQPage() {
     `http://localhost:3000/faq/`,
     fetcher
   );
+
+  checkForErrors([faqError]);
   
   useEffect(()=>{
     if(!faq || !faq.data || loaded){

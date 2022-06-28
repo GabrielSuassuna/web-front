@@ -27,4 +27,11 @@ const apiRequest = async (method, url, requestData, okCallback, errorCallback, a
     }
 }
 
-export { apiRequest };
+const checkForErrors = (errors) => {
+  for(let e of errors){
+    if(e)
+      console.log(`[ERROR]:${e}`)
+  }
+}
+
+export { apiRequest, checkForErrors };

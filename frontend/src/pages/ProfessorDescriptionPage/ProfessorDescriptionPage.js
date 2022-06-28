@@ -3,12 +3,15 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 
 import Tag from "../../components/Tag/Tag";
+import { checkForErrors } from "../../utils/apiReq";
 
 function ProfessorDescriptionPage() {
 
   let query = useQuery();
 
   const {data: professor, error: professorError} = useSWR(`http://localhost:3000/professor/${query.get("id")}`, fetcher);
+
+  checkForErrors([professorError])
 
   return (
     <div>

@@ -3,11 +3,14 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 
 import Tag from "../../components/Tag/Tag";
+import { checkForErrors } from "../../utils/apiReq";
 
 function DisciplineDescriptionPage() {
   let query = useQuery();
 
   const {data: discipline, error: disciplineError} = useSWR(`http://localhost:3000/discipline/${query.get("id")}`, fetcher);
+
+  checkForErrors([disciplineError]);
 
   return (
     <div>

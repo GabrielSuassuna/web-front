@@ -2,6 +2,7 @@ import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { Link } from "react-router-dom";
+import { checkForErrors } from "../../utils/apiReq";
 
 function LecturingDescriptionPage() {
   let query = useQuery();
@@ -19,11 +20,7 @@ function LecturingDescriptionPage() {
     fetcher
   );
 
-  if (lecturingError || professorError || disciplineError) {
-    console.log(lecturingError);
-    console.log(professorError);
-    console.log(disciplineError);
-  }
+  checkForErrors([lecturingError, professorError, disciplineError]);
 
   if (!lecturing || !professor || !discipline) {
     return (
@@ -32,6 +29,7 @@ function LecturingDescriptionPage() {
       </div>
     );
   }
+  
   return (
     <div>
       <h1>LecturingDescriptionPage</h1>

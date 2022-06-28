@@ -5,7 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
-import { apiRequest } from "../../utils/apiReq";
+import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import styles from "./ProfessorRegisterPage.module.css";
 import { validationStringChecker, validationPasswordChecker, validationPasswordConfirmChecker } from "../../utils/validation";
@@ -30,9 +30,7 @@ function ProfessorRegisterPage() {
     fetcher
   );
 
-  if(departmentsError){
-    console.log(departmentsError)
-  }
+  checkForErrors([departmentsError])
 
   useEffect(()=>{
     if(!departments || !departments.data || loaded){

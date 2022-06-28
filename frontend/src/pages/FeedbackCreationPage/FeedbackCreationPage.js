@@ -6,7 +6,7 @@ import styles from "./FeedbackCreationPage.module.css";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import IconButton from "../../components/IconButton/IconButton";
 import { DUMMY_AUTH_TOKEN, DUMMY_STUDENT_ID } from "../../utils/consts";
-import { apiRequest } from "../../utils/apiReq";
+import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { useNavigate } from "react-router-dom";
 import { validationStringChecker } from "../../utils/validation";
 
@@ -41,12 +41,7 @@ function FeedbackCreationPage() {
     fetcher
   );
 
-  if(lecturingError || professorError || disciplineError || tagsError){
-    console.log(lecturingError)
-    console.log(professorError)
-    console.log(disciplineError)
-    console.log(tagsError)
-  }
+  checkForErrors([lecturingError, professorError, disciplineError, tagsError]);
 
   const toggleTagHandler = (tagId) => {
     if (selectedTags.find((t) => t.id === tagId)) {

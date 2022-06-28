@@ -5,7 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
-import { apiRequest } from "../../utils/apiReq";
+import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 
 function LecturingRegisterPage() {
@@ -27,6 +27,8 @@ function LecturingRegisterPage() {
     `http://localhost:3000/discipline/`,
     fetcher
   );
+
+  checkForErrors([professorsError, disciplinesError])
 
   useEffect(() => {
     if (professors && professors.data && !professorLoaded) {
