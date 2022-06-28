@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Tag from "../../Tag/Tag";
+
 /**
  * Componente que representa um resultado de uma pesquisa de Professor.
  * 
@@ -16,14 +16,12 @@ function DisciplineSearchResult(props) {
   const navigate = useNavigate();
 
   const redirectSearchHandler = () => {
-    navigate('/description/professor');
+    navigate(`/description/professor?id=${props.resultData.id}`);
   }
 
   return <div onClick={redirectSearchHandler}>
-    <small>{props.resultData.department}</small>
-    <h1>{props.resultData.siape} -{props.resultData.professor}</h1>
-    {props.resultData.tags.map(t => <Tag key={t.id} id={t.id} title={t.title}/>)}
-    <h2>Classificação: {props.resultData.score}</h2> {/* Será substituído pelo componente Stars*/}
+    <small>{props.resultData.department_name}</small>
+    <h1>{props.resultData.siape} -{props.resultData.name}</h1>
   </div>
 }
 

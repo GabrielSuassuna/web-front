@@ -2,7 +2,9 @@ import { useState } from "react";
 import RadioInput from "../../components/RadioInput/RadioInput";
 import SearchResult from "../../components/SearchResult/SearchResult";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
+import IconButton from "../../components/IconButton/IconButton";
 import { SEARCH_RESULT_TYPES } from "../../utils/consts";
+import ProfessorSearchPage from "./ProfessorSearchPage/ProfessorSearchPage";
 
 const DUMMY_RESULTS = [
   {
@@ -130,13 +132,11 @@ const DUMMY_RESULTS = [
   },
 ];
 
-const DUMMY_SELECT_OPTIONS = [
-  { value: "ALL", label: "Todas as entidades" },
-  { value: "PROFESSOR", label: "Professor" },
-  { value: "DISCIPLINE", label: "Disciplina" },
-  { value: "DISCIPLINE_TAUGHT", label: "Disciplina Ministrada" },
-  { value: "FEEDBACK", label: "Feedback" },
-  { value: "DISABLED", label: "Opção indisponível", disabled: true },
+const SELECT_OPTIONS = [
+  { value: SEARCH_RESULT_TYPES.PROFESSOR, label: "Professor" },
+  { value: SEARCH_RESULT_TYPES.DISCIPLINE, label: "Disciplina" },
+  { value: SEARCH_RESULT_TYPES.LECTURING, label: "Disciplina Ministrada" },
+  { value: SEARCH_RESULT_TYPES.FEEDBACK, label: "Feedback" }
 ];
 
 const DUMMY_RADIO_OPTIONS = [
@@ -147,10 +147,27 @@ const DUMMY_RADIO_OPTIONS = [
 ];
 
 function ExplorePage() {
-  const [searchType, setSearchType] = useState("ALL");
+  const [searchType, setSearchType] = useState(SEARCH_RESULT_TYPES.PROFESSOR);
   const [sorting, setSorting] = useState('scoreAsc');
 
+  let renderedExplorePage;
 
+  switch(searchType){
+    case SEARCH_RESULT_TYPES.PROFESSOR:
+      renderedExplorePage = <ProfessorSearchPage />
+      break;
+    case SEARCH_RESULT_TYPES.DISCIPLINE:
+      break;
+    case SEARCH_RESULT_TYPES.LECTURING:
+      break;
+    case SEARCH_RESULT_TYPES.FEEDBACK:
+      break;
+    default:
+      renderedExplorePage = <></>;
+      break;
+  }
+
+  
   return (
     <div>
       <h1>ExplorePage</h1>
@@ -161,22 +178,23 @@ function ExplorePage() {
         hint="Selecione uma entidade"
         value={searchType}
         valueHandler={setSearchType}
-        options={DUMMY_SELECT_OPTIONS}
+        options={SELECT_OPTIONS}
       />
 
-      <RadioInput 
+      {/* <RadioInput 
         label='Modo de ordenação'
         name='order'
         options={DUMMY_RADIO_OPTIONS}
         selected={sorting}
         setSelected={setSorting}
-      />
-      {DUMMY_RESULTS.map((result, i) => (
+      /> */}
+      {renderedExplorePage}
+      {/*DUMMY_RESULTS.map((result, i) => (
         <div key={i}>
           <SearchResult type={result.type} resultData={result.resultData} handleVote={(v)=>alert(v)} />{" "}
           <br />{" "}
         </div>
-      ))}
+      ))*/}
     </div>
   );
 }

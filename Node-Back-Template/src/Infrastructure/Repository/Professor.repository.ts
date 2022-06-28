@@ -17,11 +17,13 @@ export class ProfessorRepository {
     public async getAll(professorFilter: ProfessorFilter | null = null): Promise<ProfessorInterface[]>{
         const SQL = `
             SELECT 
-                id,
-                department_id,
-                siape,
-                name
-            FROM professor
+                p.id,
+                p.department_id,
+                d.name as department_name,
+                p.siape,
+                p.name
+            FROM professor as p
+                INNER JOIN department as d on p.department_id = d.id
         `
 
         let values: any[] = []

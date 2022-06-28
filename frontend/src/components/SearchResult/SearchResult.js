@@ -22,7 +22,7 @@ function SearchResult(props) {
     return <DisciplineSearchResult resultData={props.resultData}/>;
   if(props.type === SEARCH_RESULT_TYPES.PROFESSOR)
     return <ProfessorSearchResult resultData={props.resultData}/>;
-  if(props.type === SEARCH_RESULT_TYPES.DISCIPLINE_TAUGHT)
+  if(props.type === SEARCH_RESULT_TYPES.LECTURING)
     return <DisciplineTaughtSearchResult resultData={props.resultData}/>;
   if(props.type === SEARCH_RESULT_TYPES.FEEDBACK)
     return <FeedbackSearchResult resultData={props.resultData} handleVote={props.handleVote}/>;
