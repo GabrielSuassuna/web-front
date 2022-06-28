@@ -16,7 +16,7 @@ export class HasVoteController {
  
     public getRouter() {
         this.router.get(`${this.prefixPath}/`,(request: Request, response: Response) => this.getByStudentId(request, response));
-        this.router.post(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.create(request, response));
+        this.router.post(`${this.prefixPath}/`, authHandler,(request: Request, response: Response) => this.create(request, response));
         this.router.delete(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
         this.router.put(`${this.prefixPath}/:feedbackId`, authHandler,(request: Request, response: Response) => this.update(request, response));
         
@@ -24,7 +24,6 @@ export class HasVoteController {
     }
 
     private getByStudentId(request: Request, response: Response){
-        console.log(request.body)
         this.serviceUoW.hasVoteService.getByStudentAndFeedbackId(request, response)
     }
 

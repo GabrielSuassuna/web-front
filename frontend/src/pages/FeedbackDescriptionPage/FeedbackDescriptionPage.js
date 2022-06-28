@@ -1,16 +1,82 @@
 import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
+import { useEffect, useState } from "react";
 import fetcher from "../../utils/fetcher";
-import {DUMMY_STUDENT_ID} from "../../utils/consts";
+import { apiRequest } from "../../utils/apiReq";
+import {DUMMY_STUDENT_ID, DUMMY_AUTH_TOKEN} from "../../utils/consts";
 
 function FeedbackDescriptionPage() {
+
+  let [vote, setVote] = useState(null);
 
   let query = useQuery();
 
   const {data: feedback, error: feedbackError } = useSWR(`http://localhost:3000/feedback/${query.get("id")}`, fetcher);
-  const {data: hasVote, error: hasVoteError } = useSWR(`http://localhost:3000/hasVote?studentId=${DUMMY_STUDENT_ID}&feedbackId=${query.get("id")}`, fetcher);
+  let {data: hasVote, error: hasVoteError } = useSWR(`http://localhost:3000/hasVote?studentId=${DUMMY_STUDENT_ID}&feedbackId=${query.get("id")}`, fetcher);
   
+  if(feedbackError || hasVoteError){
+    console.log(feedbackError)
+    console.log(hasVoteError)
+  }
 
+  useEffect(()=>{
+    if(vote)
+      return;
+    if(hasVote && hasVote.data && hasVote.data.length === 0){
+      setVote('NONE');
+    }
+    else if(hasVote && hasVote.data && hasVote.data[0].is_upvote){
+      setVote('UPVOTE');
+    }
+    else if(hasVote && hasVote.data && !hasVote.data[0].is_upvote){
+      setVote('DOWNVOTE');
+    }
+  }, [vote, setVote, hasVote])
+
+  const handleVote = (isUpvote) => {
+    setVote(isUpvote?'UPVOTE':'DOWNVOTE');
+
+    if(hasVote && hasVote.data[0]){
+      apiRequest(
+        'PUT',
+        `http://localhost:3000/hasVote/${query.get("id")}?studentId=${DUMMY_STUDENT_ID}`,
+        {
+          isUpvote: isUpvote
+        },
+        (res) => {
+          console.log(res)
+        },
+        (res) => {
+          alert(res.message)
+          console.log(res.message)
+          console.log(res.errorStack)
+        },
+        DUMMY_AUTH_TOKEN
+      );
+    }
+    else{
+      apiRequest(
+        'POST',
+        `http://localhost:3000/hasVote`,
+        {
+          feedbackId: query.get("id"),
+          studentId: DUMMY_STUDENT_ID,
+          isUpvote: isUpvote
+        },
+        (res) => {
+          console.log(res)
+        },
+        (res) => {
+          alert(res.message)
+          console.log(res.message)
+          console.log(res.errorStack)
+        },
+        DUMMY_AUTH_TOKEN
+      );
+    }
+    
+  }
+  
   if(!hasVote){
     return (
       <div>
@@ -25,6 +91,9 @@ function FeedbackDescriptionPage() {
       <p>{JSON.stringify(feedback)}</p>
       <hr/>
       <p>{JSON.stringify(hasVote)}</p>
+      <button disabled={vote === 'UPVOTE'} onClick={()=>handleVote(true)}> + </button>
+      <hr/>
+      <button disabled={vote === 'DOWNVOTE'} onClick={()=>handleVote(false)}> - </button>
     </div>
   );
 }

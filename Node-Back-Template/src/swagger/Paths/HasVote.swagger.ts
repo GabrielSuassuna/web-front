@@ -127,139 +127,6 @@ export const HasVotePaths = {
                 },
             }
         },
-        "post": {
-            "tags": ["HasVote"],
-            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante.",
-            "security": [{
-                "Bearer": []
-            }],
-            "requestBody": {
-                "content": {
-                    "application/json": {
-                        "required": ["data", "message"],
-                        "example": {
-                            "feedbackId": "1",
-                            "studentId": "1",
-                            "isUpvote": true,
-                        },
-                        "schema": {
-                            "$ref": "#/components/schemas/PostHasVote"
-                        }
-                    }
-                }
-            },
-            "responses": {
-                "200": {
-                    "description": "OK - Interação criada com sucesso",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [
-                                        {
-                                            "id": "1",
-                                            "feedback_id": "1",
-                                            "student_id": "1",
-                                            "is_upvote": true,
-                                        }
-                                    ],
-                                    "message" : "Interação criada com sucesso"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/GetHasVote"
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "400": {
-                    "description": "Bad request - Erro ao criar interação",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Erro ao criar interação"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "401": {
-                    "description": "Unauthorized - Problema ao decodificar o token",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Problema ao decodificar o token"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-                "500": {
-                    "description": "Internal Server Error - Falha ao processar a requisição",
-                    "content": {
-                        "application/json": {
-                            "required": ["data", "message"],
-                            "schema": {
-                                "type": "object",
-                                "example": {
-                                    "data": [],
-                                    "message" : "Falha ao processar a requisição"
-                                }, 
-                                "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                        }
-                                    },    
-                                    "message": {
-                                        "type": "string"
-                                    },
-                                },
-                            }
-                        }
-                    },
-                },
-
-            }
-        },
         "put": {
             "tags": ["HasVote"],
             "summary": "Atualiza os dados de uma interação. Necessita da autenticação do estudante autor da interação.",
@@ -540,6 +407,139 @@ export const HasVotePaths = {
                         }
                     },
                 }
+            }
+        },
+        "post": {
+            "tags": ["HasVote"],
+            "summary": "Cria uma nova interação com os dados especificados. Necessita de autenticação de estudante.",
+            "security": [{
+                "Bearer": []
+            }],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "required": ["data", "message"],
+                        "example": {
+                            "feedbackId": "1",
+                            "studentId": "1",
+                            "isUpvote": true,
+                        },
+                        "schema": {
+                            "$ref": "#/components/schemas/PostHasVote"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "OK - Interação criada com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "feedback_id": "1",
+                                            "student_id": "1",
+                                            "is_upvote": true,
+                                        }
+                                    ],
+                                    "message" : "Interação criada com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetHasVote"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao criar interação",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao criar interação"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+
             }
         },
     }
