@@ -16,10 +16,7 @@ export class DisciplineRepository {
 
     public async getAll(disciplineFilter: DisciplineFilter | null = null): Promise<DisciplineInterface[]>{
         const SQL = `
-            SELECT 
-                id,
-                code,
-                name
+            SELECT *
             FROM discipline
         `
 

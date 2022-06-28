@@ -5,6 +5,7 @@ import ValidationSelect from "../../components/ValidationSelect/ValidationSelect
 import IconButton from "../../components/IconButton/IconButton";
 import { SEARCH_RESULT_TYPES } from "../../utils/consts";
 import ProfessorSearchPage from "./ProfessorSearchPage/ProfessorSearchPage";
+import DisciplineSearchPage from "./DisciplineSearchPage/DisciplineSearchPage";
 
 const DUMMY_RESULTS = [
   {
@@ -157,6 +158,7 @@ function ExplorePage() {
       renderedExplorePage = <ProfessorSearchPage />
       break;
     case SEARCH_RESULT_TYPES.DISCIPLINE:
+      renderedExplorePage = <DisciplineSearchPage />
       break;
     case SEARCH_RESULT_TYPES.LECTURING:
       break;

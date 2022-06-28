@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import Tag from "../../Tag/Tag";
+import { Link } from "react-router-dom";
+
 /**
  * Componente que representa um resultado de uma pesquisa de Disciplina.
  * 
@@ -12,19 +12,9 @@ import Tag from "../../Tag/Tag";
  *    * score (Float 0-10): Classificação geral da disciplina
  */
 function DisciplineSearchResult(props) {
-  
-  const navigate = useNavigate();
-
-  const redirectSearchHandler = () => {
-    navigate('/description/discipline');
-  }
-
-  return <div onClick={redirectSearchHandler}>
-    <small>{props.resultData.department}</small>
-    <h1>{props.resultData.code} - {props.resultData.discipline}</h1>
-    {props.resultData.tags.map(t => <Tag key={t.id} id={t.id} title={t.title}/>)}
-    <h2>Classificação: {props.resultData.score}</h2> {/* Será substituído pelo componente Stars*/}
-  </div>
+  return <Link to={`/description/discipline?id=${props.resultData.id}`}>
+    <h1>{props.resultData.code} - {props.resultData.name} ({props.resultData.hours}h)</h1>
+  </Link>
 }
 
 export default DisciplineSearchResult;

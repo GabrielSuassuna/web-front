@@ -8,46 +8,19 @@ import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
 
-function ProfessorSearchPage(props) {
-  const professorNameRef = useRef(null);
-  const professorSiapeRef = useRef(null);
+function DisciplineSearchPage(props) {
+  const disciplineNameRef = useRef(null);
+  const disciplineCodeRef = useRef(null);
+  const disciplineHoursRef = useRef(null);
 
-  const [professorDepartment, setProfessorDepartment] = useState(null);
-  const [deptOptions, setDeptOptions] = useState([]);
   const [results, setResults] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
-  const [loaded, setLoaded] = useState(false);
-
-  const { data: departments, error: departmentsError } = useSWR(
-    `http://localhost:3000/department/`,
-    fetcher
-  );
-
-  checkForErrors([departmentsError]);
-
-  useEffect(() => {
-    if (!departments || !departments.data || loaded) {
-      return;
-    }
-    let deptOptions = departments.data.map((f) => {
-      return {
-        value: f.id,
-        label: f.name,
-      };
-    });
-    setDeptOptions([
-      { value: "", label: "Todos os departamentos" },
-      ...deptOptions,
-    ]);
-    setProfessorDepartment(deptOptions[0].value);
-    setLoaded(true);
-  }, [deptOptions, departments, loaded]);
 
   const handleSearch = (pageNumber) => {
-    let url = "http://localhost:3000/professor?";
-    url += `departmentId=${professorDepartment}`;
-    url += `&name=${professorNameRef.current.value}`;
-    url += `&siape=${professorSiapeRef.current.value}`;
+    let url = "http://localhost:3000/discipline?";
+    url += `name=${disciplineNameRef.current.value}`;
+    url += `&code=${disciplineCodeRef.current.value}`;
+    url += `&hours=${disciplineHoursRef.current.value}`;
     url += `&page=${pageNumber}`;
     url += `&limit=10`;
     fetch(url)
@@ -68,26 +41,25 @@ function ProfessorSearchPage(props) {
   return (
     <div>
       <ValidationInput
-        label="Nome do Professor"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
+        label="Nome da Disciplina"
+        hint="ex: Algoritmos Aproximativos"
         type="text"
         name="name"
-        inputRef={professorNameRef}
+        inputRef={disciplineNameRef}
       />
       <ValidationInput
-        label="SIAPE do Professor"
-        hint="ex: 12345"
+        label="Código da Disciplina"
+        hint="ex: CC0101"
         type="text"
-        name="siape"
-        inputRef={professorSiapeRef}
+        name="code"
+        inputRef={disciplineCodeRef}
       />
-      <ValidationSelect
-        name="dept"
-        label="Departamento"
-        hint="Selecione um departamento"
-        value={professorDepartment}
-        valueHandler={setProfessorDepartment}
-        options={deptOptions}
+      <ValidationInput
+        label="Carga horária da Disciplina"
+        hint="ex: 64"
+        type="number"
+        name="hours"
+        inputRef={disciplineHoursRef}
       />
       <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
       {results.length > 0 && (
@@ -107,7 +79,7 @@ function ProfessorSearchPage(props) {
       {results.map((result, i) => (
         <div key={i}>
           <SearchResult
-            type={SEARCH_RESULT_TYPES.PROFESSOR}
+            type={SEARCH_RESULT_TYPES.DISCIPLINE}
             resultData={result}
           />{" "}
           <br />{" "}
@@ -117,4 +89,4 @@ function ProfessorSearchPage(props) {
   );
 }
 
-export default ProfessorSearchPage;
+export default DisciplineSearchPage;

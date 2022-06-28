@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /**
  * Componente que representa um resultado de uma pesquisa de Professor.
@@ -11,18 +11,17 @@ import { useNavigate } from "react-router-dom";
  *    * tags (Array): Tags mais comuns que o professor possui ministrando essa disciplina
  *    * score (Float 0-10): Classificação geral do professor ministrando essa disciplina
  */
-function DisciplineSearchResult(props) {
-  
-  const navigate = useNavigate();
-
-  const redirectSearchHandler = () => {
-    navigate(`/description/professor?id=${props.resultData.id}`);
-  }
-
-  return <div onClick={redirectSearchHandler}>
-    <small>{props.resultData.department_name}</small>
-    <h1>{props.resultData.siape} -{props.resultData.name}</h1>
-  </div>
+function ProfessorSearchResult(props) {
+  return (
+    <div>
+      <Link to={`/description/department?id=${props.resultData.department_id}`}>
+        <small>{props.resultData.department_name}</small>
+      </Link>
+      <Link to={`/description/professor?id=${props.resultData.id}`}>
+        <h1>{props.resultData.siape} -{props.resultData.name}</h1>
+      </Link>
+    </div>
+  )
 }
 
-export default DisciplineSearchResult;
+export default ProfessorSearchResult;
