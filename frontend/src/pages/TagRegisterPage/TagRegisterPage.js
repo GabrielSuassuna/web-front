@@ -26,7 +26,7 @@ function TagRegisterPage() {
     };
 
     apiRequest(
-      'POST',
+      "POST",
       "http://localhost:3000/tag/",
       requestData,
       (res) => {
