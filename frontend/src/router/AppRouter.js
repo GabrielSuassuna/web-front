@@ -4,7 +4,6 @@ import AboutPage from "../pages/AboutPage/AboutPage";
 import DepartmentRegisterPage from "../pages/DepartmentRegisterPage/DepartmentRegisterPage";
 import DisciplineDescriptionPage from "../pages/DisciplineDescriptionPage/DisciplineDescriptionPage";
 import DisciplineRegisterPage from "../pages/DisciplineRegisterPage/DisciplineRegisterPage";
-import DisciplineTaughtDescriptionPage from "../pages/DisciplineTaughtDescriptionPage/DisciplineTaughtDescriptionPage";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import FAQPage from "../pages/FAQPage/FAQPage";
 import FAQRegisterPage from "../pages/FAQRegisterPage/FAQRegisterPage";
@@ -57,7 +56,6 @@ function AppRouter() {
         <Route path="/register/student" element={<RegisterPage />} />
         <Route path="/register/tag" element={<TagRegisterPage />} />
         <Route path="/description/discipline" element={<DisciplineDescriptionPage />} />
-        <Route path="/description/disciplineTaught" element={<DisciplineTaughtDescriptionPage />} />
         <Route path="/description/feedback" element={<FeedbackDescriptionPage />} />
         <Route path="/description/professor" element={<ProfessorDescriptionPage />} />
         <Route path="/description/lecturing" element={<LecturingDescriptionPage />} />
