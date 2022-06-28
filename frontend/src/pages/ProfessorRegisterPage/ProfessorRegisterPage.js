@@ -30,6 +30,10 @@ function ProfessorRegisterPage() {
     fetcher
   );
 
+  if(departmentsError){
+    console.log(departmentsError)
+  }
+
   useEffect(()=>{
     if(!departments || !departments.data || loaded){
       return;

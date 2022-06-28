@@ -43,11 +43,18 @@ function FeedbackCreationPage() {
     fetcher
   );
 
+  if(lecturingError || professorError || disciplineError || tagsError){
+    console.log(lecturingError)
+    console.log(professorError)
+    console.log(disciplineError)
+    console.log(tagsError)
+  }
+
   const toggleTagHandler = (tagId) => {
-    if (selectedTags.find((t) => t.id == tagId)) {
-      setSelectedTags((prevTags) => prevTags.filter((t) => t.id != tagId));
+    if (selectedTags.find((t) => t.id === tagId)) {
+      setSelectedTags((prevTags) => prevTags.filter((t) => t.id !== tagId));
     } else if (selectedTags.length < 3) {
-      let selectedTag = tags.data.find((t) => t.id == tagId);
+      let selectedTag = tags.data.find((t) => t.id === tagId);
       setSelectedTags((prevTags) => [...prevTags, selectedTag]);
     }
   };
@@ -163,7 +170,7 @@ function FeedbackCreationPage() {
         return (
           <h2
             className={
-              selectedTags.find((tag) => t.id == tag.id) ? styles.selected : ""
+              selectedTags.find((tag) => t.id === tag.id) ? styles.selected : ""
             }
             onClick={() => toggleTagHandler(t.id)}
             key={t.id}
