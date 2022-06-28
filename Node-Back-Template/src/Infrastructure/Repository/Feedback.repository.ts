@@ -19,10 +19,16 @@ export class FeedbackRepository {
             SELECT 
                 f.id as id,
                 f.title as title,
+                f.period as period,
                 p.name as professor_name,
                 p.siape as professor_siape,
+                p.id as professor_id,
+                dpt.id as professor_department_id,
+                dpt.name as professor_department,
                 d.name as discipline_name,
                 d.code as discipline_code,
+                d.hours as discipline_hours,
+                d.id as discipline_id,
                 f.general_score as general_score,
                 f.date as date,
                 i.upvote_count as upvote_count,
@@ -31,6 +37,7 @@ export class FeedbackRepository {
                 INNER JOIN lecturing as l on f.lecturing_id = l.id
                 INNER JOIN professor as p on l.professor_id = p.id
                 INNER JOIN discipline as d on l.discipline_id = d.id
+                INNER JOIN department as dpt on p.department_id = dpt.id
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
@@ -59,10 +66,16 @@ export class FeedbackRepository {
             SELECT 
                 f.id as id,
                 f.title as title,
+                f.period as period,
                 p.name as professor_name,
                 p.siape as professor_siape,
+                p.id as professor_id,
+                dpt.id as professor_department_id,
+                dpt.name as professor_department,
                 d.name as discipline_name,
                 d.code as discipline_code,
+                d.hours as discipline_hours,
+                d.id as discipline_id,
                 f.general_score as general_score,
                 f.date as date,
                 i.upvote_count as upvote_count,
@@ -71,6 +84,7 @@ export class FeedbackRepository {
                 INNER JOIN lecturing as l on f.lecturing_id = l.id
                 INNER JOIN professor as p on l.professor_id = p.id
                 INNER JOIN discipline as d on l.discipline_id = d.id
+                INNER JOIN department as dpt on p.department_id = dpt.id
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
@@ -102,10 +116,16 @@ export class FeedbackRepository {
             SELECT 
                 f.id as id,
                 f.title as title,
+                f.period as period,
                 p.name as professor_name,
                 p.siape as professor_siape,
+                p.id as professor_id,
+                dpt.id as professor_department_id,
+                dpt.name as professor_department,
                 d.name as discipline_name,
                 d.code as discipline_code,
+                d.hours as discipline_hours,
+                d.id as discipline_id,
                 f.general_score as general_score,
                 f.date as date,
                 i.upvote_count as upvote_count,
@@ -114,6 +134,7 @@ export class FeedbackRepository {
                 INNER JOIN lecturing as l on f.lecturing_id = l.id
                 INNER JOIN professor as p on l.professor_id = p.id
                 INNER JOIN discipline as d on l.discipline_id = d.id
+                INNER JOIN department as dpt on p.department_id = dpt.id
                 INNER JOIN (
                     SELECT fe.id as feedback_id, 
                         SUM(CASE WHEN hv.is_upvote IS TRUE THEN 1 ELSE 0 END) as upvote_count,
@@ -155,13 +176,17 @@ export class FeedbackRepository {
             f.date as date,
             p.name as professor_name,
             p.siape as professor_siape,
+            dpt.name as professor_department,
+            dpt.id as professor_department_id,
             d.name as discipline_name,
             d.code as discipline_code,
+            d.hours as discipline_hours,
             i.upvote_count as upvote_count,
             i.downvote_count as downvote_count
         FROM feedback as f
             INNER JOIN lecturing as l on f.lecturing_id = l.id
             INNER JOIN professor as p on l.professor_id = p.id
+            INNER JOIN department as dpt on p.department_id = dpt.id
             INNER JOIN discipline as d on l.discipline_id = d.id
             INNER JOIN (
                 SELECT fe.id as feedback_id, 
@@ -293,6 +318,14 @@ export class FeedbackRepository {
             values.push(`%${feedbackFilter.professorSiape}%`)
             sqlWithFilter += ` AND p.siape LIKE $${values.length}`
         }
+        if(feedbackFilter?.professorDepartmentName){
+            values.push(`%${feedbackFilter.professorDepartmentName}%`)
+            sqlWithFilter += ` AND dpt.name LIKE $${values.length}`
+        }
+        if(feedbackFilter?.professorDepartmentId){
+            values.push(`${feedbackFilter.professorDepartmentId}`)
+            sqlWithFilter += ` AND p.department_id = $${values.length}`
+        }
         if(feedbackFilter?.disciplineName){
             values.push(`%${feedbackFilter.disciplineName}%`)
             sqlWithFilter += ` AND d.name LIKE $${values.length}`
@@ -301,9 +334,17 @@ export class FeedbackRepository {
             values.push(`%${feedbackFilter.disciplineCode}%`)
             sqlWithFilter += ` AND d.code LIKE $${values.length}`
         }
+        if(feedbackFilter?.disciplineHours){
+            values.push(`${feedbackFilter.disciplineHours}`)
+            sqlWithFilter += ` AND d.hours = $${values.length}`
+        }
         if(feedbackFilter?.title){
             values.push(`%${feedbackFilter.title}%`)
             sqlWithFilter += ` AND f.title LIKE $${values.length}`
+        }
+        if(feedbackFilter?.period){
+            values.push(`%${feedbackFilter.period}%`)
+            sqlWithFilter += ` AND f.period LIKE $${values.length}`
         }
         
         if(feedbackFilter?.limit != null && feedbackFilter?.page != null){

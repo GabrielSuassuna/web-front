@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Tag from "../../Tag/Tag";
 /**
  * Componente que representa um resultado de uma pesquisa de Disciplina Ministrada.
  *
- * props:
+ * props: TODO: Refazer documentação
  *  * resultData (Object): Contém todas as informações necessárias para o a disciplina. Sendo elas:
  *    * code (String): Código identificador da disciplina
  *    * discipline (String): Título da Disciplina
@@ -21,50 +21,40 @@ import Tag from "../../Tag/Tag";
  *    * handleVote (Function): Apenas se for votable. Função que lida com o tipo de voto.
  *          parâmetro enviado: isUpvote: Boolean  (talvez seja necessário enviar mais parâmetros)
  */
-function DisciplineSearchResult(props) {
-  const navigate = useNavigate();
-
-  const redirectSearchHandler = () => {
-    navigate("/description/feedback");
-  };
-
+function FeedbackSearchResult(props) {
   return (
     <div>
-      <div onClick={redirectSearchHandler}>
-        <small>{props.resultData.department}</small>
+      <Link
+        to={`/description/department?id=${props.resultData.professor_department_id}`}
+      >
+        <small>{props.resultData.professor_department}</small>
+      </Link>
+      <Link to={`/description/feedback?id=${props.resultData.id}`}>
         <h1>{props.resultData.title}</h1>
+      </Link>
+      <Link to={`/description/discipline?id=${props.resultData.discipline_id}`}>
         <h1>
-          {props.resultData.code} - {props.resultData.discipline}
+          {props.resultData.discipline_code} -{" "}
+          {props.resultData.discipline_name}{" "}
+          ({props.resultData.discipline_hours})h
         </h1>
+      </Link>
+      <Link to={`/description/professor?id=${props.resultData.professor_id}`}>
         <h1>
-          {props.resultData.siape} - {props.resultData.professor}
+          {props.resultData.professor_siape} - {props.resultData.professor_name}
         </h1>
-        {props.resultData.tags.map((t) => (
-          <Tag key={t.id} id={t.id} title={t.title} />
+      </Link>
+      <Link to={`/description/feedback?id=${props.resultData.id}`}>
+        {props.resultData.tags.map((t, i) => (
+          <Tag key={i} id={i} title={t} />
         ))}
-        <h2>Classificação: {props.resultData.score}</h2>{" "}
-        {/* Será substituído pelo componente Stars*/}
-      </div>
-      <h2>Upvotes: {props.resultData.upvotes}</h2>
-      {props.resultData.votable && (
-        <button
-          disabled={props.resultData.hasVoted === "UPVOTED"}
-          onClick={() => props.handleVote(true)}
-        >
-          +
-        </button>
-      )}
-      <h2>Downvotes: {props.resultData.downvotes}</h2>
-      {props.resultData.votable && (
-        <button
-          disabled={props.resultData.hasVoted === "DOWNVOTED"}
-          onClick={() => props.handleVote(false)}
-        >
-          -
-        </button>
-      )}
+        <h2>Período: {props.resultData.period}</h2>{" "}
+        <h2>Classificação: {props.resultData.general_score}</h2>{" "}
+        <h2>Upvotes: {props.resultData.upvote_count}</h2>
+        <h2>Downvotes: {props.resultData.downvote_count}</h2>
+      </Link>
     </div>
   );
 }
 
-export default DisciplineSearchResult;
+export default FeedbackSearchResult;

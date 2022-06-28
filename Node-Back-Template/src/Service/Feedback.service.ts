@@ -24,16 +24,20 @@ export class FeedbackService {
         try{
             
             const { 
-              professorName,
-              professorSiape,
               disciplineName,
               disciplineCode,
+              disciplineHours,
+              professorName,
+              professorSiape,
+              professorDepartmentName,
+              professorDepartmentId,
               title,
+              period,
               page,
               limit
             } = request.query as any
             
-            const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
+            const feedbackFilter: FeedbackFilter = { disciplineName, disciplineCode, disciplineHours, professorName, professorSiape, professorDepartmentName, professorDepartmentId, title, period, page, limit}
 
             let toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll(feedbackFilter)
 
@@ -66,16 +70,20 @@ export class FeedbackService {
           const studentId: string = request.params.studentId
           
           const { 
-            professorName,
-            professorSiape,
             disciplineName,
             disciplineCode,
+            disciplineHours,
+            professorName,
+            professorSiape,
+            professorDepartmentName,
+            professorDepartmentId,
             title,
+            period,
             page,
             limit
           } = request.query as any
           
-          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
+          const feedbackFilter: FeedbackFilter = { disciplineName, disciplineCode, disciplineHours, professorName, professorSiape, professorDepartmentName, professorDepartmentId, title, period, page, limit}
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId, feedbackFilter)
 
@@ -106,16 +114,20 @@ export class FeedbackService {
           const professorId: string = request.params.professorId
           
           const { 
-            professorName,
-            professorSiape,
             disciplineName,
             disciplineCode,
+            disciplineHours,
+            professorName,
+            professorSiape,
+            professorDepartmentName,
+            professorDepartmentId,
             title,
+            period,
             page,
             limit
           } = request.query as any
           
-          const feedbackFilter: FeedbackFilter = { professorName, professorSiape, disciplineName, disciplineCode, title, page, limit }
+          const feedbackFilter: FeedbackFilter = { disciplineName, disciplineCode, disciplineHours, professorName, professorSiape, professorDepartmentName, professorDepartmentId, title, period, page, limit}
 
           const toBeFoundFeedbacks: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId, feedbackFilter)
 

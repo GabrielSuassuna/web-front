@@ -5,6 +5,13 @@ export const FeedbackPaths = {
             "summary": "Obtém todos os feedbacks.",
             "parameters": [
                 {
+                    "name": "disciplineName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
                     "name": "disciplineCode",
                     "in": "query",
                     "schema": {
@@ -12,7 +19,14 @@ export const FeedbackPaths = {
                     }
                 },
                 {
-                    "name": "disciplineName",
+                    "name": "disciplineHours",
+                    "in": "query",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "professorName",
                     "in": "query",
                     "schema": {
                         "type": "string"
@@ -26,7 +40,14 @@ export const FeedbackPaths = {
                     }
                 },
                 {
-                    "name": "professorName",
+                    "name": "professorDepartmentName",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "professorDepartmentId",
                     "in": "query",
                     "schema": {
                         "type": "string"
@@ -34,6 +55,13 @@ export const FeedbackPaths = {
                 },
                 {
                     "name": "title",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "period",
                     "in": "query",
                     "schema": {
                         "type": "string"

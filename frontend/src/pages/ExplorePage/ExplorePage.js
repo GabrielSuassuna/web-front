@@ -7,6 +7,7 @@ import { SEARCH_RESULT_TYPES } from "../../utils/consts";
 import ProfessorSearchPage from "./ProfessorSearchPage/ProfessorSearchPage";
 import DisciplineSearchPage from "./DisciplineSearchPage/DisciplineSearchPage";
 import LecturingSearchPage from "./LecturingSearchPage/LecturingSearchPage";
+import FeedbackSearchPage from "./FeedbackSearchPage/FeedbackSearchPage";
 
 const DUMMY_RESULTS = [
   {
@@ -165,6 +166,7 @@ function ExplorePage() {
       renderedExplorePage = <LecturingSearchPage />
       break;
     case SEARCH_RESULT_TYPES.FEEDBACK:
+      renderedExplorePage = <FeedbackSearchPage />
       break;
     default:
       renderedExplorePage = <></>;
