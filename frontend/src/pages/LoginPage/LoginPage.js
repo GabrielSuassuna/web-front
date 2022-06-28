@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
+import { validationStringChecker } from "../../utils/validation";
 
 
 function LoginPage() {
@@ -10,18 +11,6 @@ function LoginPage() {
   const registrationRef = useRef(null);
   const passwordRef = useRef(null);
   
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
   const loginHandler = async () => {
     if (
       !validationStringChecker(registrationRef).isValid ||

@@ -8,6 +8,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import { useNavigate } from "react-router-dom";
+import { validationStringChecker } from "../../utils/validation";
 
 const DUMMY_STUDENT_ID = 1;
 
@@ -49,18 +50,6 @@ function FeedbackCreationPage() {
       let selectedTag = tags.data.find((t) => t.id == tagId);
       setSelectedTags((prevTags) => [...prevTags, selectedTag]);
     }
-  };
-
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
   };
 
   const registerFeedbackHandler = () => {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
+import { validationStringChecker, validationPasswordChecker, validationPasswordConfirmChecker } from "../../utils/validation";
 
 function RegisterPage() {
 
@@ -13,54 +14,12 @@ function RegisterPage() {
   const studentPasswordRef = useRef(null);
   const studentPasswordConfirmRef = useRef(null);
 
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
-  const validationPasswordChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      if (inputRef.current.value.length < 6)
-        return {
-          isValid: false,
-          message: "Sua senha não pode ter menos de 6 caracteres",
-        };
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
-  const validationPasswordConfirmChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0 &&
-      inputRef.current.value === studentPasswordRef.current.value
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "As senhas não coincidem" };
-  };
-
   const registerStudentHandler = async () => {
     if (
       !validationStringChecker(studentNameRef).isValid ||
       !validationStringChecker(studentIdRef).isValid ||
       !validationPasswordChecker(studentPasswordRef).isValid || 
-      !validationPasswordConfirmChecker(studentPasswordConfirmRef).isValid
+      !validationPasswordConfirmChecker(studentPasswordConfirmRef, studentPasswordRef).isValid
     )
       return alert("Dados inválidos!");
     

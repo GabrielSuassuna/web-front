@@ -5,6 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import styles from "./DisciplineRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
+import { validationStringChecker, validationNumberChecker } from "../../utils/validation";
 
 function DisciplineRegisterPage() {
   const navigate = useNavigate();
@@ -13,27 +14,6 @@ function DisciplineRegisterPage() {
   const disciplineCodeRef = useRef(null);
   const disciplineHoursRef = useRef(null);
   const disciplineDescriptionRef = useRef(null);
-
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
-  const validationNumberChecker = (inputRef) => {
-    if (inputRef && inputRef.current && inputRef.current.value) {
-      if (Number.isNaN(inputRef.current.value) || inputRef.current.value <= 0)
-        return { isValid: false, message: "Valor numérico inválido!" };
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
 
   const registerDisciplineHandler = () => {
     if (

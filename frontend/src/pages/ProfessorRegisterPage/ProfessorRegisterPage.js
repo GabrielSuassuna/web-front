@@ -8,6 +8,7 @@ import fetcher from "../../utils/fetcher";
 import { apiRequest } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import styles from "./ProfessorRegisterPage.module.css";
+import { validationStringChecker, validationPasswordChecker, validationPasswordConfirmChecker } from "../../utils/validation";
 
 function ProfessorRegisterPage() {
 
@@ -44,54 +45,12 @@ function ProfessorRegisterPage() {
     setLoaded(true);
   },[deptOptions, departments, loaded]);
 
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
-  const validationPasswordChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      if (inputRef.current.value.length < 6)
-        return {
-          isValid: false,
-          message: "Sua senha não pode ter menos de 6 caracteres",
-        };
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
-
-  const validationPasswordConfirmChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0 &&
-      inputRef.current.value === professorPasswordRef.current.value
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "As senhas não coincidem" };
-  };
-
   const registerProfessorHandler = async () => {
     if (
       !validationStringChecker(professorNameRef).isValid ||
       !validationStringChecker(professorIdRef).isValid ||
       !validationPasswordChecker(professorPasswordRef).isValid || 
-      !validationPasswordConfirmChecker(professorPasswordConfirmRef).isValid
+      !validationPasswordConfirmChecker(professorPasswordConfirmRef, professorPasswordRef).isValid
     )
       return alert("Dados inválidos!");
     

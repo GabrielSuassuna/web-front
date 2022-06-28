@@ -5,24 +5,13 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import styles from "./DepartmentRegisterPage.module.css";
+import { validationStringChecker } from "../../utils/validation";
 
 function DepartmentRegisterPage() {
   const navigate = useNavigate();
 
   const departmentNameRef = useRef(null);
   const departmentDescriptionRef = useRef(null);
-
-  const validationStringChecker = (inputRef) => {
-    if (
-      inputRef &&
-      inputRef.current &&
-      inputRef.current.value &&
-      inputRef.current.value.length >= 0
-    ) {
-      return { isValid: true };
-    }
-    return { isValid: false, message: "Esse campo não pode estar vazio" };
-  };
 
   const registerFAQHandler = async () => {
     if (
