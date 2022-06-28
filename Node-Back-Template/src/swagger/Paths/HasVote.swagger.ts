@@ -434,4 +434,113 @@ export const HasVotePaths = {
             }
         },
     },
+    "/hasVote": {
+        "get": {
+            "tags": ["HasVote"],
+            "summary": "Obtém a interação que o usuário possui com o feedback, se houver",
+            "parameters": [
+                {
+                    "name": "studentId",
+                    "in": "query",
+                    "description": "ID do autor da interação",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "feedbackId",
+                    "in": "query",
+                    "description": "ID do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Interação obtida com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "feedback_id": "1",
+                                            "student_id": "1",
+                                            "is_upvote": true
+                                          }
+                                    ],
+                                    "message" : "Interação obtida com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetHasVote"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Interação não encontrada",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Interação não encontrada"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter interação",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter interação"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    }
 }

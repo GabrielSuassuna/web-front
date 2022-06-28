@@ -35,7 +35,7 @@ export class HasVoteRepository {
 
     }
 
-    public async getByFeedbackAndStudent(feedbackId: string, studentId: string): Promise<GetHasVote[]>{
+    public async getByStudentAndFeedback(studentId: string, feedbackId: string): Promise<GetHasVote[]>{
         const SQL = `
             SELECT * FROM has_vote 
             WHERE feedback_id = $1

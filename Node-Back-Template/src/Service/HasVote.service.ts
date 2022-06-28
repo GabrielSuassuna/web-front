@@ -12,6 +12,32 @@ export class HasVoteService {
         this.repositoryUoW = new RepositoryUoW()
     }
 
+    public async getByStudentAndFeedbackId(request: Request, response: Response){    
+        const sucessMessage: string = "Interação encontrada com sucesso"
+        const errorMessage: string = "Erro ao encontrar interação"
+        const notFoundMessage: string = "Interação não encontrada"
+    
+        let result: GetHasVote[] = []
+    
+        try{
+            const { 
+                studentId,
+                feedbackId
+              } = request.query as any
+            
+            const toBeFoundHasVote: GetHasVote[] = await this.repositoryUoW.hasVoteRepository.getByStudentAndFeedback(studentId, feedbackId)
+            
+            if(!!toBeFoundHasVote.length){
+                return response.status(200).json(setApiResponse<GetHasVote[]>(toBeFoundHasVote, sucessMessage))
+            }
+            
+            return response.status(404).json(setApiResponse<GetHasVote[]>(result, notFoundMessage))
+        }
+        catch(err: any){
+            return response.status(400).json(setApiResponse<GetHasVote[]>(result, errorMessage, err.message))
+        }    
+    }
+
     public async create(request: Request, response: Response){    
         const sucessMessage: string = "Interação criada com sucesso"
         const errorMessage: string = "Erro ao criar interação"
