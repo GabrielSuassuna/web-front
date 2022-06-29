@@ -25,11 +25,7 @@ function IconButton(props) {
       }
     >
       {props.icon && (
-        <img
-          src={props.icon}
-          alt={props.alt}
-          className={styles.iconButonImage}
-        />
+        <img src={props.icon} alt={props.alt} className={"w-10 mr-10"} />
       )}
       <h1>{props.content}</h1>
     </button>
