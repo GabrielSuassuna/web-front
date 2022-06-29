@@ -16,7 +16,6 @@ export class DisciplineService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Disciplinas encontradas com sucesso"
         const errorMessage: string = "Erro ao encontrar disciplinas"
         const notFoundMessage: string = "Disciplinas não encontradas"
     
@@ -36,9 +35,16 @@ export class DisciplineService {
             const toBeFoundDiscipline: DisciplineInterface[] = await this.repositoryUoW.disciplineRepository.getAll(disciplineFilter)
 
             if(!!toBeFoundDiscipline.length){
-                return response.status(200).json(setApiResponse<DisciplineInterface[]>(toBeFoundDiscipline, sucessMessage))
+                let nextPageFilter: DisciplineFilter = {
+                    ...disciplineFilter,
+                    limit: 1,
+                    page: disciplineFilter.page*disciplineFilter.limit+1
+                };
+                const nextPage: DisciplineInterface[] = await this.repositoryUoW.disciplineRepository.getAll(nextPageFilter)
+                let successMessage: string = `Disciplinas encontradas com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+                return response.status(200).json(setApiResponse<DisciplineInterface[]>(toBeFoundDiscipline, successMessage))
             }
-            
+
             return response.status(404).json(setApiResponse<DisciplineInterface[]>(result, notFoundMessage))
         }
         catch(err: any){

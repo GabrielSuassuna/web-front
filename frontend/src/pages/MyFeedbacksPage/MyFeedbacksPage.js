@@ -26,6 +26,7 @@ function MyFeedbacksPage() {
   const [deptOptions, setDeptOptions] = useState([]);
   const [results, setResults] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
@@ -62,6 +63,7 @@ function MyFeedbacksPage() {
       .then((res) => res.json())
       .then((res) => {
         setResults(res.data);
+        setHasNextPage( res.message.split("last=")[1] === "FALSE" );
       });
   };
 
@@ -162,12 +164,13 @@ function MyFeedbacksPage() {
         <>
           <IconButton
             content="<"
-            onClick={() => handlePageChange(pageIndex - 1)}
             disabled={pageIndex === 1}
+            onClick={() => handlePageChange(pageIndex - 1)}
           />
           <h1>{pageIndex}</h1>
           <IconButton
             content=">"
+            disabled={!hasNextPage}
             onClick={() => handlePageChange(pageIndex + 1)}
           />
         </>

@@ -14,7 +14,6 @@ export class LecturingService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Disciplinas ministradas encontradas com sucesso"
         const errorMessage: string = "Erro ao encontrar disciplinas ministradas"
         const notFoundMessage: string = "Disciplinas ministradas não encontradas"
     
@@ -39,7 +38,14 @@ export class LecturingService {
             const toBeFoundLecturings: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll(lecturingFilter)
 
             if(!!toBeFoundLecturings.length){
-                return response.status(200).json(setApiResponse<LecturingInterface[]>(toBeFoundLecturings, sucessMessage))
+                let nextPageFilter: LecturingFilter = {
+                    ...lecturingFilter,
+                    limit: 1,
+                    page: lecturingFilter.page*lecturingFilter.limit+1
+                };
+                const nextPage: LecturingInterface[] = await this.repositoryUoW.lecturingRepository.getAll(nextPageFilter)
+                let successMessage: string = `Disciplinas ministradas encontradas com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+                return response.status(200).json(setApiResponse<LecturingInterface[]>(toBeFoundLecturings, successMessage))
             }
             
             return response.status(404).json(setApiResponse<LecturingInterface[]>(result, notFoundMessage))

@@ -15,7 +15,6 @@ export class FeedbackService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Feedbacks encontrados com sucesso"
         const errorMessage: string = "Erro ao encontrar feedbacks"
         const notFoundMessage: string = "Feedbacks não encontrados"
     
@@ -49,7 +48,14 @@ export class FeedbackService {
             console.log(toBeFoundFeedbacks[0])
 
             if(!!toBeFoundFeedbacks.length){
-                return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
+                let nextPageFilter: FeedbackFilter = {
+                  ...feedbackFilter,
+                  limit: 1,
+                  page: feedbackFilter.page*feedbackFilter.limit+1
+              };
+              const nextPage: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getAll(nextPageFilter)
+              let successMessage: string = `Feedbacks encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+              return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, successMessage))
             }
             
             return response.status(404).json(setApiResponse<FeedbackInterface[]>(result, notFoundMessage))
@@ -60,7 +66,6 @@ export class FeedbackService {
     }
 
     public async getStudentFeedbacks(request: Request, response: Response){
-      const sucessMessage: string = "Feedbacks encontrados com sucesso"
       const errorMessage: string = "Erro ao encontrar feedbacks"
       const notFoundMessage: string = "Feedbacks não encontrados"
   
@@ -93,7 +98,14 @@ export class FeedbackService {
           }
 
           if(!!toBeFoundFeedbacks.length){
-              return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
+            let nextPageFilter: FeedbackFilter = {
+                ...feedbackFilter,
+                limit: 1,
+                page: feedbackFilter.page*feedbackFilter.limit+1
+            };
+            const nextPage: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getStudentFeedbacks(studentId, nextPageFilter)
+            let successMessage: string = `Feedbacks encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+            return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, successMessage))
           }
           
           return response.status(404).json(setApiResponse<FeedbackInterface[]>(result, notFoundMessage))
@@ -104,7 +116,6 @@ export class FeedbackService {
     }
 
     public async getProfessorFeedbacks(request: Request, response: Response){
-      const sucessMessage: string = "Feedbacks encontrados com sucesso"
       const errorMessage: string = "Erro ao encontrar feedbacks"
       const notFoundMessage: string = "Feedbacks não encontrados"
   
@@ -137,7 +148,14 @@ export class FeedbackService {
           }
           
           if(!!toBeFoundFeedbacks.length){
-              return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, sucessMessage))
+            let nextPageFilter: FeedbackFilter = {
+                ...feedbackFilter,
+                limit: 1,
+                page: feedbackFilter.page*feedbackFilter.limit+1
+            };
+            const nextPage: FeedbackInterface[] = await this.repositoryUoW.feedbackRepository.getProfessorFeedbacks(professorId, nextPageFilter)
+            let successMessage: string = `Feedbacks encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+            return response.status(200).json(setApiResponse<FeedbackInterface[]>(toBeFoundFeedbacks, successMessage))
           }
 
           return response.status(404).json(setApiResponse<FeedbackInterface[]>(result, notFoundMessage))

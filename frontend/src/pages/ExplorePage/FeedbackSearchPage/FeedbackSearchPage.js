@@ -22,6 +22,7 @@ function FeedbackSearchPage() {
   const [deptOptions, setDeptOptions] = useState([]);
   const [results, setResults] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
   const { data: departments, error: departmentsError } = useSWR(
@@ -68,6 +69,7 @@ function FeedbackSearchPage() {
           alert("Nenhum resultado encontrado");
         }
         setResults(res.data);
+        setHasNextPage( res.message.split("last=")[1] === "FALSE" );
       });
   };
 
@@ -140,12 +142,13 @@ function FeedbackSearchPage() {
         <>
           <IconButton
             content="<"
-            onClick={() => handlePageChange(pageIndex - 1)}
             disabled={pageIndex === 1}
+            onClick={() => handlePageChange(pageIndex - 1)}
           />
           <h1>{pageIndex}</h1>
           <IconButton
             content=">"
+            disabled={!hasNextPage}
             onClick={() => handlePageChange(pageIndex + 1)}
           />
         </>
