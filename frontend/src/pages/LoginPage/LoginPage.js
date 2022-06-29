@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import url from "../../config/api";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
 
@@ -24,7 +25,7 @@ function LoginPage() {
 
     apiRequest(
       "POST",
-      "http://localhost:3000/auth/student",
+      url + "/auth/student",
       requestData,
       (_) => navigate("/"),
       (res) => {
