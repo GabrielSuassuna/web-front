@@ -79,6 +79,7 @@ function FAQRegisterPage() {
             "text-xs",
             "rounded",
             "mt-2",
+            "mb-10",
           ]}
           content="Registrar FAQ"
           onClick={registerFAQHandler}

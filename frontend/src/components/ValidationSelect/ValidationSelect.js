@@ -14,10 +14,15 @@ import styles from "./ValidationSelect.module.css";
  */
 function ValidationSelect(props) {
   return (
-    <div>
-      <label htmlFor="validationSelect">{props.label}:</label>
+    <div className="flex flex-col">
+      <label
+        className="font-bold text-blue-700 mb-2"
+        htmlFor="validationSelect"
+      >
+        {props.label}:
+      </label>
       <select
-        className={styles.validationSelect}
+        className={"rounded border w-full border-gray-400 px-2 py-1 my-1"}
         name={props.name}
         id="validationSelect"
         ref={props.selectRef}
@@ -25,7 +30,11 @@ function ValidationSelect(props) {
         onChange={(e) => props.valueHandler(e.target.value)}
       >
         {props.options.map((o) => (
-          <option key={`${o.value}_${o.label}`} value={o.value} disabled={!!o.disabled}>
+          <option
+            key={`${o.value}_${o.label}`}
+            value={o.value}
+            disabled={!!o.disabled}
+          >
             {o.label}
           </option>
         ))}
