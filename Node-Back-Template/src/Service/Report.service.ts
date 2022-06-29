@@ -35,12 +35,13 @@ export class ReportService {
                 viewerId,
                 authorName, 
                 authorSiape,
+                title,
                 page,
                 limit
             } = request.query as any
 
             
-            const reportFilter: ReportFilter = { authorName, authorSiape, page, limit }
+            const reportFilter: ReportFilter = { authorName, authorSiape, title, page, limit }
 
             const viewer: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(viewerId);
             const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(viewer[0].department_id);
@@ -81,11 +82,12 @@ export class ReportService {
               reviewerName, 
               reviewerSiape,
               status,
+              title,
               page,
               limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status, page, limit }
+          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status, title, page, limit }
 
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
 
@@ -120,11 +122,12 @@ export class ReportService {
               authorName, 
               authorSiape,
               status,
+              title,
               page,
               limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { authorName, authorSiape, status, page, limit }
+          const reportFilter: ReportFilter = { authorName, authorSiape, status, title, page, limit }
 
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
 
@@ -251,7 +254,7 @@ export class ReportService {
             await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, toBeupdatedReport.authorId)
 
             const toBeUpdatedReportLog:PutReportUpdate = {
-              reviewerId: toBeupdatedReport.status === "EM REVISÃO" ? toBeupdatedReport.authorId : undefined,
+              reviewerId: toBeupdatedReport.status === "EM_REVISAO" ? toBeupdatedReport.authorId : undefined,
               status: toBeupdatedReport.status
             }
             

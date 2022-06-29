@@ -12,5 +12,6 @@ export interface GetReport {
   reviewer_siape?: string
   status: string
   feedback: GetFeedback
+  title: string
   logs: GetReportLog[]
 }

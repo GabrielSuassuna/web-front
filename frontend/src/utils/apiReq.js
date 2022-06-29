@@ -14,7 +14,7 @@ const apiRequest = async (
     headers["Authorization"] = `Bearer ${authToken}`;
   }
 
-  const response = await fetch(url, {
+  let req = {
     method: method,
     mode: "cors",
     cache: "no-cache",
@@ -22,8 +22,12 @@ const apiRequest = async (
     headers: headers,
     redirect: "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify(requestData),
-  });
+  }
+
+  if(method !== 'GET')
+    req.body = JSON.stringify(requestData);
+
+  const response = await fetch(url, req);
 
   const res_data = await response.json();
 

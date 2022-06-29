@@ -25,9 +25,11 @@ export class ReportRepository {
         const SQL = `
             SELECT r.*, 
                 au.name as author_name,
-                au.siape as author_siape  
+                au.siape as author_siape,
+                f.title as feedback_title
             FROM report as r
                 INNER JOIN professor as au on r.author_id = au.id
+                INNER JOIN feedback as f on r.feedback_id = f.id
             WHERE status like $1
                 AND r.author_id != $2
                 AND au.department_id = $3
@@ -50,10 +52,12 @@ export class ReportRepository {
                 au.name as author_name,
                 au.siape as author_siape, 
                 re.name as reviewer_name,
-                re.siape as reviewer_siape 
+                re.siape as reviewer_siape,
+                f.title as feedback_title
             FROM report as r
                 INNER JOIN professor as au on r.author_id = au.id
                 INNER JOIN professor as re on r.author_id = re.id
+                INNER JOIN feedback as f on r.feedback_id = f.id
             WHERE r.author_id = $1
         `
 
@@ -72,10 +76,12 @@ export class ReportRepository {
                 au.name as author_name,
                 au.siape as author_siape, 
                 re.name as reviewer_name,
-                re.siape as reviewer_siape 
+                re.siape as reviewer_siape,
+                f.title as feedback_title
             FROM report as r
                 INNER JOIN professor as au on r.author_id = au.id
                 INNER JOIN professor as re on r.author_id = re.id
+                INNER JOIN feedback as f on r.feedback_id = f.id
             WHERE r.reviewer_id = $1
         `
 
@@ -199,6 +205,10 @@ export class ReportRepository {
         if(reportFilter?.status){
             values.push(`%${reportFilter.status}%`)
             sqlWithFilter += ` AND r.status LIKE $${values.length}`
+        }
+        if(reportFilter?.title){
+            values.push(`%${reportFilter.title}%`)
+            sqlWithFilter += ` AND f.title LIKE $${values.length}`
         }
         
         if(reportFilter?.limit != null && reportFilter?.page != null){

@@ -8,4 +8,5 @@ export interface ReportInterface {
   reviewer_name?: string
   reviewer_siape?: string
   status: string
+  title: string
 }
