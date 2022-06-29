@@ -241,6 +241,108 @@ export const DepartmentPaths = {
         },
     },
     "/department/{departmentId}": {
+        "get": {
+            "tags": ["Department"],
+            "summary": "Obtém os dados de um departamento especificado.",
+            "parameters": [
+                {
+                    "name": "departmentId",
+                    "in": "path",
+                    "description": "ID do departamento",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Departamento obtido com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "name": "5",
+                                            "description": "03042",
+                                            "department_head_id": "03042",
+                                            "department_head_name": "Fulano de Tal",
+                                            "course_coordinator_id": "03043",
+                                            "course_coordinator_name": "Ricardo Marques",
+                                        }
+                                    ],
+                                    "message" : "Departamento obtido com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetDepartamento"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Departamento não encontrado",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Departamento não encontrado"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter departamento",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter departamento"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
         "put": {
             "tags": ["Department"],
             "summary": "Atualiza os dados de um departamento especificado. Necessita de autenticação do administrador.",

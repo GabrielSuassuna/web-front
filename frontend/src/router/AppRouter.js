@@ -26,6 +26,7 @@ import ReportedFeedbackPage from "../pages/ReportedFeedbackPage/ReportedFeedback
 import ReportedFeedbacksPage from "../pages/ReportedFeedbacksPage/ReportedFeedbacksPage";
 import TagRegisterPage from "../pages/TagRegisterPage/TagRegisterPage";
 import Header from "../components/Header/Header";
+import DepartmentDescriptionPage from "../pages/DepartmentDescriptionPage/DepartmentDescriptionPage";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -63,6 +64,10 @@ function AppRouter() {
         <Route path="/register/remove" element={<RegisterDeletionPage />} />
         <Route path="/register/student" element={<RegisterPage />} />
         <Route path="/register/tag" element={<TagRegisterPage />} />
+        <Route
+          path="/description/department"
+          element={<DepartmentDescriptionPage />}
+        />
         <Route
           path="/description/discipline"
           element={<DisciplineDescriptionPage />}
