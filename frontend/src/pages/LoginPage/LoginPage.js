@@ -4,7 +4,6 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
-import url from "../../config/api";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ function LoginPage() {
 
     apiRequest(
       "POST",
-      url + "/auth/student",
+      "http://localhost:3000/auth/student",
       requestData,
       (_) => navigate("/"),
       (res) => {
@@ -36,25 +35,42 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>LoginPage</h1>
-      <ValidationInput
-        label="Matrícula"
-        hint="ex: 123456"
-        type="text"
-        name="login"
-        inputRef={registrationRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Senha"
-        hint="*****"
-        type="password"
-        name="answer"
-        inputRef={passwordRef}
-        validation={validationStringChecker}
-      />
-      <IconButton content="Fazer Login" onClick={loginHandler} />
+    <div className="flex h-full flex-1 justify-center self-center w-64">
+      <div className="flex flex-col items-center w-full">
+        <img
+          alt="logo"
+          className="w-40 mb-10 mt-5"
+          src={require("../../assets/img/logo.png")}
+        />
+        <ValidationInput
+          hint="Matrícula"
+          type="text"
+          name="login"
+          inputRef={registrationRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          showLabel={true}
+          hint="Senha"
+          type="password"
+          name="answer"
+          inputRef={passwordRef}
+          validation={validationStringChecker}
+        />
+        <IconButton
+          classes={[
+            "w-full",
+            "bg-indigo-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+          ]}
+          content="ENTRAR"
+          onClick={loginHandler}
+        />
+      </div>
     </div>
   );
 }
