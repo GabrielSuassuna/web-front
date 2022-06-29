@@ -49,9 +49,10 @@ function ValidationInput(props) {
   if (props.isTextArea) {
     input = (
       <textarea
-        className={[styles.validationInput, ...(props.inputClasses || [])].join(
-          " "
-        )}
+        className={[
+          "rounded border w-full border-gray-400 px-2 py-1 my-1",
+          ...(props.inputClasses || []),
+        ].join(" ")}
         type={props.type}
         id={`validationInput_${props.name}`}
         onFocus={() => setShouldValidate(true)}
@@ -63,9 +64,14 @@ function ValidationInput(props) {
     );
   }
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
       {props.label ? (
-        <label htmlFor="validationInput">{props.label}:</label>
+        <label
+          className="font-bold text-blue-700 mb-2"
+          htmlFor="validationInput"
+        >
+          {props.label}:
+        </label>
       ) : (
         ""
       )}
