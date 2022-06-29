@@ -25,6 +25,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ReportedFeedbackPage from "../pages/ReportedFeedbackPage/ReportedFeedbackPage";
 import ReportedFeedbacksPage from "../pages/ReportedFeedbacksPage/ReportedFeedbacksPage";
 import TagRegisterPage from "../pages/TagRegisterPage/TagRegisterPage";
+import Header from "../components/Header/Header";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -33,6 +34,7 @@ import TagRegisterPage from "../pages/TagRegisterPage/TagRegisterPage";
 function AppRouter() {
   return (
     <BrowserRouter>
+      <Header></Header>
       <Routes>
         <Route path="*" element={<NavBar />} />
         <Route path="/" element={<Navigate to="/home" replace />} />
@@ -41,13 +43,19 @@ function AppRouter() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/login/professor" element={<ProfessorLoginPage/>} />
+        <Route path="/login/professor" element={<ProfessorLoginPage />} />
         <Route path="/loggedHome" element={<LoggedHomePage />} />
         <Route path="/me" element={<Navigate to="/myProfile" replace />} />
         <Route path="/myProfile" element={<MyProfilePage />} />
         <Route path="/myFeedbacks" element={<MyFeedbacksPage />} />
-        <Route path="/register/department" element={<DepartmentRegisterPage />} />
-        <Route path="/register/discipline" element={<DisciplineRegisterPage />} />
+        <Route
+          path="/register/department"
+          element={<DepartmentRegisterPage />}
+        />
+        <Route
+          path="/register/discipline"
+          element={<DisciplineRegisterPage />}
+        />
         <Route path="/register/faq" element={<FAQRegisterPage />} />
         <Route path="/register/feedback" element={<FeedbackCreationPage />} />
         <Route path="/register/professor" element={<ProfessorRegisterPage />} />
@@ -55,10 +63,22 @@ function AppRouter() {
         <Route path="/register/remove" element={<RegisterDeletionPage />} />
         <Route path="/register/student" element={<RegisterPage />} />
         <Route path="/register/tag" element={<TagRegisterPage />} />
-        <Route path="/description/discipline" element={<DisciplineDescriptionPage />} />
-        <Route path="/description/feedback" element={<FeedbackDescriptionPage />} />
-        <Route path="/description/professor" element={<ProfessorDescriptionPage />} />
-        <Route path="/description/lecturing" element={<LecturingDescriptionPage />} />
+        <Route
+          path="/description/discipline"
+          element={<DisciplineDescriptionPage />}
+        />
+        <Route
+          path="/description/feedback"
+          element={<FeedbackDescriptionPage />}
+        />
+        <Route
+          path="/description/professor"
+          element={<ProfessorDescriptionPage />}
+        />
+        <Route
+          path="/description/lecturing"
+          element={<LecturingDescriptionPage />}
+        />
         <Route path="/revision/feedback" element={<FeedbackRevisionPage />} />
         <Route path="/revision/report" element={<ReportedFeedbackPage />} />
         <Route path="/revision/reports" element={<ReportedFeedbacksPage />} />
