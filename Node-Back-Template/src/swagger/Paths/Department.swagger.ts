@@ -280,7 +280,7 @@ export const DepartmentPaths = {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/GetDepartamento"
+                                            "$ref": "#/components/schemas/GetDepartament"
                                         }
                                     },    
                                     "message": {

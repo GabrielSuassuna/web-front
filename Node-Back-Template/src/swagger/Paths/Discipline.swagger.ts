@@ -69,7 +69,7 @@ export const DisciplinePaths = {
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "$ref": "#/components/schemas/Disciline"
+                                            "$ref": "#/components/schemas/Discipline"
                                         }
                                     },    
                                     "message": {
