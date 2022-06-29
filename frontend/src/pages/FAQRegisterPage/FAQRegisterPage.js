@@ -6,6 +6,7 @@ import styles from "./FAQRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
+import url from "../../config/api";
 
 function FAQRegisterPage() {
   const navigate = useNavigate();
@@ -26,8 +27,8 @@ function FAQRegisterPage() {
     };
 
     apiRequest(
-      'POST',
-      "http://localhost:3000/faq/",
+      "POST",
+      url + "/faq/",
       requestData,
       (res) => {
         alert("Registro de pergunta realizado!");

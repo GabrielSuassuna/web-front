@@ -7,6 +7,7 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
+import url from "../../config/api";
 
 function LecturingRegisterPage() {
   const navigate = useNavigate();
@@ -20,15 +21,15 @@ function LecturingRegisterPage() {
   const [discipline, setDiscipline] = useState(null);
 
   const { data: professors, error: professorsError } = useSWR(
-    `http://localhost:3000/professor/`,
+    `${url}/professor/`,
     fetcher
   );
   const { data: disciplines, error: disciplinesError } = useSWR(
-    `http://localhost:3000/discipline/`,
+    `${url}/discipline/`,
     fetcher
   );
 
-  checkForErrors([professorsError, disciplinesError])
+  checkForErrors([professorsError, disciplinesError]);
 
   useEffect(() => {
     if (professors && professors.data && !professorLoaded) {
@@ -63,25 +64,24 @@ function LecturingRegisterPage() {
   ]);
 
   const registerLecturingHandler = async () => {
-    
     let requestData = {
       professorId: professor,
       disciplineId: discipline,
     };
 
     apiRequest(
-      'POST',
-      'http://localhost:3000/lecturing/',
+      "POST",
+      url + "/lecturing/",
       requestData,
       (res) => {
-        alert("Registro de disciplina ministrada realizado!")
-        console.log(res)
-        navigate('/')
+        alert("Registro de disciplina ministrada realizado!");
+        console.log(res);
+        navigate("/");
       },
       (res) => {
-        alert(res.message)
-        console.log(res.message)
-        console.log(res.errorStack)
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
       },
       DUMMY_AUTH_TOKEN
     );

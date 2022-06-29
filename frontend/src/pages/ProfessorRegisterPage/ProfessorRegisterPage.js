@@ -8,10 +8,14 @@ import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import styles from "./ProfessorRegisterPage.module.css";
-import { validationStringChecker, validationPasswordChecker, validationPasswordConfirmChecker } from "../../utils/validation";
+import {
+  validationStringChecker,
+  validationPasswordChecker,
+  validationPasswordConfirmChecker,
+} from "../../utils/validation";
+import url from "../../config/api";
 
 function ProfessorRegisterPage() {
-
   const navigate = useNavigate();
 
   const professorNameRef = useRef(null);
@@ -26,58 +30,61 @@ function ProfessorRegisterPage() {
   let [loaded, setLoaded] = useState(false);
 
   const { data: departments, error: departmentsError } = useSWR(
-    `http://localhost:3000/department/`,
+    `${url}/department/`,
     fetcher
   );
 
-  checkForErrors([departmentsError])
+  checkForErrors([departmentsError]);
 
-  useEffect(()=>{
-    if(!departments || !departments.data || loaded){
+  useEffect(() => {
+    if (!departments || !departments.data || loaded) {
       return;
     }
     let deptOptions = departments.data.map((f) => {
-      console.log(f)
+      console.log(f);
       return {
         value: f.id,
-        label: f.name
+        label: f.name,
       };
     });
     setDeptOptions(deptOptions);
     setLoaded(true);
-  },[deptOptions, departments, loaded]);
+  }, [deptOptions, departments, loaded]);
 
   const registerProfessorHandler = async () => {
     if (
       !validationStringChecker(professorNameRef).isValid ||
       !validationStringChecker(professorIdRef).isValid ||
-      !validationPasswordChecker(professorPasswordRef).isValid || 
-      !validationPasswordConfirmChecker(professorPasswordConfirmRef, professorPasswordRef).isValid
+      !validationPasswordChecker(professorPasswordRef).isValid ||
+      !validationPasswordConfirmChecker(
+        professorPasswordConfirmRef,
+        professorPasswordRef
+      ).isValid
     )
       return alert("Dados inválidos!");
-    
+
     let requestData = {
       departmentId: professorDepartment,
       siape: professorIdRef.current.value,
       name: professorNameRef.current.value,
       password: professorPasswordRef.current.value,
-      about: professorAboutRef.current.value || '' ,
-      lattesUrl: professorLattesUrlRef.current.value || '' ,
+      about: professorAboutRef.current.value || "",
+      lattesUrl: professorLattesUrlRef.current.value || "",
     };
 
     apiRequest(
-      'POST',
-      'http://localhost:3000/professor/',
+      "POST",
+      url + "/professor/",
       requestData,
       (res) => {
-        alert("Registro realizado!")
-        console.log(res)
-        navigate('/loggedHome')
+        alert("Registro realizado!");
+        console.log(res);
+        navigate("/loggedHome");
       },
       (res) => {
-        alert(res.message)
-        console.log(res.message)
-        console.log(res.errorStack)
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
       },
       DUMMY_AUTH_TOKEN
     );
@@ -90,7 +97,7 @@ function ProfessorRegisterPage() {
         label="Nome Completo"
         hint="ex: Fulano de Tal Cicrano de Oliveira"
         type="text"
-        name='name'
+        name="name"
         inputRef={professorNameRef}
         validation={validationStringChecker}
       />
@@ -98,7 +105,7 @@ function ProfessorRegisterPage() {
         label="SIAPE"
         hint="ex: 414644"
         type="text"
-        name='id'
+        name="id"
         inputRef={professorIdRef}
         validation={validationStringChecker}
       />
@@ -106,7 +113,7 @@ function ProfessorRegisterPage() {
         label="Senha"
         hint="******"
         type="password"
-        name='password'
+        name="password"
         inputRef={professorPasswordRef}
         validation={validationPasswordChecker}
       />
@@ -114,7 +121,7 @@ function ProfessorRegisterPage() {
         label="Confirmar Senha"
         hint="******"
         type="password"
-        name='confirm_password'
+        name="confirm_password"
         inputRef={professorPasswordConfirmRef}
         validation={validationPasswordConfirmChecker}
       />
@@ -131,7 +138,7 @@ function ProfessorRegisterPage() {
         label="URL Lattes"
         hint="ex: lattes.cnpq.br/123456789"
         type="text"
-        name='lattes'
+        name="lattes"
         inputRef={professorLattesUrlRef}
       />
       <ValidationSelect

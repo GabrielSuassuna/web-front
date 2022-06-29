@@ -4,7 +4,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
-
+import url from "../../config/api";
 
 function ProfessorLoginPage() {
   const navigate = useNavigate();
@@ -17,24 +17,24 @@ function ProfessorLoginPage() {
       !validationStringChecker(passwordRef).isValid
     )
       return alert("Dados inválidos!");
-    
+
     let requestData = {
       code: siapeRef.current.value,
-      password: passwordRef.current.value
+      password: passwordRef.current.value,
     };
 
     apiRequest(
-      'POST',
-      'http://localhost:3000/auth/professor',
+      "POST",
+      url + "/auth/professor",
       requestData,
-      (_) => navigate('/'),
+      (_) => navigate("/"),
       (res) => {
-        console.log(res)
-        alert(res.message)
+        console.log(res);
+        alert(res.message);
       }
     );
   };
-  
+
   return (
     <div>
       <h1>ProfessorLoginPage</h1>
@@ -42,7 +42,7 @@ function ProfessorLoginPage() {
         label="SIAPE"
         hint="ex: 123456"
         type="text"
-        name='login'
+        name="login"
         inputRef={siapeRef}
         validation={validationStringChecker}
       />
@@ -50,7 +50,7 @@ function ProfessorLoginPage() {
         label="Senha"
         hint="*****"
         type="password"
-        name='answer'
+        name="answer"
         inputRef={passwordRef}
         validation={validationStringChecker}
       />

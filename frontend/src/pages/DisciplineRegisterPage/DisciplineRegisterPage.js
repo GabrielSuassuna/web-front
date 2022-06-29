@@ -5,7 +5,11 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import styles from "./DisciplineRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
-import { validationStringChecker, validationNumberChecker } from "../../utils/validation";
+import {
+  validationStringChecker,
+  validationNumberChecker,
+} from "../../utils/validation";
+import url from "../../config/api";
 
 function DisciplineRegisterPage() {
   const navigate = useNavigate();
@@ -19,19 +23,19 @@ function DisciplineRegisterPage() {
     if (
       !validationStringChecker(disciplineNameRef).isValid ||
       !validationStringChecker(disciplineCodeRef).isValid ||
-      !validationNumberChecker(disciplineHoursRef).isValid 
+      !validationNumberChecker(disciplineHoursRef).isValid
     )
       return alert("Dados inválidos!");
-    
+
     let requestData = {
       name: disciplineNameRef.current.value,
       code: disciplineCodeRef.current.value,
-      description: disciplineDescriptionRef.current.value || '',
+      description: disciplineDescriptionRef.current.value || "",
       hours: disciplineHoursRef.current.value,
     };
     apiRequest(
-      'POST',
-      "http://localhost:3000/discipline/",
+      "POST",
+      url + "/discipline/",
       requestData,
       (res) => {
         alert("Registro de disciplina realizado!");
@@ -81,8 +85,10 @@ function DisciplineRegisterPage() {
         validation={validationNumberChecker}
       />
 
-      
-    <IconButton content="Registrar disciplina" onClick={registerDisciplineHandler} />
+      <IconButton
+        content="Registrar disciplina"
+        onClick={registerDisciplineHandler}
+      />
     </div>
   );
 }

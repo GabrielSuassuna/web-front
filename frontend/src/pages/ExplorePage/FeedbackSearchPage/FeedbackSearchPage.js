@@ -7,6 +7,7 @@ import ValidationSelect from "../../../components/ValidationSelect/ValidationSel
 import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
+import URL from "../../../config/api";
 
 function FeedbackSearchPage() {
   const professorNameRef = useRef(null);
@@ -24,7 +25,7 @@ function FeedbackSearchPage() {
   const [loaded, setLoaded] = useState(false);
 
   const { data: departments, error: departmentsError } = useSWR(
-    `http://localhost:3000/department/`,
+    `${URL}/department/`,
     fetcher
   );
 
@@ -49,7 +50,7 @@ function FeedbackSearchPage() {
   }, [deptOptions, departments, loaded]);
 
   const handleSearch = (pageNumber) => {
-    let url = "http://localhost:3000/feedback?";
+    let url = URL + "/feedback?";
     url += `disciplineName=${disciplineNameRef.current.value}`;
     url += `&disciplineCode=${disciplineCodeRef.current.value}`;
     url += `&disciplineHours=${disciplineHoursRef.current.value}`;

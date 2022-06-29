@@ -6,6 +6,7 @@ import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import styles from "./DepartmentRegisterPage.module.css";
 import { validationStringChecker } from "../../utils/validation";
+import url from "../../config/api";
 
 function DepartmentRegisterPage() {
   const navigate = useNavigate();
@@ -26,8 +27,8 @@ function DepartmentRegisterPage() {
     };
 
     apiRequest(
-      'POST',
-      "http://localhost:3000/department/",
+      "POST",
+      url + "/department/",
       requestData,
       (res) => {
         alert("Registro de departamento realizado!");
@@ -65,7 +66,10 @@ function DepartmentRegisterPage() {
         inputClasses={[styles.inputQuestion]}
         isTextArea
       />
-      <IconButton content="Registrar Departamento" onClick={registerFAQHandler} />
+      <IconButton
+        content="Registrar Departamento"
+        onClick={registerFAQHandler}
+      />
     </div>
   );
 }

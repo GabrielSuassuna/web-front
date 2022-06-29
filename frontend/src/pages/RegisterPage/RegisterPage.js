@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
-import { validationStringChecker, validationPasswordChecker, validationPasswordConfirmChecker } from "../../utils/validation";
+import {
+  validationStringChecker,
+  validationPasswordChecker,
+  validationPasswordConfirmChecker,
+} from "../../utils/validation";
+import url from "../../config/api";
 
 function RegisterPage() {
-
   const navigate = useNavigate();
 
   const studentNameRef = useRef(null);
@@ -18,11 +22,14 @@ function RegisterPage() {
     if (
       !validationStringChecker(studentNameRef).isValid ||
       !validationStringChecker(studentIdRef).isValid ||
-      !validationPasswordChecker(studentPasswordRef).isValid || 
-      !validationPasswordConfirmChecker(studentPasswordConfirmRef, studentPasswordRef).isValid
+      !validationPasswordChecker(studentPasswordRef).isValid ||
+      !validationPasswordConfirmChecker(
+        studentPasswordConfirmRef,
+        studentPasswordRef
+      ).isValid
     )
       return alert("Dados inválidos!");
-    
+
     let requestData = {
       registration: studentIdRef.current.value,
       name: studentNameRef.current.value,
@@ -30,18 +37,18 @@ function RegisterPage() {
     };
 
     apiRequest(
-      'POST',
-      'http://localhost:3000/student/',
+      "POST",
+      url + "/student/",
       requestData,
       (res) => {
-        alert("Registro realizado!")
-        console.log(res)
-        navigate('/loggedHome')
+        alert("Registro realizado!");
+        console.log(res);
+        navigate("/loggedHome");
       },
       (res) => {
-        alert(res.message)
-        console.log(res.message)
-        console.log(res.errorStack)
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
       }
     );
   };
@@ -54,7 +61,7 @@ function RegisterPage() {
         label="Nome Completo"
         hint="ex: Fulano de Tal Cicrano de Oliveira"
         type="text"
-        name='name'
+        name="name"
         inputRef={studentNameRef}
         validation={validationStringChecker}
       />
@@ -62,7 +69,7 @@ function RegisterPage() {
         label="Matrícula"
         hint="ex: 414644"
         type="text"
-        name='id'
+        name="id"
         inputRef={studentIdRef}
         validation={validationStringChecker}
       />
@@ -70,7 +77,7 @@ function RegisterPage() {
         label="Senha"
         hint="******"
         type="password"
-        name='password'
+        name="password"
         inputRef={studentPasswordRef}
         validation={validationPasswordChecker}
       />
@@ -78,7 +85,7 @@ function RegisterPage() {
         label="Confirmar Senha"
         hint="******"
         type="password"
-        name='confirm_password'
+        name="confirm_password"
         inputRef={studentPasswordConfirmRef}
         validation={validationPasswordConfirmChecker}
       />

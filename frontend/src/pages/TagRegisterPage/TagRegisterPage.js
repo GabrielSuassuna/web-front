@@ -6,6 +6,7 @@ import styles from "./TagRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
+import url from "../../config/api";
 
 function TagRegisterPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function TagRegisterPage() {
 
     apiRequest(
       "POST",
-      "http://localhost:3000/tag/",
+      url + "/tag/",
       requestData,
       (res) => {
         alert("Registro de tag realizado!");

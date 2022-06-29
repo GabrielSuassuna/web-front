@@ -3,20 +3,21 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { Link } from "react-router-dom";
 import { checkForErrors } from "../../utils/apiReq";
+import url from "../../config/api";
 
 function LecturingDescriptionPage() {
   let query = useQuery();
 
   const { data: lecturing, error: lecturingError } = useSWR(
-    `http://localhost:3000/lecturing/${query.get("id")}`,
+    `${url}/lecturing/${query.get("id")}`,
     fetcher
   );
   const { data: professor, error: professorError } = useSWR(
-    () => `http://localhost:3000/professor/${lecturing.data[0].professor_id}`,
+    () => `${url}/professor/${lecturing.data[0].professor_id}`,
     fetcher
   );
   const { data: discipline, error: disciplineError } = useSWR(
-    () => `http://localhost:3000/discipline/${lecturing.data[0].discipline_id}`,
+    () => `${url}/discipline/${lecturing.data[0].discipline_id}`,
     fetcher
   );
 
@@ -29,7 +30,7 @@ function LecturingDescriptionPage() {
       </div>
     );
   }
-  
+
   return (
     <div>
       <h1>LecturingDescriptionPage</h1>

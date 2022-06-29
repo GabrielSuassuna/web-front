@@ -7,6 +7,7 @@ import ValidationSelect from "../../../components/ValidationSelect/ValidationSel
 import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
+import URL from "../../../config/api";
 
 function DisciplineSearchPage(props) {
   const disciplineNameRef = useRef(null);
@@ -17,7 +18,7 @@ function DisciplineSearchPage(props) {
   const [pageIndex, setPageIndex] = useState(1);
 
   const handleSearch = (pageNumber) => {
-    let url = "http://localhost:3000/discipline?";
+    let url = URL + "/discipline?";
     url += `name=${disciplineNameRef.current.value}`;
     url += `&code=${disciplineCodeRef.current.value}`;
     url += `&hours=${disciplineHoursRef.current.value}`;

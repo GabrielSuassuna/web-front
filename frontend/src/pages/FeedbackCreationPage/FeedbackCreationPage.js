@@ -9,6 +9,7 @@ import { DUMMY_AUTH_TOKEN, DUMMY_STUDENT_ID } from "../../utils/consts";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { useNavigate } from "react-router-dom";
 import { validationStringChecker } from "../../utils/validation";
+import url from "../../config/api";
 
 function FeedbackCreationPage() {
   const navigate = useNavigate();
@@ -25,21 +26,18 @@ function FeedbackCreationPage() {
   let query = useQuery();
 
   const { data: lecturing, error: lecturingError } = useSWR(
-    `http://localhost:3000/lecturing/${query.get("lecturingId")}`,
+    `${url}/lecturing/${query.get("lecturingId")}`,
     fetcher
   );
   const { data: professor, error: professorError } = useSWR(
-    () => `http://localhost:3000/professor/${lecturing.data[0].professor_id}`,
+    () => `${url}/professor/${lecturing.data[0].professor_id}`,
     fetcher
   );
   const { data: discipline, error: disciplineError } = useSWR(
-    () => `http://localhost:3000/discipline/${lecturing.data[0].discipline_id}`,
+    () => `${url}/discipline/${lecturing.data[0].discipline_id}`,
     fetcher
   );
-  const { data: tags, error: tagsError } = useSWR(
-    () => `http://localhost:3000/tag/`,
-    fetcher
-  );
+  const { data: tags, error: tagsError } = useSWR(() => `${url}/tag/`, fetcher);
 
   checkForErrors([lecturingError, professorError, disciplineError, tagsError]);
 
@@ -61,7 +59,7 @@ function FeedbackCreationPage() {
       return alert("Dados inválidos!");
 
     let generalScore =
-      ( Number(feedbackAssiduityScoreRef.current.value) +
+      (Number(feedbackAssiduityScoreRef.current.value) +
         Number(feedbackClarityScoreRef.current.value) +
         Number(feedbackRelationshipScoreRef.current.value)) /
       3;
@@ -77,14 +75,14 @@ function FeedbackCreationPage() {
       clarityScore: feedbackClarityScoreRef.current.value,
       relationshipScore: feedbackRelationshipScoreRef.current.value,
       date: new Date(),
-      tags: selectedTags.map(t => t.id),
+      tags: selectedTags.map((t) => t.id),
     };
 
-    console.log(requestData)
+    console.log(requestData);
 
     apiRequest(
       "POST",
-      "http://localhost:3000/feedback/",
+      url + "/feedback/",
       requestData,
       (res) => {
         alert("Registro de feedback realizado!");

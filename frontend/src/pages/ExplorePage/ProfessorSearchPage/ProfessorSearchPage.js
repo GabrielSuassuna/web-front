@@ -7,6 +7,7 @@ import ValidationSelect from "../../../components/ValidationSelect/ValidationSel
 import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
+import URL from "../../../config/api";
 
 function ProfessorSearchPage() {
   const professorNameRef = useRef(null);
@@ -19,7 +20,7 @@ function ProfessorSearchPage() {
   const [loaded, setLoaded] = useState(false);
 
   const { data: departments, error: departmentsError } = useSWR(
-    `http://localhost:3000/department/`,
+    `${URL}/department/`,
     fetcher
   );
 
@@ -44,7 +45,7 @@ function ProfessorSearchPage() {
   }, [deptOptions, departments, loaded]);
 
   const handleSearch = (pageNumber) => {
-    let url = "http://localhost:3000/professor?";
+    let url = URL + "/professor?";
     url += `departmentId=${professorDepartment}`;
     url += `&name=${professorNameRef.current.value}`;
     url += `&siape=${professorSiapeRef.current.value}`;

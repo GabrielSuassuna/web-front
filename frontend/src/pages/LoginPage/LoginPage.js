@@ -4,37 +4,37 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
-
+import url from "../../config/api";
 
 function LoginPage() {
   const navigate = useNavigate();
   const registrationRef = useRef(null);
   const passwordRef = useRef(null);
-  
+
   const loginHandler = async () => {
     if (
       !validationStringChecker(registrationRef).isValid ||
       !validationStringChecker(passwordRef).isValid
     )
       return alert("Dados inválidos!");
-    
+
     let requestData = {
       code: registrationRef.current.value,
-      password: passwordRef.current.value
+      password: passwordRef.current.value,
     };
-    
+
     apiRequest(
-      'POST',
-      'http://localhost:3000/auth/student',
+      "POST",
+      url + "/auth/student",
       requestData,
-      (_) => navigate('/'),
+      (_) => navigate("/"),
       (res) => {
-        console.log(res)
-        alert(res.message)
+        console.log(res);
+        alert(res.message);
       }
     );
-  }
-  
+  };
+
   return (
     <div>
       <h1>LoginPage</h1>
@@ -42,7 +42,7 @@ function LoginPage() {
         label="Matrícula"
         hint="ex: 123456"
         type="text"
-        name='login'
+        name="login"
         inputRef={registrationRef}
         validation={validationStringChecker}
       />
@@ -50,7 +50,7 @@ function LoginPage() {
         label="Senha"
         hint="*****"
         type="password"
-        name='answer'
+        name="answer"
         inputRef={passwordRef}
         validation={validationStringChecker}
       />

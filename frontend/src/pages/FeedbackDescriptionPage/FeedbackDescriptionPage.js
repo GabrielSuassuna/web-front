@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_STUDENT_ID, DUMMY_AUTH_TOKEN } from "../../utils/consts";
+import url from "../../config/api";
 
 function FeedbackDescriptionPage() {
   let [vote, setVote] = useState(null);
@@ -11,17 +12,17 @@ function FeedbackDescriptionPage() {
   let query = useQuery();
 
   const { data: feedback, error: feedbackError } = useSWR(
-    `http://localhost:3000/feedback/${query.get("id")}`,
+    `${url}/feedback/${query.get("id")}`,
     fetcher
   );
   let { data: hasVote, error: hasVoteError } = useSWR(
-    `http://localhost:3000/hasVote?studentId=${DUMMY_STUDENT_ID}&feedbackId=${query.get(
+    `${url}/hasVote?studentId=${DUMMY_STUDENT_ID}&feedbackId=${query.get(
       "id"
     )}`,
     fetcher
   );
 
-  checkForErrors([feedbackError, hasVoteError])
+  checkForErrors([feedbackError, hasVoteError]);
 
   useEffect(() => {
     if (vote || !hasVote || !hasVote.data) return;
@@ -36,9 +37,7 @@ function FeedbackDescriptionPage() {
     if (hasVote && hasVote.data[0]) {
       apiRequest(
         "PUT",
-        `http://localhost:3000/hasVote/${query.get(
-          "id"
-        )}?studentId=${DUMMY_STUDENT_ID}`,
+        `${url}/hasVote/${query.get("id")}?studentId=${DUMMY_STUDENT_ID}`,
         {
           isUpvote: isUpvote,
         },
@@ -55,7 +54,7 @@ function FeedbackDescriptionPage() {
     } else {
       apiRequest(
         "POST",
-        `http://localhost:3000/hasVote`,
+        `${url}/hasVote`,
         {
           feedbackId: query.get("id"),
           studentId: DUMMY_STUDENT_ID,
