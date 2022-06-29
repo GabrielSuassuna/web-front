@@ -17,7 +17,7 @@ export class ReportLogRepository {
             SELECT 
                 r.*,
                 p.name as author_name,
-                p.name as author_siape
+                p.siape as author_siape
             FROM report_log as r 
                 INNER JOIN professor as p on r.author_id = p.id
             WHERE r.report_id = $1

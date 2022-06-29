@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import useSWR from "swr";
+import { useState, useRef, useEffect } from "react";
 import IconButton from "../../components/IconButton/IconButton";
 import SearchResult from "../../components/SearchResult/SearchResult";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
-import fetcher from "../../utils/fetcher";
-import { apiRequest, checkForErrors } from "../../utils/apiReq";
+import { apiRequest} from "../../utils/apiReq";
 import { SEARCH_RESULT_TYPES, REPORT_UPDATE_TYPES, REPORT_UPDATE_TRANSLATION, DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import URL from "../../config/api";
 

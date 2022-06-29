@@ -19,7 +19,7 @@ function ReportLog(props) {
     <div>
       <h1>{props.date}</h1>
       <h1 className={styles.reportTitle}>
-        {REPORT_UPDATE_TRANSLATION[props.type]}
+        {props.title}
       </h1>
       <h1 className={styles.reportDescription}>
         {props.description
@@ -28,6 +28,7 @@ function ReportLog(props) {
               props.professor
             }`}
       </h1>
+      <hr/>
     </div>
   );
 }
