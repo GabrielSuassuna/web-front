@@ -17,13 +17,17 @@ function ReportSearchResult(props) {
     <div>
       <Link to={`/description/report?id=${props.resultData.id}`}>
         <small>{props.resultData.status}</small>
-        <h1>Título do feedback: {props.resultData.title}</h1>
+        <h1>Título do feedback: {props.resultData.feedback_title}</h1>
         <h1>
-          Autorado por: {props.resultData.author_name} - {props.resultData.author_siape}
+          Autorado por: {props.resultData.author_name} -{" "}
+          {props.resultData.author_siape}
         </h1>
-        <h1>
-          {REPORT_UPDATE_FILLER[props.resultData.status]} {props.resultData.author_name} - {props.resultData.author_siape}
-        </h1>
+        {props.resultData.status === "EM_REVISAO" && (
+          <h1>
+            {REPORT_UPDATE_FILLER[props.resultData.status]}{" "}
+            {props.resultData.reviewer_name} - {props.resultData.reviewer_siape}
+          </h1>
+        )}
       </Link>
     </div>
   );
