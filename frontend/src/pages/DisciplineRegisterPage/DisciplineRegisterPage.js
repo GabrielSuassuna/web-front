@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import styles from "./DisciplineRegisterPage.module.css";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import {
@@ -52,43 +51,55 @@ function DisciplineRegisterPage() {
   };
 
   return (
-    <div>
-      <h1>DisciplineRegisterPage</h1>
-      <ValidationInput
-        label="Nome da Disciplina"
-        hint="ex: Algoritmos Aproximativos"
-        type="text"
-        inputRef={disciplineNameRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Código da Disciplina"
-        hint="ex: CK0203"
-        type="text"
-        inputRef={disciplineCodeRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Descrição"
-        hint="ex: Esta disciplina tem como foco..."
-        type="text"
-        name="description"
-        inputRef={disciplineDescriptionRef}
-        inputClasses={[styles.inputQuestion]}
-        isTextArea
-      />
-      <ValidationInput
-        label="Carga horária da Disciplina"
-        hint="ex: 96"
-        type="number"
-        inputRef={disciplineHoursRef}
-        validation={validationNumberChecker}
-      />
+    <div className="mt-6 ml-6">
+      <h1 className="text-4xl font-bold mb-6">Cadastro de Disciplina</h1>
 
-      <IconButton
-        content="Registrar disciplina"
-        onClick={registerDisciplineHandler}
-      />
+      <div className="flex flex-col w-6/12">
+        <ValidationInput
+          label="Nome da Disciplina"
+          hint="ex: Algoritmos Aproximativos"
+          type="text"
+          inputRef={disciplineNameRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="Código da Disciplina"
+          hint="ex: CK0203"
+          type="text"
+          inputRef={disciplineCodeRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="Descrição"
+          hint="ex: Esta disciplina tem como foco..."
+          type="text"
+          name="description"
+          inputRef={disciplineDescriptionRef}
+          inputClasses={[]}
+          isTextArea
+        />
+        <ValidationInput
+          label="Carga horária da Disciplina"
+          hint="ex: 96"
+          type="number"
+          inputRef={disciplineHoursRef}
+          validation={validationNumberChecker}
+        />
+
+        <IconButton
+          classes={[
+            "w-full",
+            "bg-green-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+          ]}
+          content="Registrar disciplina"
+          onClick={registerDisciplineHandler}
+        />
+      </div>
     </div>
   );
 }

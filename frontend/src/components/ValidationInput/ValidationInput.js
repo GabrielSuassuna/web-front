@@ -22,9 +22,8 @@ function ValidationInput(props) {
   let [errorMessage, setErrorMessage] = useState("");
 
   const validationCheck = () => {
-    if(!props.validation)
-      return;
-    
+    if (!props.validation) return;
+
     let validation = props.validation(props.inputRef);
     if (validation.isValid) setErrorMessage("");
     else setErrorMessage(validation.message);
@@ -32,9 +31,10 @@ function ValidationInput(props) {
 
   let input = (
     <input
-      className={[styles.validationInput, ...(props.inputClasses || [])].join(
-        " "
-      )}
+      className={[
+        "rounded border w-full border-gray-400 px-2 py-1 my-1",
+        ...(props.inputClasses || []),
+      ].join(" ")}
       type={props.type}
       id={`validationInput_${props.name}`}
       onFocus={() => setShouldValidate(true)}
@@ -49,9 +49,10 @@ function ValidationInput(props) {
   if (props.isTextArea) {
     input = (
       <textarea
-        className={[styles.validationInput, ...(props.inputClasses || [])].join(
-          " "
-        )}
+        className={[
+          "rounded border w-full border-gray-400 px-2 py-1 my-1",
+          ...(props.inputClasses || []),
+        ].join(" ")}
         type={props.type}
         id={`validationInput_${props.name}`}
         onFocus={() => setShouldValidate(true)}
@@ -63,8 +64,17 @@ function ValidationInput(props) {
     );
   }
   return (
-    <div>
-      <label htmlFor="validationInput">{props.label}:</label>
+    <div className="w-full flex flex-col">
+      {props.label ? (
+        <label
+          className="font-bold text-blue-700 mb-2"
+          htmlFor="validationInput"
+        >
+          {props.label}:
+        </label>
+      ) : (
+        ""
+      )}
       {input}
       {shouldValidate && errorMessage && (
         <small className={styles.validationError}>{errorMessage}</small>

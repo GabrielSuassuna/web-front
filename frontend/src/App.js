@@ -1,13 +1,12 @@
-import './App.css';
-import AppRouter from './router/AppRouter';
-
-import Header from './components/Header/Header'
+import "./App.css";
+import AppRouter from "./router/AppRouter";
 
 function App() {
   return (
-    <main className="w-100 h-100">
-
-      <Header></Header>
+    <main
+      className="w-full flex flex-col h-full"
+      style={{ minHeight: "100vh" }}
+    >
       <AppRouter />
     </main>
   );

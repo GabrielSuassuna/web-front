@@ -54,43 +54,57 @@ function RegisterPage() {
   };
 
   return (
-    <div>
-      <h1>Fazer Registro</h1>
+    <div className="mt-6 ml-6">
+      <h1 className="text-4xl font-bold mb-6">Cadastro de Aluno</h1>
 
-      <ValidationInput
-        label="Nome Completo"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
-        type="text"
-        name="name"
-        inputRef={studentNameRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Matrícula"
-        hint="ex: 414644"
-        type="text"
-        name="id"
-        inputRef={studentIdRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Senha"
-        hint="******"
-        type="password"
-        name="password"
-        inputRef={studentPasswordRef}
-        validation={validationPasswordChecker}
-      />
-      <ValidationInput
-        label="Confirmar Senha"
-        hint="******"
-        type="password"
-        name="confirm_password"
-        inputRef={studentPasswordConfirmRef}
-        validation={validationPasswordConfirmChecker}
-      />
+      <div className="flex flex-col w-6/12">
+        <ValidationInput
+          label="Nome Completo"
+          hint="ex: Fulano de Tal Cicrano de Oliveira"
+          type="text"
+          name="name"
+          inputRef={studentNameRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="Matrícula"
+          hint="ex: 414644"
+          type="text"
+          name="id"
+          inputRef={studentIdRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="Senha"
+          hint="******"
+          type="password"
+          name="password"
+          inputRef={studentPasswordRef}
+          validation={validationPasswordChecker}
+        />
+        <ValidationInput
+          label="Confirmar Senha"
+          hint="******"
+          type="password"
+          name="confirm_password"
+          inputRef={studentPasswordConfirmRef}
+          validation={validationPasswordConfirmChecker}
+        />
 
-      <IconButton content="Registrar-se" onClick={registerStudentHandler} />
+        <IconButton
+          classes={[
+            "w-full",
+            "bg-green-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+          ]}
+          content="Registrar Aluno"
+          onClick={registerStudentHandler}
+        />
+      </div>
     </div>
   );
 }

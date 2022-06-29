@@ -7,7 +7,6 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
-import styles from "./ProfessorRegisterPage.module.css";
 import {
   validationStringChecker,
   validationPasswordChecker,
@@ -91,66 +90,81 @@ function ProfessorRegisterPage() {
   };
 
   return (
-    <div>
-      <h1>Fazer Registro de Professor</h1>
-      <ValidationInput
-        label="Nome Completo"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
-        type="text"
-        name="name"
-        inputRef={professorNameRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="SIAPE"
-        hint="ex: 414644"
-        type="text"
-        name="id"
-        inputRef={professorIdRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Senha"
-        hint="******"
-        type="password"
-        name="password"
-        inputRef={professorPasswordRef}
-        validation={validationPasswordChecker}
-      />
-      <ValidationInput
-        label="Confirmar Senha"
-        hint="******"
-        type="password"
-        name="confirm_password"
-        inputRef={professorPasswordConfirmRef}
-        validation={validationPasswordConfirmChecker}
-      />
-      <ValidationInput
-        label="Sobre"
-        hint="ex: Sou um professor que preza por...."
-        type="text"
-        name="about"
-        inputRef={professorAboutRef}
-        inputClasses={[styles.inputQuestion]}
-        isTextArea
-      />
-      <ValidationInput
-        label="URL Lattes"
-        hint="ex: lattes.cnpq.br/123456789"
-        type="text"
-        name="lattes"
-        inputRef={professorLattesUrlRef}
-      />
-      <ValidationSelect
-        name="dept"
-        label="Departamento"
-        hint="Selecione um departamento"
-        value={professorDepartment}
-        valueHandler={setProfessorDepartment}
-        options={deptOptions}
-      />
+    <div className="mt-6 ml-6 pb-10">
+      <h1 className="text-4xl font-bold mb-6">Cadastro de Docente</h1>
 
-      <IconButton content="Registrar-se" onClick={registerProfessorHandler} />
+      <div className="flex flex-col w-6/12">
+        <ValidationInput
+          label="Nome Completo"
+          hint="ex: Fulano de Tal Cicrano de Oliveira"
+          type="text"
+          name="name"
+          inputRef={professorNameRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="SIAPE"
+          hint="ex: 414644"
+          type="text"
+          name="id"
+          inputRef={professorIdRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          label="Senha"
+          hint="******"
+          type="password"
+          name="password"
+          inputRef={professorPasswordRef}
+          validation={validationPasswordChecker}
+        />
+        <ValidationInput
+          label="Confirmar Senha"
+          hint="******"
+          type="password"
+          name="confirm_password"
+          inputRef={professorPasswordConfirmRef}
+          validation={validationPasswordConfirmChecker}
+        />
+        <ValidationInput
+          label="Sobre"
+          hint="ex: Sou um professor que preza por...."
+          type="text"
+          name="about"
+          inputRef={professorAboutRef}
+          inputClasses={[]}
+          isTextArea
+        />
+        <ValidationInput
+          label="URL Lattes"
+          hint="ex: lattes.cnpq.br/123456789"
+          type="text"
+          name="lattes"
+          inputRef={professorLattesUrlRef}
+        />
+        <ValidationSelect
+          name="dept"
+          label="Departamento"
+          hint="Selecione um departamento"
+          value={professorDepartment}
+          valueHandler={setProfessorDepartment}
+          options={deptOptions}
+        />
+
+        <IconButton
+          classes={[
+            "w-full",
+            "bg-green-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+          ]}
+          content="Registrar Docente"
+          onClick={registerProfessorHandler}
+        />
+      </div>
     </div>
   );
 }

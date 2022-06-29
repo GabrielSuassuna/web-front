@@ -1,6 +1,7 @@
 import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
+import url from "../../config/api";
 
 import Tag from "../../components/Tag/Tag";
 import { checkForErrors } from "../../utils/apiReq";
