@@ -41,25 +41,42 @@ function ProfessorLoginPage() {
   };
 
   return (
-    <div>
-      <h1>ProfessorLoginPage</h1>
-      <ValidationInput
-        label="SIAPE"
-        hint="ex: 123456"
-        type="text"
-        name="login"
-        inputRef={siapeRef}
-        validation={validationStringChecker}
-      />
-      <ValidationInput
-        label="Senha"
-        hint="*****"
-        type="password"
-        name="answer"
-        inputRef={passwordRef}
-        validation={validationStringChecker}
-      />
-      <IconButton content="Fazer Login" onClick={loginHandler} />
+    <div className="flex h-full flex-1 justify-center self-center w-64">
+      <div className="flex flex-col items-center w-full">
+        <img
+          alt="logo"
+          className="w-40 mb-10 mt-5"
+          src={require("../../assets/img/logo.png")}
+        />
+        <ValidationInput
+          hint="SIAPE"
+          type="text"
+          name="login"
+          inputRef={siapeRef}
+          validation={validationStringChecker}
+        />
+        <ValidationInput
+          showLabel={true}
+          hint="Senha"
+          type="password"
+          name="answer"
+          inputRef={passwordRef}
+          validation={validationStringChecker}
+        />
+        <IconButton
+          classes={[
+            "w-full",
+            "bg-indigo-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+          ]}
+          content="ENTRAR" 
+          onClick={loginHandler}
+        />
+      </div>
     </div>
   );
 }
