@@ -24,7 +24,7 @@ function DisciplineSearchPage(props) {
     url += `&code=${disciplineCodeRef.current.value}`;
     url += `&hours=${disciplineHoursRef.current.value}`;
     url += `&page=${pageNumber}`;
-    url += `&${PAGE_LIMIT}`;
+    url += `&limit=${PAGE_LIMIT}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
