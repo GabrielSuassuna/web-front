@@ -5,7 +5,6 @@ import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { GetAuth } from '../Interfaces/Get/Auth.interface'
 
 import { sign } from 'jsonwebtoken'
-import { Auth } from '../Interfaces/Auth.interface'
 
 export class AuthService {
     private repositoryUoW: RepositoryUoW
