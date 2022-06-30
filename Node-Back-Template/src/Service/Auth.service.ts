@@ -5,6 +5,7 @@ import { RepositoryUoW } from '../Infrastructure/Repository/RepositoryUoW'
 import { GetAuth } from '../Interfaces/Get/Auth.interface'
 
 import { sign } from 'jsonwebtoken'
+import { Auth } from '../Interfaces/Auth.interface'
 
 export class AuthService {
     private repositoryUoW: RepositoryUoW
@@ -17,7 +18,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: string[] = []
+        let result: Auth[] = []
         
         try{
             const authCredentials: GetAuth = request.body
@@ -37,14 +38,18 @@ export class AuthService {
                         expiresIn: 3000
                     }
                 )
-                result = [token]
-                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
+                result = [{
+                    token: token,
+                    user_id: authCredentials.code,
+                    user_type: 'ADMIN'
+                }]
+                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
         }
     }
 
@@ -52,7 +57,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: string[] = []
+        let result: Auth[] = []
 
         try{
             const authCredentials: GetAuth = request.body
@@ -73,14 +78,18 @@ export class AuthService {
                         expiresIn: 3000
                     }
                 )
-                result = [token]
-                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
+                result = [{
+                    token: token,
+                    user_id: toBeFoundClient[0],
+                    user_type: 'PROFESSOR'
+                }]
+                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
         }
     }
 
@@ -88,7 +97,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: string[] = []
+        let result: Auth[] = []
 
         try{
             const authCredentials: GetAuth = request.body
@@ -108,14 +117,18 @@ export class AuthService {
                         expiresIn: 3000
                     }
                 )
-                result = [token]
-                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
+                result = [{
+                    token: token,
+                    user_id: toBeFoundClient[0],
+                    user_type: 'STUDENT'
+                }]
+                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
         }
     }
 }

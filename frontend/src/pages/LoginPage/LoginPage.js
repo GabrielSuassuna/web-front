@@ -28,7 +28,9 @@ function LoginPage() {
       url + "/auth/student",
       requestData,
       (response) => {
-        localStorage.setItem("token", response.data[0]);
+        localStorage.setItem("token", response.data[0].token);
+        localStorage.setItem("userType", response.data[0].user_type);
+        localStorage.setItem("userId", response.data[0].user_id);
         navigate("/");
       },
       (res) => {

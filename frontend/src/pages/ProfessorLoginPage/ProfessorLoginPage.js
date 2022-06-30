@@ -27,7 +27,12 @@ function ProfessorLoginPage() {
       "POST",
       url + "/auth/professor",
       requestData,
-      (_) => navigate("/"),
+      (res) => {
+        localStorage.setItem("token", res.data[0].token);
+        localStorage.setItem("userType", res.data[0].user_type);
+        localStorage.setItem("userId", res.data[0].user_id); 
+        navigate("/")
+      },
       (res) => {
         console.log(res);
         alert(res.message);
