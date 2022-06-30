@@ -27,23 +27,24 @@ function FAQRegisterPage() {
 
     let token = getAuthToken(navigate);
 
-    if (token)
-      apiRequest(
-        "POST",
-        url + "/faq/",
-        requestData,
-        (res) => {
-          alert("Registro de pergunta realizado!");
-          console.log(res);
-          navigate("/faq");
-        },
-        (res) => {
-          alert(res.message);
-          console.log(res.message);
-          console.log(res.errorStack);
-        },
-        token
-      );
+    if (!token) return;
+
+    apiRequest(
+      "POST",
+      url + "/faq/",
+      requestData,
+      (res) => {
+        alert("Registro de pergunta realizado!");
+        console.log(res);
+        navigate("/faq");
+      },
+      (res) => {
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
+      },
+      token
+    );
   };
 
   return (

@@ -107,22 +107,22 @@ function FeedbackDescriptionPage() {
   const deleteFeedbackHandler = () => {
     let token = getAuthToken(navigate);
 
-    if (token)
-      apiRequest(
-        "DELETE",
-        `${url}/feedback/${query.get("id")}`,
-        {},
-        (res) => {
-          alert("Feedback deltado com sucesso!");
-          navigate("/myFeedbacks");
-        },
-        (res) => {
-          alert(res.message);
-          console.log(res.message);
-          console.log(res.errorStack);
-        },
-        token
-      );
+    if (!token) return;
+    apiRequest(
+      "DELETE",
+      `${url}/feedback/${query.get("id")}`,
+      {},
+      (res) => {
+        alert("Feedback deltado com sucesso!");
+        navigate("/myFeedbacks");
+      },
+      (res) => {
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
+      },
+      token
+    );
   };
 
   const reportFeedbackHandler = () => {
@@ -132,27 +132,28 @@ function FeedbackDescriptionPage() {
     }
     let token = getAuthToken(navigate);
 
-    if (token)
-      apiRequest(
-        "POST",
-        `${url}/report/`,
-        {
-          feedbackId: "28",
-          authorId: "10",
-          description: reportUpdateRef.current.value,
-          date: new Date(),
-        },
-        (res) => {
-          alert("Feedback denunciado com sucesso!");
-          navigate("/revision/myReports");
-        },
-        (res) => {
-          alert(res.message);
-          console.log(res.message);
-          console.log(res.errorStack);
-        },
-        token
-      );
+    if (!token) return;
+
+    apiRequest(
+      "POST",
+      `${url}/report/`,
+      {
+        feedbackId: "28",
+        authorId: "10",
+        description: reportUpdateRef.current.value,
+        date: new Date(),
+      },
+      (res) => {
+        alert("Feedback denunciado com sucesso!");
+        navigate("/revision/myReports");
+      },
+      (res) => {
+        alert(res.message);
+        console.log(res.message);
+        console.log(res.errorStack);
+      },
+      token
+    );
   };
 
   if (!hasVote) {
@@ -182,7 +183,9 @@ function FeedbackDescriptionPage() {
         {" "}
         -{" "}
       </button>
-      {feedback && feedback.data && feedback.data[0].student_id === userId &&
+      {feedback &&
+        feedback.data &&
+        feedback.data[0].student_id === userId &&
         userType === AUTH_LEVELS.STUDENT && (
           <IconButton
             content="Deletar Feedback"
@@ -202,7 +205,9 @@ function FeedbackDescriptionPage() {
           />
         </div>
       )}
-      {feedback && feedback.data && feedback.data[0].professor_id === userId &&
+      {feedback &&
+        feedback.data &&
+        feedback.data[0].professor_id === userId &&
         userType === AUTH_LEVELS.PROFESSOR &&
         report &&
         report.data.length === 0 && (
@@ -211,7 +216,9 @@ function FeedbackDescriptionPage() {
             onClick={reportFeedbackHandler}
           />
         )}
-      {feedback && feedback.data && feedback.data[0].professor_id === userId &&
+      {feedback &&
+        feedback.data &&
+        feedback.data[0].professor_id === userId &&
         userType === AUTH_LEVELS.PROFESSOR &&
         report &&
         report.data &&
