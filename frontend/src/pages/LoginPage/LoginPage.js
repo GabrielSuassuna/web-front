@@ -46,6 +46,7 @@ function LoginPage() {
           className="w-40 mb-10 mt-5"
           src={require("../../assets/img/logo.png")}
         />
+        <p>Login Estudante</p>
         <ValidationInput
           hint="Matrícula"
           type="text"
