@@ -14,9 +14,23 @@ function FAQ(props) {
   const toggleExpanded = () => setIsExpanded(!isExpanded);
 
   return (
-    <div>
-      <h1>{props.question}</h1>
-      <button onClick={toggleExpanded}>{isExpanded ? "^" : "v"}</button>
+    <div className="shadow-lg bg-slate-100 mb-4 rounded-lg w-6/12 px-4 py-4">
+      <div className="flex flex-row justify-between w-full ">
+        <h1 className="uppercase font-bold">{props.question}</h1>
+        <button onClick={toggleExpanded}>
+          {isExpanded ? (
+            <img
+              className="transform rotate-180 w-10"
+              src={require("../../assets/icons/down-arrow.png")}
+            />
+          ) : (
+            <img
+              className="w-10"
+              src={require("../../assets/icons/down-arrow.png")}
+            />
+          )}
+        </button>
+      </div>
       {isExpanded && <p>{props.answer}</p>}
     </div>
   );
