@@ -17,8 +17,7 @@ export class ProfessorService {
     }
 
     public async getAll(request: Request, response: Response){
-        const sucessMessage: string = "Professor encontrados com sucesso"
-        const errorMessage: string = "Erro ao encontrar professor"
+        const errorMessage: string = "Erro ao encontrar professores"
         const notFoundMessage: string = "Professores não encontrados"
     
         let result: ProfessorInterface[] = []
@@ -38,7 +37,14 @@ export class ProfessorService {
             const toBeFoundProfessors: ProfessorInterface[] = await this.repositoryUoW.professorRepository.getAll(professorFilter)
 
             if(!!toBeFoundProfessors.length){
-                return response.status(200).json(setApiResponse<ProfessorInterface[]>(toBeFoundProfessors, sucessMessage))
+                let nextPageFilter: ProfessorFilter = {
+                    ...professorFilter,
+                    limit: 1,
+                    page: professorFilter.page*professorFilter.limit+1
+                };
+                const nextPage: ProfessorInterface[] = await this.repositoryUoW.professorRepository.getAll(nextPageFilter)
+                let successMessage: string = `Professores encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+                return response.status(200).json(setApiResponse<ProfessorInterface[]>(toBeFoundProfessors, successMessage))
             }
             
             return response.status(404).json(setApiResponse<ProfessorInterface[]>(result, notFoundMessage))

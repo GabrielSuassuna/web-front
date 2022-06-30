@@ -28,7 +28,14 @@ export class DepartmentRepository {
 
     public async getById(departmentId: string): Promise<GetDepartment[]>{
         const SQL = `
-            SELECT * FROM department WHERE id = $1
+            SELECT  
+                d.*,
+                c.name as course_coordinator_name,
+                h.name as department_head_name
+            FROM department as d
+                LEFT OUTER JOIN professor as c on d.course_coordinator_id = c.id
+                LEFT OUTER JOIN professor as h on d.department_head_id = h.id 
+            WHERE d.id = $1
         `
 
         const values = [

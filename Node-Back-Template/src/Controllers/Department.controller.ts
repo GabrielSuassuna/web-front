@@ -17,6 +17,7 @@ export class DepartmentController {
     public getRouter() {
         this.router.get(`${this.prefixPath}`, (request: Request, response: Response) => this.getAll(request, response));
         this.router.post(`${this.prefixPath}`, authHandler, (request: Request, response: Response) => this.create(request, response));
+        this.router.get(`${this.prefixPath}/:departmentId`, (request: Request, response: Response) => this.getById(request, response));
         this.router.put(`${this.prefixPath}/:departmentId`, authHandler, (request: Request, response: Response) => this.update(request, response));
         this.router.delete(`${this.prefixPath}/:departmentId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
         this.router.put(`${this.prefixPath}/:departmentId/changeCoordinator`, authHandler,(request: Request, response: Response) => this.updateCourseCoordinator(request, response));
@@ -27,6 +28,10 @@ export class DepartmentController {
 
     private getAll(request: Request, response: Response){
         this.serviceUoW.departmentService.getAll(request, response)
+    }
+
+    private getById(request: Request, response: Response){
+        this.serviceUoW.departmentService.getById(request, response)
     }
 
     private create(request: Request, response: Response){

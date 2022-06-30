@@ -6,4 +6,5 @@ export interface ReportFilter extends PaginationFilter {
     reviewerName?: string
     reviewerSiape?: string
     status?: string
+    title?: string
 }

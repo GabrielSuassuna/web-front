@@ -3,33 +3,28 @@ const SEARCH_RESULT_TYPES = {
   LECTURING: 'LECTURING',
   FEEDBACK: 'FEEDBACK',
   PROFESSOR: 'PROFESSOR',
+  REPORT: 'REPORT'
 }
 
 const REPORT_UPDATE_TYPES = {
-  OPENED: 'OPENED', // Denúncia aberta
-  ACCEPTED: 'ACCEPTED', // Denúncia aceita para revisão
-  CANCELLED: 'CANCELLED', // Revisão cancelada pelo revisor
-  REMOVED: 'REMOVED', // Denúncia removida da plataforma
-  REVOKED: 'REVOKED', // Denúncia revogada pelo revisor
-  REOPENED: 'REOPENED', // Denúncia reaberta pelo professor
+  OPEN: 'ABERTO', // Denúncia aberta
+  IN_REVISION: 'EM_REVISAO', // Denúncia aceita para revisão
+  REMOVED: 'REMOVIDO', // Denúncia removida da plataforma
+  REVOKED: 'REVOGADO', // Denúncia revogada pelo revisor
 }
 
 const REPORT_UPDATE_TRANSLATION = {
-  OPENED: 'Feedback denunciado', // Denúncia aberta
-  ACCEPTED: 'Feedback aceito para revisão', // Denúncia aceita para revisão
-  CANCELLED: 'Revisão cancelada pelo revisor', // Revisão cancelada pelo revisor
+  OPEN: 'Feedback denunciado', // Denúncia aberta
+  IN_REVISION: 'Feedback em revisão', // Denúncia aceita para revisão
   REMOVED: 'Feedback removido da plataforma', // Denúncia removida da plataforma
   REVOKED: 'Denúncia revogada pelo revisor', // Denúncia revogada pelo revisor
-  REOPENED: 'Denúncia reaberta', // Denúncia reaberta pelo professor  
 }
 
 const REPORT_UPDATE_FILLER = {
-  OPENED: 'Denunciado por', // Denúncia aberta
-  ACCEPTED: 'Aceito por', // Denúncia aceita para revisão
-  CANCELLED: 'Cancelado por', // Revisão cancelada pelo revisor
-  REMOVED: 'Removidor por', // Denúncia removida da plataforma
-  REVOKED: 'Revogado por', // Denúncia revogada pelo revisor
-  REOPENED: 'Reaberto por', // Denúncia reaberta pelo professor  
+  [REPORT_UPDATE_TYPES.OPEN]: 'Denunciado por ', // Denúncia aberta
+  [REPORT_UPDATE_TYPES.IN_REVISION]: 'Revisado por ', // Denúncia aceita para revisão
+  [REPORT_UPDATE_TYPES.REMOVED]: 'Removido por ', // Denúncia removida da plataforma
+  [REPORT_UPDATE_TYPES.REVOKED]: 'Revogada por ', // Denúncia revogada pelo revisor
 }
 
 const DUMMY_AUTH_TOKEN = "THIS IS A DUMMY TOKEN PLEASE REPLACE ME I'M ONLY FOR TESTING"

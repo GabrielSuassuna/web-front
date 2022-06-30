@@ -3,6 +3,7 @@ import DisciplineSearchResult from "./DisciplineSearchResult/DisciplineSearchRes
 import LecturingSearchResult from "./LecturingSearchResult/LecturingSearchResult";
 import FeedbackSearchResult from "./FeedbackSearchResult/FeedbackSearchResult";
 import ProfessorSearchResult from "./ProfessorSearchResult/ProfessorSearchResult";
+import ReportSearchResult from "./ReportSearchResult/ReportSearchResult";
 
 /**
  * Componente que representa um resultado de uma pesquisa, podendo ser:
@@ -25,7 +26,9 @@ function SearchResult(props) {
   if(props.type === SEARCH_RESULT_TYPES.LECTURING)
     return <LecturingSearchResult resultData={props.resultData}/>;
   if(props.type === SEARCH_RESULT_TYPES.FEEDBACK)
-    return <FeedbackSearchResult resultData={props.resultData} handleVote={props.handleVote}/>;
+    return <FeedbackSearchResult resultData={props.resultData}/>;
+  if(props.type === SEARCH_RESULT_TYPES.REPORT)
+    return <ReportSearchResult resultData={props.resultData}/>;
 }
 
 export default SearchResult;

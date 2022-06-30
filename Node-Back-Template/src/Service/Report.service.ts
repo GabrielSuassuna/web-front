@@ -23,7 +23,6 @@ export class ReportService {
     }
 
     public async getAllOpen(request: Request, response: Response){
-        const sucessMessage: string = "Denúncias encontrados com sucesso"
         const errorMessage: string = "Erro ao encontrar denúncia"
         const notFoundMessage: string = "Denúncias não encontradas"
         const notAuthorizedMessage: string = "Usuário não autorizado para ver denúncias abertas"
@@ -36,12 +35,13 @@ export class ReportService {
                 viewerId,
                 authorName, 
                 authorSiape,
+                title,
                 page,
                 limit
             } = request.query as any
 
             
-            const reportFilter: ReportFilter = { authorName, authorSiape, page, limit }
+            const reportFilter: ReportFilter = { authorName, authorSiape, title, page, limit }
 
             const viewer: GetProfessor[] = await this.repositoryUoW.professorRepository.getById(viewerId);
             const department: GetDepartment[] = await this.repositoryUoW.departmentRepository.getById(viewer[0].department_id);
@@ -50,10 +50,16 @@ export class ReportService {
               return response.status(401).json(setApiResponse<ReportInterface[]>(result, notAuthorizedMessage))
 
             const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id, reportFilter)
-            //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id)
 
             if(!!toBeFoundReports.length){
-                return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))
+                let nextPageFilter: ReportFilter = {
+                    ...reportFilter,
+                    limit: 1,
+                    page: reportFilter.page*reportFilter.limit+1
+                };
+                const nextPage: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllOpen(viewerId, viewer[0].department_id, nextPageFilter)
+                let successMessage: string = `Denúncias encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+                return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, successMessage))
             }
             
             return response.status(404).json(setApiResponse<ReportInterface[]>(result, notFoundMessage))
@@ -64,7 +70,6 @@ export class ReportService {
     }
 
     public async getByAuthor(request: Request, response: Response){
-      const sucessMessage: string = "Denúncias encontrados com sucesso"
       const errorMessage: string = "Erro ao encontrar denúncia"
       const notFoundMessage: string = "Denúncias não encontradas"
   
@@ -77,17 +82,24 @@ export class ReportService {
               reviewerName, 
               reviewerSiape,
               status,
+              title,
               page,
               limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status, page, limit }
+          const reportFilter: ReportFilter = { reviewerName, reviewerSiape, status, title, page, limit }
 
-          //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, reportFilter)
 
           if(!!toBeFoundReports.length){
-              return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))
+            let nextPageFilter: ReportFilter = {
+                ...reportFilter,
+                limit: 1,
+                page: reportFilter.page*reportFilter.limit+1
+            };
+            const nextPage: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByAuthor(authorId, nextPageFilter)
+            let successMessage: string = `Denúncias encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+            return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, successMessage))
           }
           
           return response.status(404).json(setApiResponse<ReportInterface[]>(result, notFoundMessage))
@@ -98,7 +110,6 @@ export class ReportService {
     }
 
     public async getByReviewer(request: Request, response: Response){
-      const sucessMessage: string = "Denúncias encontrados com sucesso"
       const errorMessage: string = "Erro ao encontrar denúncia"
       const notFoundMessage: string = "Denúncias não encontradas"
   
@@ -111,17 +122,24 @@ export class ReportService {
               authorName, 
               authorSiape,
               status,
+              title,
               page,
               limit
           } = request.query as any
           
-          const reportFilter: ReportFilter = { authorName, authorSiape, status, page, limit }
+          const reportFilter: ReportFilter = { authorName, authorSiape, status, title, page, limit }
 
-          //const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
           const toBeFoundReports: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, reportFilter)
 
           if(!!toBeFoundReports.length){
-              return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, sucessMessage))
+            let nextPageFilter: ReportFilter = {
+                ...reportFilter,
+                limit: 1,
+                page: reportFilter.page*reportFilter.limit+1
+            };
+            const nextPage: ReportInterface[] = await this.repositoryUoW.reportRepository.getAllByReviewer(reviewerId, nextPageFilter)
+            let successMessage: string = `Denúncias encontrados com sucesso. last=${nextPage.length > 0 ? "FALSE" : "TRUE"}`
+            return response.status(200).json(setApiResponse<ReportInterface[]>(toBeFoundReports, successMessage))
           }
           
           return response.status(404).json(setApiResponse<ReportInterface[]>(result, notFoundMessage))
@@ -236,7 +254,7 @@ export class ReportService {
             await this.repositoryUoW.reportLogRepository.create(toBeCreatedReportLog, reportId, toBeupdatedReport.authorId)
 
             const toBeUpdatedReportLog:PutReportUpdate = {
-              reviewerId: toBeupdatedReport.status === "EM REVISÃO" ? toBeupdatedReport.authorId : undefined,
+              reviewerId: toBeupdatedReport.status === "EM_REVISAO" ? toBeupdatedReport.authorId : undefined,
               status: toBeupdatedReport.status
             }
             

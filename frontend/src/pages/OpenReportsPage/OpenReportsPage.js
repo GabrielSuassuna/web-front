@@ -1,28 +1,18 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import IconButton from "../../components/IconButton/IconButton";
 import SearchResult from "../../components/SearchResult/SearchResult";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
-import { apiRequest} from "../../utils/apiReq";
-import { SEARCH_RESULT_TYPES, REPORT_UPDATE_TYPES, REPORT_UPDATE_TRANSLATION, DUMMY_AUTH_TOKEN } from "../../utils/consts";
+import { apiRequest } from "../../utils/apiReq";
+import { SEARCH_RESULT_TYPES, DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import URL from "../../config/api";
 
 const DUMMY_USER_ID = 11;
 
-const REPORT_STATUS_OPTIONS = [];
-for(let s in REPORT_UPDATE_TYPES){
-  REPORT_STATUS_OPTIONS.push({
-    label: REPORT_UPDATE_TRANSLATION[s],
-    value: REPORT_UPDATE_TYPES[s]
-  });
-}
-
-function ReportedFeedbacksPage() {
-  const reviewerNameRef = useRef(null);
-  const reviewerSiapeRef = useRef(null);
+function OpenReportsPage() {
+  const authorNameRef = useRef(null);
+  const authorSiapeRef = useRef(null);
   const feedbackTitleRef = useRef(null);
 
-  const [feedbackStatus, setFeedbackStatus] = useState(REPORT_STATUS_OPTIONS[0].value);
   const [results, setResults] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -35,11 +25,11 @@ function ReportedFeedbacksPage() {
   }
 
   const handleSearch = (pageNumber) => {
-    let url = URL + `/report/professor/${DUMMY_USER_ID}?`;  
-    url += `reviewerName=${checkRef(reviewerNameRef)}`;
-    url += `&reviewerSiape=${checkRef(reviewerSiapeRef)}`;
+    let url = URL + `/report?`;
+    url += `viewerId=${DUMMY_USER_ID}`;  
+    url += `&authorName=${checkRef(authorNameRef)}`;
+    url += `&authorSiape=${checkRef(authorSiapeRef)}`;
     url += `&title=${checkRef(feedbackTitleRef)}`;
-    url += `&status=${feedbackStatus}`;
     url += `&page=${pageNumber}`;
     url += `&limit=10`;
     apiRequest(
@@ -76,18 +66,18 @@ function ReportedFeedbacksPage() {
       {showFilter && (
         <>
           <ValidationInput
-            label="Nome do Revisor"
+            label="Nome do Autor"
             hint="ex: Fulano de Tal Cicrano de Oliveira"
             type="text"
             name="reviewerName"
-            inputRef={reviewerNameRef}
+            inputRef={authorNameRef}
           />
           <ValidationInput
-            label="SIAPE do Revisor"
+            label="SIAPE do Autor"
             hint="ex: 123456"
             type="text"
             name="reviewerSiape"
-            inputRef={reviewerSiapeRef}
+            inputRef={authorSiapeRef}
           />
           <ValidationInput
             label="Título do Feedback"
@@ -95,14 +85,6 @@ function ReportedFeedbacksPage() {
             type="text"
             name="feedbackTitle"
             inputRef={feedbackTitleRef}
-          />
-          <ValidationSelect
-            name="status"
-            label="Estado da denúncia"
-            hint="Selecione um estado"
-            value={feedbackStatus}
-            valueHandler={setFeedbackStatus}
-            options={REPORT_STATUS_OPTIONS}
           />
           <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
         </>
@@ -140,4 +122,4 @@ function ReportedFeedbacksPage() {
   );
 }
 
-export default ReportedFeedbacksPage;
+export default OpenReportsPage;

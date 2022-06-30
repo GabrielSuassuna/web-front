@@ -32,6 +32,14 @@ export const ReportPaths = {
                     }
                 },
                 {
+                    "name": "title",
+                    "in": "query",
+                    "description": "Título do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
                     "name": "page",
                     "in": "query",
                     "description": "Página atual que se deseja obter",
@@ -370,6 +378,14 @@ export const ReportPaths = {
                     }
                 },
                 {
+                    "name": "title",
+                    "in": "query",
+                    "description": "Título do feedback",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
                     "name": "page",
                     "in": "query",
                     "description": "Página atual que se deseja obter",
@@ -565,6 +581,14 @@ export const ReportPaths = {
                     "name": "authorSiape",
                     "in": "query",
                     "description": "SIAPE do autor da denúncia",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "title",
+                    "in": "query",
+                    "description": "Título do feedback",
                     "schema": {
                         "type": "string"
                     }
@@ -975,7 +999,7 @@ export const ReportPaths = {
                                           "feedback_id": 25,
                                           "author_id": 11,
                                           "reviewer_id": 10,
-                                          "status": "EM REVISÃO",
+                                          "status": "EM_REVISAO",
                                           "feedback": {
                                             "id": 25,
                                             "lecturing_id": 8,
