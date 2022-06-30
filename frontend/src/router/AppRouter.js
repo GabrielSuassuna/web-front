@@ -9,7 +9,6 @@ import FAQPage from "../pages/FAQPage/FAQPage";
 import FAQRegisterPage from "../pages/FAQRegisterPage/FAQRegisterPage";
 import FeedbackCreationPage from "../pages/FeedbackCreationPage/FeedbackCreationPage";
 import FeedbackDescriptionPage from "../pages/FeedbackDescriptionPage/FeedbackDescriptionPage";
-import FeedbackRevisionPage from "../pages/FeedbackRevisionPage/FeedbackRevisionPage";
 import HomePage from "../pages/HomePage/HomePage";
 import LecturingDescriptionPage from "../pages/LecturingDescriptionPage/LecturingDescriptionPage";
 import LecturingRegisterPage from "../pages/LecturingRegisterPage/LecturingRegisterPage";
@@ -28,6 +27,8 @@ import TagRegisterPage from "../pages/TagRegisterPage/TagRegisterPage";
 import Header from "../components/Header/Header";
 import DepartmentDescriptionPage from "../pages/DepartmentDescriptionPage/DepartmentDescriptionPage";
 import OpenReportsPage from "../pages/OpenReportsPage/OpenReportsPage";
+import AuthRedirect from "./AuthRedirect";
+import { AUTH_LEVELS } from "../utils/consts";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -44,27 +45,124 @@ function AppRouter() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/faq" element={<FAQPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/login/professor" element={<ProfessorLoginPage />} />
-        <Route path="/loggedHome" element={<LoggedHomePage />} />
+
+        <Route
+          path="/login"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
+              <LoginPage />
+            </AuthRedirect>
+          }
+        />
+
+        <Route
+          path="/login/professor"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
+              <ProfessorLoginPage />
+            </AuthRedirect>
+          }
+        />
+
+        <Route
+          path="/loggedHome"
+          element={
+            <AuthRedirect levels={[]}>
+              <LoggedHomePage />
+            </AuthRedirect>
+          }
+        />
+
+        <Route
+          path="/myProfile"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.PROFESSOR, AUTH_LEVELS.STUDENT]}>
+              <MyProfilePage />
+            </AuthRedirect>
+          }
+        />
         <Route path="/me" element={<Navigate to="/myProfile" replace />} />
-        <Route path="/myProfile" element={<MyProfilePage />} />
-        <Route path="/myFeedbacks" element={<MyFeedbacksPage />} />
+
+        <Route
+          path="/myFeedbacks"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.PROFESSOR, AUTH_LEVELS.STUDENT]}>
+              <MyFeedbacksPage />
+            </AuthRedirect>
+          }
+        />
         <Route
           path="/register/department"
-          element={<DepartmentRegisterPage />}
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN]}>
+              <DepartmentRegisterPage />
+            </AuthRedirect>
+          }
         />
         <Route
           path="/register/discipline"
-          element={<DisciplineRegisterPage />}
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
+              <DisciplineRegisterPage />
+            </AuthRedirect>
+          }
         />
-        <Route path="/register/faq" element={<FAQRegisterPage />} />
-        <Route path="/register/feedback" element={<FeedbackCreationPage />} />
-        <Route path="/register/professor" element={<ProfessorRegisterPage />} />
-        <Route path="/register/lecturing" element={<LecturingRegisterPage />} />
-        <Route path="/register/remove" element={<RegisterDeletionPage />} />
-        <Route path="/register/student" element={<RegisterPage />} />
-        <Route path="/register/tag" element={<TagRegisterPage />} />
+        <Route
+          path="/register/faq"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
+              <FAQRegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/feedback"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.STUDENT]}>
+              <FeedbackCreationPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/professor"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
+              <ProfessorRegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/lecturing"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.PROFESSOR]}>
+              <LecturingRegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/remove"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
+              <RegisterDeletionPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/student"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
+              <RegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/register/tag"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
+              <TagRegisterPage />
+            </AuthRedirect>
+          }
+        />
         <Route
           path="/description/department"
           element={<DepartmentDescriptionPage />}
@@ -85,10 +183,30 @@ function AppRouter() {
           path="/description/lecturing"
           element={<LecturingDescriptionPage />}
         />
-        <Route path="/revision/feedback" element={<FeedbackRevisionPage />} />
-        <Route path="/revision/report" element={<ReportedFeedbackPage />} />
-        <Route path="/revision/reports" element={<OpenReportsPage />} />
-        <Route path="/revision/myReports" element={<ReportedFeedbacksPage />} />
+        <Route
+          path="/revision/report"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.PROFESSOR]}>
+              <ReportedFeedbackPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/revision/reports"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.HEAD]}>
+              <OpenReportsPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/revision/myReports"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.PROFESSOR]}>
+              <ReportedFeedbacksPage />
+            </AuthRedirect>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

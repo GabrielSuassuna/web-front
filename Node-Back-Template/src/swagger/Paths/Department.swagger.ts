@@ -581,6 +581,108 @@ export const DepartmentPaths = {
             }
         },
     },
+    "/department/leader/{professorId}": {
+        "get": {
+            "tags": ["Department"],
+            "summary": "Obtém os dados de um departamento com chefe de departamento ou coordenador de curso especificado.",
+            "parameters": [
+                {
+                    "name": "professorId",
+                    "in": "path",
+                    "description": "ID do chefe de departamento / coordenador de curso.",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Departamento obtido com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "name": "5",
+                                            "description": "03042",
+                                            "department_head_id": "03042",
+                                            "course_coordinator_id": "03043",
+                                        }
+                                    ],
+                                    "message" : "Departamento obtido com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetDepartament"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Departamento não encontrado",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Departamento não encontrado"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter departamento",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter departamento"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    },
     "/department/{departmentId}/changeCoordinator": {
         "put": {
             "tags": ["Department"],

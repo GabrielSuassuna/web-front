@@ -1,20 +1,28 @@
 import jwtDecode from "jwt-decode";
 
 const tokenIsValid = (token) => {
-  const { exp, iat } = jwtDecode(token || "")
-  const now = Date.now().valueOf() / 1000
-  if (!exp || !iat)
-    return false
+  try {
+    const { exp, iat } = jwtDecode(token || "");
+    const now = Date.now().valueOf() / 1000;
+    if (!exp || !iat) return false;
 
-  if (now > exp)
-    return false
+    if (now > exp) return false;
 
-  return true
-}
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
 
 const decodeToken = (token) => {
-  const { id, userType, exp } = jwtDecode(token || "")
-  return { id, userType, exp }
-}
+  try {
+    const { id, userType, exp } = jwtDecode(token || "");
+    return { id, userType, exp };
+  } catch (e) {
+    console.log(e);
+    return { id: null, userType: null, exp: null };
+  }
+};
 
 export { tokenIsValid, decodeToken };
