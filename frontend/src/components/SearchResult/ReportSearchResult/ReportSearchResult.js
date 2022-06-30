@@ -15,7 +15,7 @@ import { REPORT_UPDATE_FILLER } from "../../../utils/consts";
 function ReportSearchResult(props) {
   return (
     <div>
-      <Link to={`/description/report?id=${props.resultData.id}`}>
+      <Link to={`/revision/report?id=${props.resultData.id}`}>
         <small>{props.resultData.status}</small>
         <h1>Título do feedback: {props.resultData.feedback_title}</h1>
         <h1>

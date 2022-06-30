@@ -165,6 +165,7 @@ export class FeedbackRepository {
         const SQL = `
         SELECT 
             f.id as id,
+            f.student_id as student_id,
             f.lecturing_id as lecturing_id,
             f.title as title,
             f.description as description,
@@ -174,6 +175,7 @@ export class FeedbackRepository {
             f.clarity_score as clarity_score,
             f.relationship_score as relationship_score,
             f.date as date,
+            p.id as professor_id,
             p.name as professor_name,
             p.siape as professor_siape,
             dpt.name as professor_department,

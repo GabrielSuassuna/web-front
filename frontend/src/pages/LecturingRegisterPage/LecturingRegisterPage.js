@@ -34,7 +34,6 @@ function LecturingRegisterPage() {
   useEffect(() => {
     if (professors && professors.data && !professorLoaded) {
       let professorOptions = professors.data.map((f) => {
-        console.log(f);
         return {
           value: f.id,
           label: `${f.siape} - ${f.name}`,
@@ -45,7 +44,6 @@ function LecturingRegisterPage() {
     }
     if (disciplines && disciplines.data && !disciplineLoaded) {
       let disciplineOptions = disciplines.data.map((f) => {
-        console.log(f);
         return {
           value: f.id,
           label: `${f.code} - ${f.name}`,

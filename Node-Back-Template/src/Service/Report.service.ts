@@ -181,6 +181,34 @@ export class ReportService {
         }    
     }
 
+    public async getByFeedbackId(request: Request, response: Response){
+        const sucessMessage: string = "Report encontrado com sucesso"
+        const errorMessage: string = "Erro ao encontrar report"
+        const notFoundMessage: string = "Report não encontrado"
+    
+        let result: GetReport[] = []
+    
+        try{
+            const feedbackId: string = request.params.feedbackId
+            
+            const toBeFoundReport: GetReport[] = await this.repositoryUoW.reportRepository.getByFeedbackId(feedbackId)
+            
+            if(!!toBeFoundReport.length){
+                result = [
+                  {
+                    ...toBeFoundReport[0]
+                  }
+                ]
+                return response.status(200).json(setApiResponse<GetReport[]>(result, sucessMessage))
+            }
+            
+            return response.status(404).json(setApiResponse<GetReport[]>(result, notFoundMessage))
+        }
+        catch(err: any){
+            return response.status(400).json(setApiResponse<GetReport[]>(result, errorMessage, err.message))
+        }    
+    }
+
     public async create(request: Request, response: Response){    
         const sucessMessage: string = "Report criado com sucesso"
         const errorMessage: string = "Erro ao criar report"

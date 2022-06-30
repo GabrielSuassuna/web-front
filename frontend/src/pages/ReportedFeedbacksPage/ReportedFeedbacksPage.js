@@ -7,7 +7,7 @@ import { apiRequest} from "../../utils/apiReq";
 import { SEARCH_RESULT_TYPES, REPORT_UPDATE_TYPES, REPORT_UPDATE_TRANSLATION, DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import URL from "../../config/api";
 
-const DUMMY_USER_ID = 11;
+const DUMMY_USER_ID = 10;
 
 const REPORT_STATUS_OPTIONS = [];
 for(let s in REPORT_UPDATE_TYPES){
