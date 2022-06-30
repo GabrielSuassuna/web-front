@@ -1,13 +1,12 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
-import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import url from "../../config/api";
+import { getAuthToken } from "../../utils/auth";
 
 function LecturingRegisterPage() {
   const navigate = useNavigate();
@@ -67,6 +66,10 @@ function LecturingRegisterPage() {
       disciplineId: discipline,
     };
 
+    let token = getAuthToken(navigate);
+    
+    if(!token) return;
+
     apiRequest(
       "POST",
       url + "/lecturing/",
@@ -81,7 +84,7 @@ function LecturingRegisterPage() {
         console.log(res.message);
         console.log(res.errorStack);
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
 

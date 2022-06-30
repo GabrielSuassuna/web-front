@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import { getAuthToken } from "../../utils/auth";
 
 function FAQRegisterPage() {
   const navigate = useNavigate();
@@ -25,22 +25,25 @@ function FAQRegisterPage() {
       answer: faqAnswerRef.current.value,
     };
 
-    apiRequest(
-      "POST",
-      url + "/faq/",
-      requestData,
-      (res) => {
-        alert("Registro de pergunta realizado!");
-        console.log(res);
-        navigate("/faq");
-      },
-      (res) => {
-        alert(res.message);
-        console.log(res.message);
-        console.log(res.errorStack);
-      },
-      DUMMY_AUTH_TOKEN
-    );
+    let token = getAuthToken(navigate);
+
+    if (token)
+      apiRequest(
+        "POST",
+        url + "/faq/",
+        requestData,
+        (res) => {
+          alert("Registro de pergunta realizado!");
+          console.log(res);
+          navigate("/faq");
+        },
+        (res) => {
+          alert(res.message);
+          console.log(res.message);
+          console.log(res.errorStack);
+        },
+        token
+      );
   };
 
   return (

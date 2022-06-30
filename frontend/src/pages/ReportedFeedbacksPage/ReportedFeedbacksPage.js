@@ -4,10 +4,10 @@ import SearchResult from "../../components/SearchResult/SearchResult";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import { apiRequest} from "../../utils/apiReq";
-import { SEARCH_RESULT_TYPES, REPORT_UPDATE_TYPES, REPORT_UPDATE_TRANSLATION, DUMMY_AUTH_TOKEN } from "../../utils/consts";
+import { SEARCH_RESULT_TYPES, REPORT_UPDATE_TYPES, REPORT_UPDATE_TRANSLATION, PAGE_LIMIT } from "../../utils/consts";
 import URL from "../../config/api";
-
-const DUMMY_USER_ID = 10;
+import { getAuthData } from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 const REPORT_STATUS_OPTIONS = [];
 for(let s in REPORT_UPDATE_TYPES){
@@ -18,6 +18,8 @@ for(let s in REPORT_UPDATE_TYPES){
 }
 
 function ReportedFeedbacksPage() {
+  const navigate = useNavigate();
+
   const reviewerNameRef = useRef(null);
   const reviewerSiapeRef = useRef(null);
   const feedbackTitleRef = useRef(null);
@@ -35,13 +37,17 @@ function ReportedFeedbacksPage() {
   }
 
   const handleSearch = (pageNumber) => {
-    let url = URL + `/report/professor/${DUMMY_USER_ID}?`;  
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
+
+    let url = URL + `/report/professor/${userId}?`;  
     url += `reviewerName=${checkRef(reviewerNameRef)}`;
     url += `&reviewerSiape=${checkRef(reviewerSiapeRef)}`;
     url += `&title=${checkRef(feedbackTitleRef)}`;
     url += `&status=${feedbackStatus}`;
     url += `&page=${pageNumber}`;
-    url += `&limit=10`;
+    url += `&limit=${PAGE_LIMIT}`;
     apiRequest(
       "GET",
       url,
@@ -57,7 +63,7 @@ function ReportedFeedbacksPage() {
         setResults([]);
         setHasNextPage( false );
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
   

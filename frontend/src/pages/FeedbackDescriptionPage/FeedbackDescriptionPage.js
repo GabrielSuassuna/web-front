@@ -4,18 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import fetcher, { auth_fetcher } from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import url from "../../config/api";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-
-const DUMMY_USER_ID = 10;
-const DUMMY_USER_TYPE = "PROFESSOR";
+import { getAuthData, getAuthToken } from "../../utils/auth";
+import { AUTH_LEVELS } from "../../utils/consts";
 
 function FeedbackDescriptionPage() {
   let [vote, setVote] = useState(null);
   let [isReporting, setIsReporting] = useState(false);
-  
+
   const reportUpdateRef = useRef(null);
 
   const query = useQuery();
@@ -26,7 +24,9 @@ function FeedbackDescriptionPage() {
     fetcher
   );
   let { data: hasVote, error: hasVoteError } = useSWR(
-    `${url}/hasVote?studentId=${DUMMY_USER_ID}&feedbackId=${query.get("id")}`,
+    `${url}/hasVote?studentId=${
+      getAuthData(navigate).id
+    }&feedbackId=${query.get("id")}`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -36,9 +36,10 @@ function FeedbackDescriptionPage() {
       refreshInterval: 300000,
     }
   );
+
   let { data: report, error: reportError } = useSWR(
     `${url}/report/feedback/${query.get("id")}`,
-    auth_fetcher(DUMMY_AUTH_TOKEN),
+    auth_fetcher(getAuthToken(navigate)),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -58,12 +59,16 @@ function FeedbackDescriptionPage() {
   }, [vote, setVote, hasVote]);
 
   const handleVote = (isUpvote) => {
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
+
     setVote(isUpvote ? "UPVOTE" : "DOWNVOTE");
 
     if (hasVote && hasVote.data[0]) {
       apiRequest(
         "PUT",
-        `${url}/hasVote/${query.get("id")}?studentId=${DUMMY_USER_ID}`,
+        `${url}/hasVote/${query.get("id")}?studentId=${userId}`,
         {
           isUpvote: isUpvote,
         },
@@ -75,7 +80,7 @@ function FeedbackDescriptionPage() {
           console.log(res.message);
           console.log(res.errorStack);
         },
-        DUMMY_AUTH_TOKEN
+        token
       );
     } else {
       apiRequest(
@@ -83,7 +88,7 @@ function FeedbackDescriptionPage() {
         `${url}/hasVote`,
         {
           feedbackId: query.get("id"),
-          studentId: DUMMY_USER_ID,
+          studentId: userId,
           isUpvote: isUpvote,
         },
         (res) => {
@@ -94,54 +99,60 @@ function FeedbackDescriptionPage() {
           console.log(res.message);
           console.log(res.errorStack);
         },
-        DUMMY_AUTH_TOKEN
+        token
       );
     }
   };
 
   const deleteFeedbackHandler = () => {
-    apiRequest(
-      "DELETE",
-      `${url}/feedback/${query.get("id")}`,
-      {},
-      (res) => {
-        alert("Feedback deltado com sucesso!");
-        navigate("/myFeedbacks");
-      },
-      (res) => {
-        alert(res.message);
-        console.log(res.message);
-        console.log(res.errorStack);
-      },
-      DUMMY_AUTH_TOKEN
-    );
+    let token = getAuthToken(navigate);
+
+    if (token)
+      apiRequest(
+        "DELETE",
+        `${url}/feedback/${query.get("id")}`,
+        {},
+        (res) => {
+          alert("Feedback deltado com sucesso!");
+          navigate("/myFeedbacks");
+        },
+        (res) => {
+          alert(res.message);
+          console.log(res.message);
+          console.log(res.errorStack);
+        },
+        token
+      );
   };
 
   const reportFeedbackHandler = () => {
-    if(!isReporting){
+    if (!isReporting) {
       setIsReporting(true);
       return;
     }
-    apiRequest(
-      "POST",
-      `${url}/report/`,
-      {
-        feedbackId: "28",
-        authorId: "10",
-        description: reportUpdateRef.current.value,
-        date: new Date()
-      },
-      (res) => {
-        alert("Feedback denunciado com sucesso!");
-        navigate("/revision/myReports");
-      },
-      (res) => {
-        alert(res.message);
-        console.log(res.message);
-        console.log(res.errorStack);
-      },
-      DUMMY_AUTH_TOKEN
-    );
+    let token = getAuthToken(navigate);
+
+    if (token)
+      apiRequest(
+        "POST",
+        `${url}/report/`,
+        {
+          feedbackId: "28",
+          authorId: "10",
+          description: reportUpdateRef.current.value,
+          date: new Date(),
+        },
+        (res) => {
+          alert("Feedback denunciado com sucesso!");
+          navigate("/revision/myReports");
+        },
+        (res) => {
+          alert(res.message);
+          console.log(res.message);
+          console.log(res.errorStack);
+        },
+        token
+      );
   };
 
   if (!hasVote) {
@@ -151,6 +162,8 @@ function FeedbackDescriptionPage() {
       </div>
     );
   }
+
+  let { id: userId, userType } = getAuthData(navigate);
 
   return (
     <div>
@@ -169,8 +182,8 @@ function FeedbackDescriptionPage() {
         {" "}
         -{" "}
       </button>
-      {feedback.data[0].student_id === DUMMY_USER_ID &&
-        DUMMY_USER_TYPE === "STUDENT" && (
+      {feedback && feedback.data && feedback.data[0].student_id === userId &&
+        userType === AUTH_LEVELS.STUDENT && (
           <IconButton
             content="Deletar Feedback"
             onClick={deleteFeedbackHandler}
@@ -189,17 +202,19 @@ function FeedbackDescriptionPage() {
           />
         </div>
       )}
-      {feedback.data[0].professor_id === DUMMY_USER_ID &&
-        DUMMY_USER_TYPE === "PROFESSOR" &&
-        report && report.data.length === 0 && (
+      {feedback && feedback.data && feedback.data[0].professor_id === userId &&
+        userType === AUTH_LEVELS.PROFESSOR &&
+        report &&
+        report.data.length === 0 && (
           <IconButton
-            content={isReporting?"Submeter Denúncia" : "Denunciar Feedback"}
+            content={isReporting ? "Submeter Denúncia" : "Denunciar Feedback"}
             onClick={reportFeedbackHandler}
           />
         )}
-      {feedback.data[0].professor_id === DUMMY_USER_ID &&
-        DUMMY_USER_TYPE === "PROFESSOR" &&
+      {feedback && feedback.data && feedback.data[0].professor_id === userId &&
+        userType === AUTH_LEVELS.PROFESSOR &&
         report &&
+        report.data &&
         report.data.length > 0 && (
           <IconButton
             content="Feedback Denunciado"

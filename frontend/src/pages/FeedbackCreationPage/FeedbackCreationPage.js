@@ -5,11 +5,11 @@ import fetcher from "../../utils/fetcher";
 import styles from "./FeedbackCreationPage.module.css";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import IconButton from "../../components/IconButton/IconButton";
-import { DUMMY_AUTH_TOKEN, DUMMY_STUDENT_ID } from "../../utils/consts";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { useNavigate } from "react-router-dom";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import { getAuthData } from "../../utils/auth";
 
 function FeedbackCreationPage() {
   const navigate = useNavigate();
@@ -64,9 +64,13 @@ function FeedbackCreationPage() {
         Number(feedbackRelationshipScoreRef.current.value)) /
       3;
 
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
+
     let requestData = {
       lecturingId: query.get("lecturingId"),
-      studentId: DUMMY_STUDENT_ID, // TODO: Remover isso
+      studentId: userId,
       title: feedbackTitleRef.current.value,
       description: feedbackDescriptionRef.current.value,
       period: feedbackPeriodRef.current.value,
@@ -94,7 +98,7 @@ function FeedbackCreationPage() {
         console.log(res.message);
         console.log(res.errorStack);
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
 

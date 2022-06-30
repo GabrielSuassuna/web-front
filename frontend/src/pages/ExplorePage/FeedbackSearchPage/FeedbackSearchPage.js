@@ -6,7 +6,7 @@ import ValidationInput from "../../../components/ValidationInput/ValidationInput
 import ValidationSelect from "../../../components/ValidationSelect/ValidationSelect";
 import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
-import { SEARCH_RESULT_TYPES } from "../../../utils/consts";
+import { PAGE_LIMIT, SEARCH_RESULT_TYPES } from "../../../utils/consts";
 import URL from "../../../config/api";
 
 function FeedbackSearchPage() {
@@ -61,7 +61,7 @@ function FeedbackSearchPage() {
     url += `&title=${feedbackTitleRef.current.value}`;
     url += `&period=${feedbackPeriodRef.current.value}`;
     url += `&page=${pageNumber}`;
-    url += `&limit=10`;
+    url += `&limit=${PAGE_LIMIT}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {

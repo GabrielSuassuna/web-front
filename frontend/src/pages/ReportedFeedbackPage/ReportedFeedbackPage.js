@@ -1,21 +1,16 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ReportLog from "../../components/ReportLog/ReportLog";
-import {
-  REPORT_UPDATE_TRANSLATION,
-  REPORT_UPDATE_TYPES,
-} from "../../utils/consts";
+import { REPORT_UPDATE_TRANSLATION } from "../../utils/consts";
 import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetcher, auth_fetcher } from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { DUMMY_STUDENT_ID, DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import url from "../../config/api";
-
-const DUMMY_USER_ID = 11;
+import { getAuthData, getAuthToken } from "../../utils/auth";
 
 function ReportedFeedbackPage() {
   const query = useQuery();
@@ -25,7 +20,7 @@ function ReportedFeedbackPage() {
 
   const { data: report, error: reportError } = useSWR(
     () => `${url}/report/${query.get("id")}`,
-    auth_fetcher(DUMMY_AUTH_TOKEN)
+    auth_fetcher(getAuthToken(navigate))
   );
 
   const { data: feedback, error: feedbackError } = useSWR(
@@ -70,6 +65,10 @@ function ReportedFeedbackPage() {
   }
 
   const handleReportUpdate = (newStatus) => {
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
+
     if (newStatus === "EXCLUDE") {
       apiRequest(
         "DELETE",
@@ -85,14 +84,14 @@ function ReportedFeedbackPage() {
           console.log(res.message);
           console.log(res.errorStack);
         },
-        DUMMY_AUTH_TOKEN
+        token
       );
     } else {
       apiRequest(
         "POST",
         `${url}/report/${report.data[0].id}`,
         {
-          authorId: DUMMY_USER_ID,
+          authorId: userId,
           status: newStatus,
           date: new Date(),
           title: REPORT_UPDATE_TRANSLATION[newStatus],
@@ -110,7 +109,7 @@ function ReportedFeedbackPage() {
           console.log(res.message);
           console.log(res.errorStack);
         },
-        DUMMY_AUTH_TOKEN
+        token
       );
     }
   };
@@ -125,26 +124,30 @@ function ReportedFeedbackPage() {
     />
   );
 
-  if (DUMMY_USER_ID === report.data[0].author_id) {
+  let { id: userId } = getAuthData(navigate);
+
+  if (!userId) return;
+
+  if (userId === report.data[0].author_id) {
     buttons.push(genButton("Excluir denúncia", "EXCLUDE"));
   }
   if (
-    DUMMY_USER_ID === report.data[0].author_id &&
+    userId === report.data[0].author_id &&
     report.data[0].status === "EM_REVISAO"
   ) {
     buttons.push(genButton("Reabrir denúncia", "ABERTO"));
   }
   if (
     report.data[0].status === "ABERTO" &&
-    DUMMY_USER_ID !== report.data[0].author_id &&
+    userId !== report.data[0].author_id &&
     !report.data[0].reviewer_id &&
-    (DUMMY_USER_ID === department.course_coordinator_id ||
-      DUMMY_USER_ID === department.department_head_id)
+    (userId === department.course_coordinator_id ||
+      userId === department.department_head_id)
   ) {
     buttons.push(genButton("Revisar Denúncia", "EM_REVISAO"));
   }
   if (
-    DUMMY_USER_ID === report.data[0].reviewer_id &&
+    userId === report.data[0].reviewer_id &&
     report.data[0].status === "EM_REVISAO"
   ) {
     buttons.push(genButton("Revogar denúncia", "REVOGADO"));

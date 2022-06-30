@@ -6,13 +6,13 @@ import ValidationSelect from "../../components/ValidationSelect/ValidationSelect
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import {
   validationStringChecker,
   validationPasswordChecker,
   validationPasswordConfirmChecker,
 } from "../../utils/validation";
 import url from "../../config/api";
+import { getAuthToken } from "../../utils/auth";
 
 function ProfessorRegisterPage() {
   const navigate = useNavigate();
@@ -71,6 +71,10 @@ function ProfessorRegisterPage() {
       lattesUrl: professorLattesUrlRef.current.value || "",
     };
 
+    let token = getAuthToken(navigate);
+
+    if (!token) return;
+
     apiRequest(
       "POST",
       url + "/professor/",
@@ -85,7 +89,7 @@ function ProfessorRegisterPage() {
         console.log(res.message);
         console.log(res.errorStack);
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
 

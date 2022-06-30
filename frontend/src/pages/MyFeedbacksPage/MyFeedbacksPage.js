@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import useSWR from "swr";
 import IconButton from "../../components/IconButton/IconButton";
 import SearchResult from "../../components/SearchResult/SearchResult";
@@ -6,14 +6,15 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import fetcher from "../../utils/fetcher";
 import { checkForErrors } from "../../utils/apiReq";
-import { SEARCH_RESULT_TYPES } from "../../utils/consts";
+import { PAGE_LIMIT, SEARCH_RESULT_TYPES } from "../../utils/consts";
 import URL from "../../config/api";
-
-// const DUMMY_USER_TYPE = "STUDENT";
-const DUMMY_USER_TYPE = "PROFESSOR";
-const DUMMY_USER_ID = 10;
+import { getAuthData } from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
+import { AUTH_LEVELS } from "../../utils/consts";
 
 function MyFeedbacksPage() {
+  const navigate = useNavigate();
+
   const professorNameRef = useRef(null);
   const professorSiapeRef = useRef(null);
   const disciplineNameRef = useRef(null);
@@ -44,11 +45,16 @@ function MyFeedbacksPage() {
   }
 
   const handleSearch = (pageNumber) => {
+    
+    let { id: userId, userType } = getAuthData(navigate);
+
+    if (!userId) return;
+
     let url =
       URL +
       "/feedback" +
-      (DUMMY_USER_TYPE === "STUDENT" ? "/student/" : "/professor/") +
-      `${DUMMY_USER_ID}?`;
+      (userType === AUTH_LEVELS.STUDENT ? "/student/" : "/professor/") +
+      `${userId}?`;
     url += `disciplineName=${checkRef(disciplineNameRef)}`;
     url += `&disciplineCode=${checkRef(disciplineCodeRef)}`;
     url += `&disciplineHours=${checkRef(disciplineHoursRef)}`;
@@ -58,7 +64,7 @@ function MyFeedbacksPage() {
     url += `&title=${checkRef(feedbackTitleRef)}`;
     url += `&period=${checkRef(feedbackPeriodRef)}`;
     url += `&page=${pageNumber}`;
-    url += `&limit=10`;
+    url += `&limit=${PAGE_LIMIT}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {

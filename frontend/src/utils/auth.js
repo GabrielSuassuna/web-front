@@ -25,4 +25,27 @@ const decodeToken = (token) => {
   }
 };
 
-export { tokenIsValid, decodeToken };
+const getAuthData = (navigate) => {
+  const token = localStorage.getItem("token");
+  if (!tokenIsValid(token)) {
+    alert("Sessão expirada, por favor, refaça seu login.");
+    navigate("/home");
+    return { token: null, id: null, userType: null, exp: null };
+  }
+  return {
+    token: token,
+    ...decodeToken(token),
+  };
+};
+
+const getAuthToken = (navigate) => {
+  const token = localStorage.getItem("token");
+  if (!tokenIsValid(token)) {
+    alert("Sessão expirada, por favor, refaça seu login.");
+    navigate("/home");
+    return;
+  }
+  return token;
+};
+
+export { tokenIsValid, decodeToken, getAuthToken, getAuthData };
