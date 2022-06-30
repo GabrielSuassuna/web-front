@@ -18,7 +18,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: Auth[] = []
+        let result: string[] = []
         
         try{
             const authCredentials: GetAuth = request.body
@@ -31,25 +31,22 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: 1000
+                        id: authCredentials.code,
+                        userType: 'ADMIN'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
-                result = [{
-                    token: token,
-                    user_id: authCredentials.code,
-                    user_type: 'ADMIN'
-                }]
-                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
+                result = [token]
+                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
         }
     }
 
@@ -57,7 +54,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: Auth[] = []
+        let result: string[] = []
 
         try{
             const authCredentials: GetAuth = request.body
@@ -71,25 +68,22 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: toBeFoundClient[0]
+                        id: toBeFoundClient[0],
+                        userType: 'PROFESSOR'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
-                result = [{
-                    token: token,
-                    user_id: toBeFoundClient[0],
-                    user_type: 'PROFESSOR'
-                }]
-                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
+                result = [token]
+                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
         }
     }
 
@@ -97,7 +91,7 @@ export class AuthService {
         const sucessMessage: string = "Login efetuado com sucesso"
         const errorMessage: string = "Login não autorizado"
     
-        let result: Auth[] = []
+        let result: string[] = []
 
         try{
             const authCredentials: GetAuth = request.body
@@ -110,25 +104,22 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: toBeFoundClient[0]
+                        id: toBeFoundClient[0],
+                        userType: 'STUDENT'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
-                result = [{
-                    token: token,
-                    user_id: toBeFoundClient[0],
-                    user_type: 'STUDENT'
-                }]
-                return response.status(200).json(setApiResponse<Auth[]>(result, sucessMessage))
+                result = [token]
+                return response.status(200).json(setApiResponse<string[]>(result, sucessMessage))
             }
             
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage))
         }
         catch(err: any){
-            return response.status(401).json(setApiResponse<Auth[]>(result, errorMessage, err.message))
+            return response.status(401).json(setApiResponse<string[]>(result, errorMessage, err.message))
         }
     }
 }

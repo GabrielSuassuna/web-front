@@ -5,6 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import {tokenIsValid, decodeToken} from "../../utils/auth";
 
 function ProfessorLoginPage() {
   const navigate = useNavigate();
@@ -28,10 +29,17 @@ function ProfessorLoginPage() {
       url + "/auth/professor",
       requestData,
       (res) => {
-        localStorage.setItem("token", res.data[0].token);
-        localStorage.setItem("userType", res.data[0].user_type);
-        localStorage.setItem("userId", res.data[0].user_id); 
-        navigate("/")
+        if(!tokenIsValid(res.data[0])){
+          console.log(res);
+          alert(res.message);
+          return;
+        }
+        const { id, userType, exp } = decodeToken(res.data[0])
+        localStorage.setItem("token", res.data[0]);
+        localStorage.setItem("userId", id);
+        localStorage.setItem("userType", userType);
+        localStorage.setItem("exp", exp);
+        navigate("/");
       },
       (res) => {
         console.log(res);
