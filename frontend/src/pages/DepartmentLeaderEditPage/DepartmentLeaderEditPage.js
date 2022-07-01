@@ -1,12 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
-import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
 import { getAuthData, getAuthToken } from "../../utils/auth";
 import { AUTH_LEVELS } from "../../utils/consts";
