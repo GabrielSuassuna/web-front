@@ -80,6 +80,107 @@ export const StudentPaths = {
         },
     },
     "/student/{studentId}": {
+        "get": {
+            "tags": ["Student"],
+            "summary": "Obtém os dados de um estudante especificado.",
+            "security": [{
+                "Bearer": []
+            }],
+            "parameters": [
+                {
+                    "name": "studentId",
+                    "in": "path",
+                    "description": "ID do estudante",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Estudante obtido com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "registration": "5",
+                                            "name": "Rodrigo Marques",
+                                        }
+                                    ],
+                                    "message" : "Estudante obtido com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetStudent"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Estudante não encontrado",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Estudante não encontrado"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter estudante",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter estudante"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                }
+            }
+        },
         "put":{
             "tags": ["Student"],
             "summary": "Atualiza os dados de um estudante especificado. Necessita de autenticação do estudante especificado.",

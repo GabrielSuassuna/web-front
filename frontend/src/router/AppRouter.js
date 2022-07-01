@@ -31,6 +31,7 @@ import AuthRedirect from "./AuthRedirect";
 import { AUTH_LEVELS } from "../utils/consts";
 import DepartmentEditPage from "../pages/DepartmentEditPage/DepartmentEditPage";
 import ProfessorEditPage from "../pages/ProfessorEditPage/ProfessorEditPage";
+import StudentEditPage from "../pages/StudentEditPage/StudentEditPage";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -170,6 +171,14 @@ function AppRouter() {
           element={
             <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
               <RegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/edit/student"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.STUDENT]}>
+              <StudentEditPage />
             </AuthRedirect>
           }
         />

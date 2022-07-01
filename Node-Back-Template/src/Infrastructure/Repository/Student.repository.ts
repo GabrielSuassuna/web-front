@@ -91,19 +91,25 @@ export class StudentRepository {
     
     public async update(student: PutStudent, studentId: string): Promise<GetStudent[]> {
         const SQL = `
-        UPDATE student
-        SET registration = $1,
-            name = $2,
-            password = $3
-        WHERE id = $4
-        RETURNING *
+            UPDATE student
+            SET registration = $1,
+                name = $2
+                ${
+                    student.password ? 
+                    ', password = $4 ':''
+                }
+            WHERE id = $3
+            RETURNING *
         `
         const values = [
             student.registration,
             student.name,
-            student.password,
             studentId
         ]
+
+        
+        if(student.password)
+            values.push(student.password)
         
         return await this.queryHandler.runQuery(SQL, values)
     }
