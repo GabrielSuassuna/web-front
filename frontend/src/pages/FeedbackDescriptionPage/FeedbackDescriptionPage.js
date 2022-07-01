@@ -13,6 +13,7 @@ import { AUTH_LEVELS } from "../../utils/consts";
 function FeedbackDescriptionPage() {
   let [vote, setVote] = useState(null);
   let [isReporting, setIsReporting] = useState(false);
+  let [hasVoteOnLoad, setHasVoteOnLoad] = useState(false);
 
   const reportUpdateRef = useRef(null);
 
@@ -53,8 +54,14 @@ function FeedbackDescriptionPage() {
 
   useEffect(() => {
     if (vote || !hasVote || !hasVote.data) return;
-    if (hasVote.data.length === 0) setVote("NONE");
-    else if (hasVote.data[0].is_upvote) setVote("UPVOTE");
+    
+    if (hasVote.data.length === 0) {
+      setVote("NONE");
+      return;
+    }
+    
+    setHasVoteOnLoad(true);
+    if (hasVote.data[0].is_upvote) setVote("UPVOTE");
     else setVote("DOWNVOTE");
   }, [vote, setVote, hasVote]);
 
@@ -62,10 +69,7 @@ function FeedbackDescriptionPage() {
     let { token, id: userId } = getAuthData(navigate);
 
     if (!token) return;
-
-    setVote(isUpvote ? "UPVOTE" : "DOWNVOTE");
-
-    if (hasVote && hasVote.data[0]) {
+    if (vote !== 'NONE') {
       apiRequest(
         "PUT",
         `${url}/hasVote/${query.get("id")}?studentId=${userId}`,
@@ -102,6 +106,7 @@ function FeedbackDescriptionPage() {
         token
       );
     }
+    setVote(isUpvote ? "UPVOTE" : "DOWNVOTE");
   };
 
   const deleteFeedbackHandler = () => {
@@ -166,6 +171,23 @@ function FeedbackDescriptionPage() {
 
   let { id: userId, userType } = getAuthData(navigate);
 
+  let upvotes = Number(feedback.data[0].upvote_count)
+  let downvotes = Number(feedback.data[0].downvote_count)
+
+  if(!hasVoteOnLoad && vote === 'UPVOTE')
+    upvotes += 1
+  if(!hasVoteOnLoad && vote === 'DOWNVOTE')
+    downvotes += 1
+
+  if(hasVoteOnLoad && hasVote.data[0].is_upvote && vote === 'DOWNVOTE'){
+    upvotes -= 1
+    downvotes += 1
+  }
+  if(hasVoteOnLoad && !hasVote.data[0].is_upvote && vote === 'UPVOTE'){
+    upvotes += 1
+    downvotes -= 1
+  }
+   
   return (
     <div>
       <h1>FeedbackDescriptionPage</h1>
@@ -175,13 +197,11 @@ function FeedbackDescriptionPage() {
       <hr />
       <p>{JSON.stringify(report)}</p>
       <button disabled={vote === "UPVOTE"} onClick={() => handleVote(true)}>
-        {" "}
-        +{" "}
+        {" "}UPVOTES: {upvotes} +{" "}
       </button>
       <hr />
       <button disabled={vote === "DOWNVOTE"} onClick={() => handleVote(false)}>
-        {" "}
-        -{" "}
+        {" "}DOWNVOTES: {downvotes} -{" "}
       </button>
       {feedback &&
         feedback.data &&
