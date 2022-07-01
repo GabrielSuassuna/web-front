@@ -98,23 +98,28 @@ export class ProfessorRepository {
         const SQL = `
             UPDATE professor
             SET siape = $1,
-                password = $2,
-                name = $3,
-                about = $4,
-                lattes_url = $5,
-                department_id = $6
-            WHERE id = $7 
+                name = $2,
+                about = $3,
+                lattes_url = $4,
+                department_id = $5
+                ${
+                    professor.password ? 
+                    ', password = $7 ':''
+                }
+            WHERE id = $6 
             RETURNING *
         `
-        const values = [
+        let values = [
           professor.siape,
-          professor.password,
           professor.name,
           professor.about,
           professor.lattesUrl,
           professor.departmentId,
           professorId,
         ]
+
+        if(professor.password)
+            values.push(professor.password)
         
         return await this.queryHandler.runQuery(SQL, values)
     }

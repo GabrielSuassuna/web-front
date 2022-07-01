@@ -30,6 +30,7 @@ import OpenReportsPage from "../pages/OpenReportsPage/OpenReportsPage";
 import AuthRedirect from "./AuthRedirect";
 import { AUTH_LEVELS } from "../utils/consts";
 import DepartmentEditPage from "../pages/DepartmentEditPage/DepartmentEditPage";
+import ProfessorEditPage from "../pages/ProfessorEditPage/ProfessorEditPage";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -137,6 +138,14 @@ function AppRouter() {
           element={
             <AuthRedirect levels={[AUTH_LEVELS.ADMIN, AUTH_LEVELS.HEAD]}>
               <ProfessorRegisterPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/edit/professor"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.PROFESSOR]}>
+              <ProfessorEditPage />
             </AuthRedirect>
           }
         />
