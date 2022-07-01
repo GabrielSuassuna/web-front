@@ -20,10 +20,13 @@ function FeedbackDescriptionPage() {
   const query = useQuery();
   const navigate = useNavigate();
 
+  let { id: userId, userType } = getAuthData(navigate);
+
   const { data: feedback, error: feedbackError } = useSWR(
     `${url}/feedback/${query.get("id")}`,
     fetcher
   );
+
   let { data: hasVote, error: hasVoteError } = useSWR(
     `${url}/hasVote?studentId=${
       getAuthData(navigate).id
@@ -53,23 +56,26 @@ function FeedbackDescriptionPage() {
   checkForErrors([feedbackError, hasVoteError]);
 
   useEffect(() => {
-    if (vote || !hasVote || !hasVote.data) return;
-    
+    if (vote || !hasVote || !hasVote.data || userType === AUTH_LEVELS.GUEST)
+      return;
+
     if (hasVote.data.length === 0) {
       setVote("NONE");
       return;
     }
-    
+
     setHasVoteOnLoad(true);
     if (hasVote.data[0].is_upvote) setVote("UPVOTE");
     else setVote("DOWNVOTE");
   }, [vote, setVote, hasVote]);
 
   const handleVote = (isUpvote) => {
+    if(userType === AUTH_LEVELS.GUEST) return;
+
     let { token, id: userId } = getAuthData(navigate);
 
     if (!token) return;
-    if (vote !== 'NONE') {
+    if (vote !== "NONE") {
       apiRequest(
         "PUT",
         `${url}/hasVote/${query.get("id")}?studentId=${userId}`,
@@ -110,6 +116,8 @@ function FeedbackDescriptionPage() {
   };
 
   const deleteFeedbackHandler = () => {
+    if(userType === AUTH_LEVELS.GUEST) return;
+    
     let token = getAuthToken(navigate);
 
     if (!token) return;
@@ -131,6 +139,8 @@ function FeedbackDescriptionPage() {
   };
 
   const reportFeedbackHandler = () => {
+    if(userType === AUTH_LEVELS.GUEST) return;
+    
     if (!isReporting) {
       setIsReporting(true);
       return;
@@ -169,25 +179,21 @@ function FeedbackDescriptionPage() {
     );
   }
 
-  let { id: userId, userType } = getAuthData(navigate);
+  let upvotes = Number(feedback.data[0].upvote_count);
+  let downvotes = Number(feedback.data[0].downvote_count);
 
-  let upvotes = Number(feedback.data[0].upvote_count)
-  let downvotes = Number(feedback.data[0].downvote_count)
+  if (!hasVoteOnLoad && vote === "UPVOTE") upvotes += 1;
+  if (!hasVoteOnLoad && vote === "DOWNVOTE") downvotes += 1;
 
-  if(!hasVoteOnLoad && vote === 'UPVOTE')
-    upvotes += 1
-  if(!hasVoteOnLoad && vote === 'DOWNVOTE')
-    downvotes += 1
-
-  if(hasVoteOnLoad && hasVote.data[0].is_upvote && vote === 'DOWNVOTE'){
-    upvotes -= 1
-    downvotes += 1
+  if (hasVoteOnLoad && hasVote.data[0].is_upvote && vote === "DOWNVOTE") {
+    upvotes -= 1;
+    downvotes += 1;
   }
-  if(hasVoteOnLoad && !hasVote.data[0].is_upvote && vote === 'UPVOTE'){
-    upvotes += 1
-    downvotes -= 1
+  if (hasVoteOnLoad && !hasVote.data[0].is_upvote && vote === "UPVOTE") {
+    upvotes += 1;
+    downvotes -= 1;
   }
-   
+
   return (
     <div>
       <h1>FeedbackDescriptionPage</h1>
@@ -196,14 +202,16 @@ function FeedbackDescriptionPage() {
       <p>{JSON.stringify(hasVote)}</p>
       <hr />
       <p>{JSON.stringify(report)}</p>
-      <button disabled={vote === "UPVOTE"} onClick={() => handleVote(true)}>
-        {" "}UPVOTES: {upvotes} +{" "}
+      <button disabled={vote === "UPVOTE" || userType === AUTH_LEVELS.GUEST} onClick={() => handleVote(true)}>
+        {" "}
+        UPVOTES: {upvotes} +{" "}
       </button>
       <hr />
-      <button disabled={vote === "DOWNVOTE"} onClick={() => handleVote(false)}>
-        {" "}DOWNVOTES: {downvotes} -{" "}
+      <button disabled={vote === "DOWNVOTE" || userType === AUTH_LEVELS.GUEST} onClick={() => handleVote(false)}>
+        {" "}
+        DOWNVOTES: {downvotes} -{" "}
       </button>
-      {feedback &&
+      { feedback &&
         feedback.data &&
         feedback.data[0].student_id === userId &&
         userType === AUTH_LEVELS.STUDENT && (
@@ -225,7 +233,7 @@ function FeedbackDescriptionPage() {
           />
         </div>
       )}
-      {feedback &&
+      { feedback &&
         feedback.data &&
         feedback.data[0].professor_id === userId &&
         userType === AUTH_LEVELS.PROFESSOR &&

@@ -1,4 +1,5 @@
 import jwtDecode from "jwt-decode";
+import { AUTH_LEVELS } from "./consts";
 
 const tokenIsValid = (token) => {
   try {
@@ -27,6 +28,8 @@ const decodeToken = (token) => {
 
 const getAuthData = (navigate) => {
   const token = localStorage.getItem("token");
+  if(!token)
+    return { token: null, id: null, userType: AUTH_LEVELS.GUEST, exp: null };
   if (!tokenIsValid(token)) {
     alert("Sessão expirada, por favor, refaça seu login.");
     navigate("/home");
@@ -40,6 +43,8 @@ const getAuthData = (navigate) => {
 
 const getAuthToken = (navigate) => {
   const token = localStorage.getItem("token");
+  if(!token)
+    return { token: null, id: null, userType: AUTH_LEVELS.GUEST, exp: null };
   if (!tokenIsValid(token)) {
     alert("Sessão expirada, por favor, refaça seu login.");
     navigate("/home");
