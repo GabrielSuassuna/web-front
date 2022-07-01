@@ -13,7 +13,7 @@ function DepartmentRegisterPage() {
   const departmentNameRef = useRef(null);
   const departmentDescriptionRef = useRef(null);
 
-  const registerFAQHandler = async () => {
+  const registerDepartmentHandler = async () => {
     if (
       !validationStringChecker(departmentNameRef).isValid ||
       !validationStringChecker(departmentDescriptionRef).isValid
@@ -36,7 +36,7 @@ function DepartmentRegisterPage() {
       (res) => {
         alert("Registro de departamento realizado!");
         console.log(res);
-        navigate("/faq");
+        navigate("/");
       },
       (res) => {
         alert(res.message);
@@ -83,7 +83,7 @@ function DepartmentRegisterPage() {
             "mt-2",
           ]}
           content="Registrar Departamento"
-          onClick={registerFAQHandler}
+          onClick={registerDepartmentHandler}
         />
       </div>
     </div>

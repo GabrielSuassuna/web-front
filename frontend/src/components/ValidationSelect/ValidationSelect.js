@@ -26,6 +26,7 @@ function ValidationSelect(props) {
         name={props.name}
         id="validationSelect"
         ref={props.selectRef}
+        value={props.value}
         disabled={props.disabled}
         onChange={(e) => props.valueHandler(e.target.value)}
       >
