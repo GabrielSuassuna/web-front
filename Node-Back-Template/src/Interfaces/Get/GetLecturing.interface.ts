@@ -1,3 +1,5 @@
+import { GetTag } from "./GetTag.interface";
+
 export interface GetLecturing {
   id: string,
   discipline_id?: string,
@@ -8,5 +10,6 @@ export interface GetLecturing {
   professor_siape: string,
   professor_department: string,
   feedback_count: number,
-  average_score: number
+  average_score: number,
+  tags?: GetTag[]
 }
