@@ -9,6 +9,8 @@ import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { getAuthData, getAuthToken } from "../../utils/auth";
 import { AUTH_LEVELS } from "../../utils/consts";
+import star_filled from "./stars_filled.png";
+import star_unfilled from "./stars_unfilled.png";
 
 function FeedbackDescriptionPage() {
   let [vote, setVote] = useState(null);
@@ -70,7 +72,7 @@ function FeedbackDescriptionPage() {
   }, [vote, setVote, hasVote]);
 
   const handleVote = (isUpvote) => {
-    if(userType === AUTH_LEVELS.GUEST) return;
+    if (userType === AUTH_LEVELS.GUEST) return;
 
     let { token, id: userId } = getAuthData(navigate);
 
@@ -116,8 +118,8 @@ function FeedbackDescriptionPage() {
   };
 
   const deleteFeedbackHandler = () => {
-    if(userType === AUTH_LEVELS.GUEST) return;
-    
+    if (userType === AUTH_LEVELS.GUEST) return;
+
     let token = getAuthToken(navigate);
 
     if (!token) return;
@@ -139,8 +141,8 @@ function FeedbackDescriptionPage() {
   };
 
   const reportFeedbackHandler = () => {
-    if(userType === AUTH_LEVELS.GUEST) return;
-    
+    if (userType === AUTH_LEVELS.GUEST) return;
+
     if (!isReporting) {
       setIsReporting(true);
       return;
@@ -171,6 +173,29 @@ function FeedbackDescriptionPage() {
     );
   };
 
+  const genStarStyle = (grade) => {
+    if (!feedback || !feedback.data) return [{}, {}];
+
+    let width = 250;
+    let height = width / 5;
+    let filledClipPath = (width / 10) * grade;
+    return [
+      {
+        display: "inline",
+        width: `${width}px`,
+        height: `${height}px`,
+        clipPath: `inset(0px ${width - filledClipPath}px 0px 0px)`,
+      },
+      {
+        display: "inline",
+        width: `${width}px`,
+        height: `${height}px`,
+        clipPath: `inset(0px 0px 0px ${filledClipPath}px)`,
+        marginLeft: `-${width}px`,
+      },
+    ];
+  };
+
   if (!hasVote) {
     return (
       <div>
@@ -194,6 +219,19 @@ function FeedbackDescriptionPage() {
     downvotes -= 1;
   }
 
+  let [genScoreUnfillStyle, genScoreFillStyle] = genStarStyle(
+    feedback.data[0].general_score
+  );
+  let [clarityScoreUnfillStyle, clarityScoreFillStyle] = genStarStyle(
+    feedback.data[0].clarity_score
+  );
+  let [assiduityScoreUnfillStyle, assiduityScoreFillStyle] = genStarStyle(
+    feedback.data[0].assiduity_score
+  );
+  let [relationshipScoreUnfillStyle, relationshipScoreFillStyle] = genStarStyle(
+    feedback.data[0].relationship_score
+  );
+
   return (
     <div>
       <h1>FeedbackDescriptionPage</h1>
@@ -202,16 +240,50 @@ function FeedbackDescriptionPage() {
       <p>{JSON.stringify(hasVote)}</p>
       <hr />
       <p>{JSON.stringify(report)}</p>
-      <button disabled={vote === "UPVOTE" || userType === AUTH_LEVELS.GUEST} onClick={() => handleVote(true)}>
+      <img
+        style={genScoreUnfillStyle}
+        src={star_filled}
+        alt={feedback.data[0].general_score}
+      />
+      <img style={genScoreFillStyle} src={star_unfilled} alt="" />
+      <hr/>
+      <img
+        style={clarityScoreUnfillStyle}
+        src={star_filled}
+        alt={feedback.data[0].clarity_score}
+      />
+      <img style={clarityScoreFillStyle} src={star_unfilled} alt="" />
+      <hr/>
+      <img
+        style={assiduityScoreUnfillStyle}
+        src={star_filled}
+        alt={feedback.data[0].clarity_score}
+      />
+      <img style={assiduityScoreFillStyle} src={star_unfilled} alt="" />
+      <hr/>
+      <img
+        style={relationshipScoreUnfillStyle}
+        src={star_filled}
+        alt={feedback.data[0].relationship_score}
+      />
+      <img style={relationshipScoreFillStyle} src={star_unfilled} alt="" />
+      <hr/>
+      <button
+        disabled={vote === "UPVOTE" || userType === AUTH_LEVELS.GUEST}
+        onClick={() => handleVote(true)}
+      >
         {" "}
         UPVOTES: {upvotes} +{" "}
       </button>
       <hr />
-      <button disabled={vote === "DOWNVOTE" || userType === AUTH_LEVELS.GUEST} onClick={() => handleVote(false)}>
+      <button
+        disabled={vote === "DOWNVOTE" || userType === AUTH_LEVELS.GUEST}
+        onClick={() => handleVote(false)}
+      >
         {" "}
         DOWNVOTES: {downvotes} -{" "}
       </button>
-      { feedback &&
+      {feedback &&
         feedback.data &&
         feedback.data[0].student_id === userId &&
         userType === AUTH_LEVELS.STUDENT && (
@@ -233,7 +305,7 @@ function FeedbackDescriptionPage() {
           />
         </div>
       )}
-      { feedback &&
+      {feedback &&
         feedback.data &&
         feedback.data[0].professor_id === userId &&
         userType === AUTH_LEVELS.PROFESSOR &&
