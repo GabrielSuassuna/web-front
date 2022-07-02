@@ -10,17 +10,19 @@ import { useNavigate } from "react-router-dom";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
 import { getAuthData } from "../../utils/auth";
+import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
+import { genPeriodOptions } from "../../utils/periods";
 
 function FeedbackCreationPage() {
   const navigate = useNavigate();
 
   const feedbackTitleRef = useRef(null);
   const feedbackDescriptionRef = useRef(null);
-  const feedbackPeriodRef = useRef(null);
   const feedbackAssiduityScoreRef = useRef(null);
   const feedbackClarityScoreRef = useRef(null);
   const feedbackRelationshipScoreRef = useRef(null);
 
+  const [feedbackPeriod, setFeedbackPeriod] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
   let query = useQuery();
@@ -54,7 +56,7 @@ function FeedbackCreationPage() {
     if (
       !validationStringChecker(feedbackTitleRef).isValid ||
       !validationStringChecker(feedbackDescriptionRef).isValid ||
-      !validationStringChecker(feedbackPeriodRef).isValid
+      feedbackPeriod.length === 0
     )
       return alert("Dados inválidos!");
 
@@ -73,7 +75,7 @@ function FeedbackCreationPage() {
       studentId: userId,
       title: feedbackTitleRef.current.value,
       description: feedbackDescriptionRef.current.value,
-      period: feedbackPeriodRef.current.value,
+      period: feedbackPeriod,
       generalScore: generalScore,
       assiduityScore: feedbackAssiduityScoreRef.current.value,
       clarityScore: feedbackClarityScoreRef.current.value,
@@ -129,12 +131,13 @@ function FeedbackCreationPage() {
         inputClasses={[styles.inputQuestion]}
         isTextArea
       />
-      <ValidationInput
-        label="Período quando cursou a disciplina"
-        hint="ex: 2020.1"
-        type="text"
-        inputRef={feedbackPeriodRef}
-        validation={validationStringChecker}
+      <ValidationSelect
+        name="periodSel"
+        label="Período que cursou a disciplina"
+        hint="Selecione um período"
+        value={feedbackPeriod}
+        valueHandler={setFeedbackPeriod}
+        options={ genPeriodOptions() }
       />
       <ValidationInput
         label="Nota: Assiduidade do Professor"

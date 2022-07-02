@@ -8,6 +8,7 @@ import fetcher from "../../../utils/fetcher";
 import { checkForErrors } from "../../../utils/apiReq";
 import { PAGE_LIMIT, SEARCH_RESULT_TYPES } from "../../../utils/consts";
 import URL from "../../../config/api";
+import { genPeriodOptions } from "../../../utils/periods";
 
 function FeedbackSearchPage() {
   const professorNameRef = useRef(null);
@@ -16,8 +17,8 @@ function FeedbackSearchPage() {
   const disciplineCodeRef = useRef(null);
   const disciplineHoursRef = useRef(null);
   const feedbackTitleRef = useRef(null);
-  const feedbackPeriodRef = useRef(null);
 
+  const [feedbackPeriod, setFeedbackPeriod] = useState("");
   const [professorDepartment, setProfessorDepartment] = useState(null);
   const [deptOptions, setDeptOptions] = useState([]);
   const [results, setResults] = useState([]);
@@ -59,9 +60,10 @@ function FeedbackSearchPage() {
     url += `&professorName=${professorNameRef.current.value}`;
     url += `&professorDepartmentId=${professorDepartment}`;
     url += `&title=${feedbackTitleRef.current.value}`;
-    url += `&period=${feedbackPeriodRef.current.value}`;
+    url += `&period=${feedbackPeriod}`;
     url += `&page=${pageNumber}`;
     url += `&limit=${PAGE_LIMIT}`;
+    console.log(url)
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -130,12 +132,13 @@ function FeedbackSearchPage() {
         name="title"
         inputRef={feedbackTitleRef}
       />
-      <ValidationInput
+      <ValidationSelect
+        name="periodSel"
         label="Período que cursou a disciplina"
-        hint="ex: 2020.1"
-        type="text"
-        name="period"
-        inputRef={feedbackPeriodRef}
+        hint="Selecione um período"
+        value={feedbackPeriod}
+        valueHandler={setFeedbackPeriod}
+        options={genPeriodOptions()}
       />
       <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
       {results.length > 0 && (
