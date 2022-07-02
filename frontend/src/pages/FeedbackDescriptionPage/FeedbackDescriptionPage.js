@@ -240,6 +240,8 @@ function FeedbackDescriptionPage() {
       <p>{JSON.stringify(hasVote)}</p>
       <hr />
       <p>{JSON.stringify(report)}</p>
+      <hr />
+      <h1>Placar Geral</h1>
       <img
         style={genScoreUnfillStyle}
         src={star_filled}
@@ -247,6 +249,7 @@ function FeedbackDescriptionPage() {
       />
       <img style={genScoreFillStyle} src={star_unfilled} alt="" />
       <hr/>
+      <h1>Clareza das Aulas</h1>
       <img
         style={clarityScoreUnfillStyle}
         src={star_filled}
@@ -254,6 +257,7 @@ function FeedbackDescriptionPage() {
       />
       <img style={clarityScoreFillStyle} src={star_unfilled} alt="" />
       <hr/>
+      <h1>Assiduidade do Docente</h1>
       <img
         style={assiduityScoreUnfillStyle}
         src={star_filled}
@@ -261,6 +265,7 @@ function FeedbackDescriptionPage() {
       />
       <img style={assiduityScoreFillStyle} src={star_unfilled} alt="" />
       <hr/>
+      <h1>Relacionamento com a Turma</h1>
       <img
         style={relationshipScoreUnfillStyle}
         src={star_filled}

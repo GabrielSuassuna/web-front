@@ -12,16 +12,20 @@ import url from "../../config/api";
 import { getAuthData } from "../../utils/auth";
 import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
 import { genPeriodOptions } from "../../utils/periods";
+import HalfStar from "../../components/HalfStar/HalfStar";
 
 function FeedbackCreationPage() {
   const navigate = useNavigate();
 
   const feedbackTitleRef = useRef(null);
   const feedbackDescriptionRef = useRef(null);
-  const feedbackAssiduityScoreRef = useRef(null);
-  const feedbackClarityScoreRef = useRef(null);
-  const feedbackRelationshipScoreRef = useRef(null);
 
+  const [assiduityScore, setAssiduityGrade] = useState(0);
+  const [previewAssiduityScore, setPreviewAssiduityGrade] = useState(0);
+  const [clarityScore, setClarityScore] = useState(0);
+  const [previewClarityScore, setPreviewClarityGrade] = useState(0);
+  const [relationshipScore, setRelationshipScore] = useState(0);
+  const [previewRelationshipScore, setPreviewRelationshipGrade] = useState(0);
   const [feedbackPeriod, setFeedbackPeriod] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -60,11 +64,7 @@ function FeedbackCreationPage() {
     )
       return alert("Dados inválidos!");
 
-    let generalScore =
-      (Number(feedbackAssiduityScoreRef.current.value) +
-        Number(feedbackClarityScoreRef.current.value) +
-        Number(feedbackRelationshipScoreRef.current.value)) /
-      3;
+    let generalScore = (assiduityScore + clarityScore + relationshipScore) / 3;
 
     let { token, id: userId } = getAuthData(navigate);
 
@@ -77,9 +77,9 @@ function FeedbackCreationPage() {
       description: feedbackDescriptionRef.current.value,
       period: feedbackPeriod,
       generalScore: generalScore,
-      assiduityScore: feedbackAssiduityScoreRef.current.value,
-      clarityScore: feedbackClarityScoreRef.current.value,
-      relationshipScore: feedbackRelationshipScoreRef.current.value,
+      assiduityScore: assiduityScore,
+      clarityScore: clarityScore,
+      relationshipScore: relationshipScore,
       date: new Date(),
       tags: selectedTags.map((t) => t.id),
     };
@@ -112,6 +112,8 @@ function FeedbackCreationPage() {
     );
   }
 
+  const possibleGrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <div>
       <h1>FeedbackCreationPage</h1>
@@ -137,32 +139,57 @@ function FeedbackCreationPage() {
         hint="Selecione um período"
         value={feedbackPeriod}
         valueHandler={setFeedbackPeriod}
-        options={ genPeriodOptions() }
+        options={genPeriodOptions()}
       />
-      <ValidationInput
-        label="Nota: Assiduidade do Professor"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackAssiduityScoreRef}
-      />
-      <ValidationInput
-        label="Nota: Clareza das aulas"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackClarityScoreRef}
-      />
-      <ValidationInput
-        label="Nota: Relacionamento do professor com a turma"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackRelationshipScoreRef}
-      />
+      <div>
+        <h1>Nota: Assiduidade do Professor</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={assiduityScore}
+              minGrade={g}
+              gradeHandler={setAssiduityGrade}
+              previewGrade={previewAssiduityScore}
+              previewGradeHandler={setPreviewAssiduityGrade}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h1>Nota: Clareza das aulas</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={clarityScore}
+              minGrade={g}
+              gradeHandler={setClarityScore}
+              previewGrade={previewClarityScore}
+              previewGradeHandler={setPreviewClarityGrade}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h1>Nota: Relacionamento com a turma</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={relationshipScore}
+              minGrade={g}
+              gradeHandler={setRelationshipScore}
+              previewGrade={previewRelationshipScore}
+              previewGradeHandler={setPreviewRelationshipGrade}
+            />
+          ))}
+        </div>
+      </div>
       <h2>Selectione até 3 características:</h2>
       {tags.data.map((t) => {
         return (

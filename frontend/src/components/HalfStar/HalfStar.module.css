@@ -1,0 +1,6 @@
+.halfStar {
+  display: inline;
+  cursor: pointer;
+  width: 25px;
+  height: 50px;
+}
