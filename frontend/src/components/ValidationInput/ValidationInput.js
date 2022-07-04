@@ -64,7 +64,9 @@ function ValidationInput(props) {
     );
   }
   return (
-    <div className="w-full flex flex-col">
+    <div
+      className={["w-full flex flex-col", ...(props.className || [])].join(" ")}
+    >
       {props.label ? (
         <label
           className="font-bold text-blue-700 mb-2"

@@ -59,7 +59,7 @@ function ProfessorSearchPage() {
           alert("Nenhum resultado encontrado");
         }
         setResults(res.data);
-        setHasNextPage( res.message.split("last=")[1] === "FALSE" );
+        setHasNextPage(res.message.split("last=")[1] === "FALSE");
       });
   };
 
@@ -69,54 +69,69 @@ function ProfessorSearchPage() {
   };
 
   return (
-    <div>
-      <ValidationInput
-        label="Nome do Professor"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
-        type="text"
-        name="name"
-        inputRef={professorNameRef}
-      />
-      <ValidationInput
-        label="SIAPE do Professor"
-        hint="ex: 12345"
-        type="text"
-        name="siape"
-        inputRef={professorSiapeRef}
-      />
-      <ValidationSelect
-        name="dept"
-        label="Departamento"
-        hint="Selecione um departamento"
-        value={professorDepartment}
-        valueHandler={setProfessorDepartment}
-        options={deptOptions}
-      />
-      <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
+    <div className="flex flex-col">
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          className={["mr-4"]}
+          label="Nome do Professor"
+          hint="ex: Fulano de Tal Cicrano de Oliveira"
+          type="text"
+          name="name"
+          inputRef={professorNameRef}
+        />
+        <ValidationInput
+          label="SIAPE do Professor"
+          hint="ex: 12345"
+          type="text"
+          name="siape"
+          inputRef={professorSiapeRef}
+        />
+      </div>
+
+      <div className="flex max-w-2xl items-end mb-8">
+        <ValidationSelect
+          className={["mr-4"]}
+          name="dept"
+          label="Departamento"
+          hint="Selecione um departamento"
+          value={professorDepartment}
+          valueHandler={setProfessorDepartment}
+          options={deptOptions}
+        />
+        <div className="mb-1">
+          <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap">
+        {results.map((result, i) => (
+          <div key={i} className="mr-4">
+            <SearchResult
+              type={SEARCH_RESULT_TYPES.PROFESSOR}
+              resultData={result}
+            />{" "}
+            <br />{" "}
+          </div>
+        ))}
+      </div>
+
       {results.length > 0 && (
-        <>
+        <div className="flex items-center ml-auto">
           <IconButton
             content="<"
+            className={["mr-4"]}
             disabled={pageIndex === 1}
             onClick={() => handlePageChange(pageIndex - 1)}
           />
-          <h1>{pageIndex}</h1>
+          <h1 className="text-center">{pageIndex}</h1>
           <IconButton
             content=">"
+            className={["ml-4"]}
             disabled={!hasNextPage}
             onClick={() => handlePageChange(pageIndex + 1)}
           />
-        </>
-      )}
-      {results.map((result, i) => (
-        <div key={i}>
-          <SearchResult
-            type={SEARCH_RESULT_TYPES.PROFESSOR}
-            resultData={result}
-          />{" "}
-          <br />{" "}
         </div>
-      ))}
+      )}
     </div>
   );
 }

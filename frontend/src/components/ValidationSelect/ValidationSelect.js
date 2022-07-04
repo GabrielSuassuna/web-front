@@ -14,7 +14,7 @@ import styles from "./ValidationSelect.module.css";
  */
 function ValidationSelect(props) {
   return (
-    <div className="flex flex-col">
+    <div className={["flex flex-col", ...(props.className || [])].join(" ")}>
       <label
         className="font-bold text-blue-700 mb-2"
         htmlFor="validationSelect"

@@ -16,13 +16,10 @@ function IconButton(props) {
     <button
       onClick={props.onClick}
       disabled={props.disabled}
-      className={
-        props.classes
-          ? `${props.classes.join(" ")} ${!props.disabled && styles.iconButton}`
-          : !props.disabled
-          ? styles.iconButton
-          : styles.disabledButton
-      }
+      className={[
+        "whitespace-nowrap inline-flex items-center justify-center px-4 py-auto h-8 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700",
+        ...(props.className || []),
+      ].join(" ")}
     >
       {props.icon && (
         <img src={props.icon} alt={props.alt} className={"w-10 mr-10"} />

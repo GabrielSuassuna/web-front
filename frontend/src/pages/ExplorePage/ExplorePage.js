@@ -11,7 +11,7 @@ const SELECT_OPTIONS = [
   { value: SEARCH_RESULT_TYPES.PROFESSOR, label: "Professor" },
   { value: SEARCH_RESULT_TYPES.DISCIPLINE, label: "Disciplina" },
   { value: SEARCH_RESULT_TYPES.LECTURING, label: "Disciplina Ministrada" },
-  { value: SEARCH_RESULT_TYPES.FEEDBACK, label: "Feedback" }
+  { value: SEARCH_RESULT_TYPES.FEEDBACK, label: "Feedback" },
 ];
 
 function ExplorePage() {
@@ -19,30 +19,33 @@ function ExplorePage() {
 
   let renderedExplorePage;
 
-  switch(searchType){
+  switch (searchType) {
     case SEARCH_RESULT_TYPES.PROFESSOR:
-      renderedExplorePage = <ProfessorSearchPage />
+      renderedExplorePage = <ProfessorSearchPage />;
       break;
     case SEARCH_RESULT_TYPES.DISCIPLINE:
-      renderedExplorePage = <DisciplineSearchPage />
+      renderedExplorePage = <DisciplineSearchPage />;
       break;
     case SEARCH_RESULT_TYPES.LECTURING:
-      renderedExplorePage = <LecturingSearchPage />
+      renderedExplorePage = <LecturingSearchPage />;
       break;
     case SEARCH_RESULT_TYPES.FEEDBACK:
-      renderedExplorePage = <FeedbackSearchPage />
+      renderedExplorePage = <FeedbackSearchPage />;
       break;
     default:
       renderedExplorePage = <></>;
       break;
   }
 
-  
   return (
-    <div>
-      <h1>ExplorePage</h1>
+    <div className="px-8 py-6">
+      <h1 className="text-4xl font-bold mb-4">Explorar</h1>
+      <h3 className="text-lg mb-8">
+        Consulte feedbacks, professores, disciplinas, e muito mais...
+      </h3>
 
       <ValidationSelect
+        className={["max-w-md mb-4"]}
         name="Select_Tipo"
         label="Entidade a ser pesquisada"
         hint="Selecione uma entidade"
