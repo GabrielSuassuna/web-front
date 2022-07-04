@@ -30,11 +30,12 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: 1000
+                        id: authCredentials.code,
+                        userType: 'ADMIN'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
                 result = [token]
@@ -66,11 +67,12 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: toBeFoundClient[0]
+                        id: toBeFoundClient[0],
+                        userType: 'PROFESSOR'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
                 result = [token]
@@ -101,11 +103,12 @@ export class AuthService {
                 
                 const token = sign(
                     {
-                        id: toBeFoundClient[0]
+                        id: toBeFoundClient[0],
+                        userType: 'STUDENT'
                     }, 
                     secret, 
                     {
-                        expiresIn: 3000
+                        expiresIn: "1h"
                     }
                 )
                 result = [token]

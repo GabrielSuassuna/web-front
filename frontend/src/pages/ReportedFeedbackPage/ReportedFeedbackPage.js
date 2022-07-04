@@ -1,76 +1,28 @@
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import ReportLog from "../../components/ReportLog/ReportLog";
-import { REPORT_UPDATE_TYPES } from "../../utils/consts";
+import { REPORT_UPDATE_TRANSLATION } from "../../utils/consts";
 import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import IconButton from "../../components/IconButton/IconButton";
+import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import { useEffect } from "react";
 import { fetcher, auth_fetcher } from "../../utils/fetcher";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
-import { DUMMY_STUDENT_ID, DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import url from "../../config/api";
- 
-
-const DUMMY_UPDATES = [
-  {
-    type: REPORT_UPDATE_TYPES.REMOVED,
-    date: "15/05/2022",
-    siape: "123456",
-    professor: "Yuri Lenon",
-    description:
-      "Perdão, não tinha prestado atenção. De fato esse feedback contén discurso de ódio ao professor. Removendo feedback imediatamente.",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.REOPENED,
-    date: "13/05/2022",
-    siape: "123321",
-    professor: "Fernando Trinta",
-    description:
-      "Peço que reveja isso por favor. Atenção a última frase do feedback.",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.REVOKED,
-    date: "12/05/2022",
-    siape: "123456",
-    professor: "Yuri Lenon",
-    description:
-      "Não consegui ver o discurso de ódio. Estarei revogando a denúncia.",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.ACCEPTED,
-    date: "12/05/2022",
-    siape: "123456",
-    professor: "Yuri Lenon",
-    description: "Perdão a demora. Irei revisar o feedback",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.CANCELLED,
-    date: "11/05/2022",
-    siape: "123455",
-    professor: "Pablo Mayckon",
-    description: "Infelizmente meu mandato se encerrou. Não poderei revisar.",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.ACCEPTED,
-    date: "10/05/2022",
-    siape: "123455",
-    professor: "Pablo Mayckon",
-  },
-  {
-    type: REPORT_UPDATE_TYPES.OPENED,
-    date: "09/05/2022",
-    siape: "123321",
-    professor: "Fernando Trinta",
-    description: "O usuário fez menções ofensivas a mim com discurso de ódio",
-  },
-];
+import { getAuthData, getAuthToken } from "../../utils/auth";
 
 function ReportedFeedbackPage() {
-  let query = useQuery();
+  const query = useQuery();
+  const navigate = useNavigate();
+
+  const reportUpdateRef = useRef(null);
 
   const { data: report, error: reportError } = useSWR(
     () => `${url}/report/${query.get("id")}`,
-    auth_fetcher(DUMMY_AUTH_TOKEN)
+    auth_fetcher(getAuthToken(navigate))
   );
-  
+
   const { data: feedback, error: feedbackError } = useSWR(
     () => `${url}/feedback/${report.data[0].feedback_id}`,
     fetcher
@@ -81,24 +33,30 @@ function ReportedFeedbackPage() {
     fetcher
   );
 
+  const { data: department, error: departmentError } = useSWR(
+    () => `${url}/department/${author.data[0].department_id}`,
+    fetcher
+  );
+
   const { data: reviewer } = useSWR(
     () => `${url}/professor/${report.data[0].reviewer_id}`,
-    fetcher, {
+    fetcher,
+    {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
       refreshWhenOffline: false,
       refreshWhenHidden: false,
-      refreshInterval: 300000
+      refreshInterval: 300000,
     }
   );
 
-  checkForErrors([reportError, feedbackError, authorError]);
-  
-  useEffect(()=>{
-    console.log(report);
-  }, [report])
+  checkForErrors([reportError, feedbackError, authorError, departmentError]);
 
-  if(!report || !feedback){
+  useEffect(() => {
+    console.log(report);
+  }, [report]);
+
+  if (!report || !feedback || !author || !department) {
     return (
       <div>
         <h1>Carregando...</h1>
@@ -106,17 +64,109 @@ function ReportedFeedbackPage() {
     );
   }
 
+  const handleReportUpdate = (newStatus) => {
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
+
+    if (newStatus === "EXCLUDE") {
+      apiRequest(
+        "DELETE",
+        `${url}/report/${report.data[0].id}`,
+        {},
+        (res) => {
+          alert("Denúncia deletada!");
+          console.log(res);
+          navigate(`/revision/myReports`);
+        },
+        (res) => {
+          alert(res.message);
+          console.log(res.message);
+          console.log(res.errorStack);
+        },
+        token
+      );
+    } else {
+      apiRequest(
+        "POST",
+        `${url}/report/${report.data[0].id}`,
+        {
+          authorId: userId,
+          status: newStatus,
+          date: new Date(),
+          title: REPORT_UPDATE_TRANSLATION[newStatus],
+          description: reportUpdateRef.current.value
+            ? reportUpdateRef.current.value
+            : REPORT_UPDATE_TRANSLATION[newStatus],
+        },
+        (res) => {
+          alert("Denúncia atualizada!");
+          console.log(res);
+          navigate(`/revision/report?id=${query.get("id")}`);
+        },
+        (res) => {
+          alert(res.message);
+          console.log(res.message);
+          console.log(res.errorStack);
+        },
+        token
+      );
+    }
+  };
+
+  let buttons = [];
+
+  const genButton = (content, status) => (
+    <IconButton
+      key={status}
+      content={content}
+      onClick={() => handleReportUpdate(status)}
+    />
+  );
+
+  let { id: userId } = getAuthData(navigate);
+
+  if (!userId) return;
+
+  if (userId === report.data[0].author_id) {
+    buttons.push(genButton("Excluir denúncia", "EXCLUDE"));
+  }
+  if (
+    userId === report.data[0].author_id &&
+    report.data[0].status === "EM_REVISAO"
+  ) {
+    buttons.push(genButton("Reabrir denúncia", "ABERTO"));
+  }
+  if (
+    report.data[0].status === "ABERTO" &&
+    userId !== report.data[0].author_id &&
+    !report.data[0].reviewer_id &&
+    (userId === department.course_coordinator_id ||
+      userId === department.department_head_id)
+  ) {
+    buttons.push(genButton("Revisar Denúncia", "EM_REVISAO"));
+  }
+  if (
+    userId === report.data[0].reviewer_id &&
+    report.data[0].status === "EM_REVISAO"
+  ) {
+    buttons.push(genButton("Revogar denúncia", "REVOGADO"));
+    buttons.push(genButton("Excluir feedback", "REMOVIDO"));
+  }
+
   return (
     <div>
       <h1>ReportedFeedbackPage</h1>
       {JSON.stringify(report)}
-      <hr/>
+      <hr />
       {JSON.stringify(feedback)}
-      <hr/>
+      <hr />
       {JSON.stringify(author)}
-      <hr/>
+      <hr />
+      {JSON.stringify(department)}
+      <hr />
       {JSON.stringify(reviewer)}
-      <hr/>
+      <hr />
       {report.data[0].logs.map((u, i) => (
         <ReportLog
           key={i}
@@ -127,6 +177,21 @@ function ReportedFeedbackPage() {
           description={u.description}
         />
       ))}
+
+      {buttons.length > 1 && (
+        <div className="w-full mt-2">
+          <ValidationInput
+            label="Atualizar denúncia"
+            hint="Descreva brevemente o motivo da atualização."
+            type="text"
+            name="description"
+            inputRef={reportUpdateRef}
+            inputClasses={["h-40"]}
+            isTextArea
+          />
+        </div>
+      )}
+      {buttons}
     </div>
   );
 }

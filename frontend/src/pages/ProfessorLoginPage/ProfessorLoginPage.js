@@ -5,6 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import { tokenIsValid, decodeToken } from "../../utils/auth";
 
 function ProfessorLoginPage() {
   const navigate = useNavigate();
@@ -27,7 +28,19 @@ function ProfessorLoginPage() {
       "POST",
       url + "/auth/professor",
       requestData,
-      (_) => navigate("/"),
+      (res) => {
+        if (!tokenIsValid(res.data[0])) {
+          console.log(res);
+          alert(res.message);
+          return;
+        }
+        const { id, userType, exp } = decodeToken(res.data[0]);
+        localStorage.setItem("token", res.data[0]);
+        localStorage.setItem("userId", id);
+        localStorage.setItem("userType", userType);
+        localStorage.setItem("exp", exp);
+        navigate("/");
+      },
       (res) => {
         console.log(res);
         alert(res.message);
@@ -43,18 +56,16 @@ function ProfessorLoginPage() {
           className="w-40 mb-10 mt-5"
           src={require("../../assets/img/logo.png")}
         />
-        <p>Login Professor</p>
         <ValidationInput
-          label="SIAPE"
-          hint="ex: 123456"
+          hint="SIAPE"
           type="text"
           name="login"
           inputRef={siapeRef}
           validation={validationStringChecker}
         />
         <ValidationInput
-          label="Senha"
-          hint="*****"
+          showLabel={true}
+          hint="Senha"
           type="password"
           name="answer"
           inputRef={passwordRef}
@@ -70,7 +81,7 @@ function ProfessorLoginPage() {
             "rounded",
             "mt-2",
           ]}
-          content="Fazer Login"
+          content="ENTRAR"
           onClick={loginHandler}
         />
       </div>

@@ -65,6 +65,28 @@ export class DepartmentService {
             return response.status(400).json(setApiResponse<GetDepartment[]>(result, errorMessage, err.message))
         }    
     }
+    
+    public async getByProfessorLeader(request: Request, response: Response){
+        const successMessage: string = "Departamento encontrado com sucesso"
+        const errorMessage: string = "Erro ao encontrar departamento"
+        const notFoundMessage: string = "Departamento não encontrado"
+    
+        let result: GetDepartment[] = []
+    
+        try{
+            const professorId: string = request.params.professorId
+            
+            result = await this.repositoryUoW.departmentRepository.getByProfessorLeader(professorId)
+            
+            if(!result.length){
+                return response.status(404).json(setApiResponse<GetDepartment[]>(result, notFoundMessage))
+            }
+            return response.status(200).json(setApiResponse<GetDepartment[]>(result, successMessage))
+        }
+        catch(err: any){
+            return response.status(400).json(setApiResponse<GetDepartment[]>(result, errorMessage, err.message))
+        }    
+    }
 
     public async getDepartmentCoordinator(request: Request, response: Response){
         const sucessMessage: string = "Coordenador do departamento encontrado com sucesso"

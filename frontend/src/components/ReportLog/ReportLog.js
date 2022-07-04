@@ -1,6 +1,5 @@
 import {
   REPORT_UPDATE_FILLER,
-  REPORT_UPDATE_TRANSLATION,
 } from "../../utils/consts";
 import styles from "./ReportLog.module.css";
 

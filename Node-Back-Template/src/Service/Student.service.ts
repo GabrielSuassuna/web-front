@@ -36,6 +36,29 @@ export class StudentService {
             return response.status(400).json(setApiResponse<GetStudent[]>(result, errorMessage, err.message))
         }
     }
+
+    public async getById(request: Request, response: Response){
+        const successMessage: string = "Estudante encontrado com sucesso"
+        const errorMessage: string = "Erro ao encontrar estudante"
+        const notFoundMessage: string = "Estudante não encontrado"
+    
+        let result: GetStudent[] = []
+    
+        try{
+            const studentId: string = request.params.studentId
+            
+            result = await this.repositoryUoW.studentRepository.getById(studentId)
+            
+            if(!result.length){
+                return response.status(404).json(setApiResponse<GetStudent[]>(result, notFoundMessage))
+            }
+
+            return response.status(200).json(setApiResponse<GetStudent[]>(result, successMessage))
+        }
+        catch(err: any){
+            return response.status(400).json(setApiResponse<GetStudent[]>(result, errorMessage, err.message))
+        }
+    }
     
     public async update(request: Request, response: Response){    
         const sucessMessage: string = "Estudante atualizado com sucesso"

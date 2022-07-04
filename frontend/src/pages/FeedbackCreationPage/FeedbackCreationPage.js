@@ -5,22 +5,28 @@ import fetcher from "../../utils/fetcher";
 import styles from "./FeedbackCreationPage.module.css";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import IconButton from "../../components/IconButton/IconButton";
-import { DUMMY_AUTH_TOKEN, DUMMY_STUDENT_ID } from "../../utils/consts";
 import { apiRequest, checkForErrors } from "../../utils/apiReq";
 import { useNavigate } from "react-router-dom";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import { getAuthData } from "../../utils/auth";
+import ValidationSelect from "../../components/ValidationSelect/ValidationSelect";
+import { genPeriodOptions } from "../../utils/periods";
+import HalfStar from "../../components/HalfStar/HalfStar";
 
 function FeedbackCreationPage() {
   const navigate = useNavigate();
 
   const feedbackTitleRef = useRef(null);
   const feedbackDescriptionRef = useRef(null);
-  const feedbackPeriodRef = useRef(null);
-  const feedbackAssiduityScoreRef = useRef(null);
-  const feedbackClarityScoreRef = useRef(null);
-  const feedbackRelationshipScoreRef = useRef(null);
 
+  const [assiduityScore, setAssiduityGrade] = useState(0);
+  const [previewAssiduityScore, setPreviewAssiduityGrade] = useState(0);
+  const [clarityScore, setClarityScore] = useState(0);
+  const [previewClarityScore, setPreviewClarityGrade] = useState(0);
+  const [relationshipScore, setRelationshipScore] = useState(0);
+  const [previewRelationshipScore, setPreviewRelationshipGrade] = useState(0);
+  const [feedbackPeriod, setFeedbackPeriod] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
   let query = useQuery();
@@ -54,26 +60,26 @@ function FeedbackCreationPage() {
     if (
       !validationStringChecker(feedbackTitleRef).isValid ||
       !validationStringChecker(feedbackDescriptionRef).isValid ||
-      !validationStringChecker(feedbackPeriodRef).isValid
+      feedbackPeriod.length === 0
     )
       return alert("Dados inválidos!");
 
-    let generalScore =
-      (Number(feedbackAssiduityScoreRef.current.value) +
-        Number(feedbackClarityScoreRef.current.value) +
-        Number(feedbackRelationshipScoreRef.current.value)) /
-      3;
+    let generalScore = (assiduityScore + clarityScore + relationshipScore) / 3;
+
+    let { token, id: userId } = getAuthData(navigate);
+
+    if (!token) return;
 
     let requestData = {
       lecturingId: query.get("lecturingId"),
-      studentId: DUMMY_STUDENT_ID, // TODO: Remover isso
+      studentId: userId,
       title: feedbackTitleRef.current.value,
       description: feedbackDescriptionRef.current.value,
-      period: feedbackPeriodRef.current.value,
+      period: feedbackPeriod,
       generalScore: generalScore,
-      assiduityScore: feedbackAssiduityScoreRef.current.value,
-      clarityScore: feedbackClarityScoreRef.current.value,
-      relationshipScore: feedbackRelationshipScoreRef.current.value,
+      assiduityScore: assiduityScore,
+      clarityScore: clarityScore,
+      relationshipScore: relationshipScore,
       date: new Date(),
       tags: selectedTags.map((t) => t.id),
     };
@@ -94,7 +100,7 @@ function FeedbackCreationPage() {
         console.log(res.message);
         console.log(res.errorStack);
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
 
@@ -105,6 +111,8 @@ function FeedbackCreationPage() {
       </div>
     );
   }
+
+  const possibleGrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div>
@@ -125,37 +133,63 @@ function FeedbackCreationPage() {
         inputClasses={[styles.inputQuestion]}
         isTextArea
       />
-      <ValidationInput
-        label="Período quando cursou a disciplina"
-        hint="ex: 2020.1"
-        type="text"
-        inputRef={feedbackPeriodRef}
-        validation={validationStringChecker}
+      <ValidationSelect
+        name="periodSel"
+        label="Período que cursou a disciplina"
+        hint="Selecione um período"
+        value={feedbackPeriod}
+        valueHandler={setFeedbackPeriod}
+        options={genPeriodOptions()}
       />
-      <ValidationInput
-        label="Nota: Assiduidade do Professor"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackAssiduityScoreRef}
-      />
-      <ValidationInput
-        label="Nota: Clareza das aulas"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackClarityScoreRef}
-      />
-      <ValidationInput
-        label="Nota: Relacionamento do professor com a turma"
-        hint="ex: 10"
-        type="number"
-        min={0}
-        max={10}
-        inputRef={feedbackRelationshipScoreRef}
-      />
+      <div>
+        <h1>Nota: Assiduidade do Professor</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={assiduityScore}
+              minGrade={g}
+              gradeHandler={setAssiduityGrade}
+              previewGrade={previewAssiduityScore}
+              previewGradeHandler={setPreviewAssiduityGrade}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h1>Nota: Clareza das aulas</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={clarityScore}
+              minGrade={g}
+              gradeHandler={setClarityScore}
+              previewGrade={previewClarityScore}
+              previewGradeHandler={setPreviewClarityGrade}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h1>Nota: Relacionamento com a turma</h1>
+        <div>
+          {possibleGrades.map((g) => (
+            <HalfStar
+              key={`halfStarKey${g}`}
+              left={g % 2 !== 0}
+              grade={relationshipScore}
+              minGrade={g}
+              gradeHandler={setRelationshipScore}
+              previewGrade={previewRelationshipScore}
+              previewGradeHandler={setPreviewRelationshipGrade}
+            />
+          ))}
+        </div>
+      </div>
       <h2>Selectione até 3 características:</h2>
       {tags.data.map((t) => {
         return (

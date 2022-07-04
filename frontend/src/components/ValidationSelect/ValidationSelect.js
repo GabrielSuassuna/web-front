@@ -14,7 +14,7 @@ import styles from "./ValidationSelect.module.css";
  */
 function ValidationSelect(props) {
   return (
-    <div className="flex flex-col">
+    <div className={["flex flex-col", ...(props.className || [])].join(" ")}>
       <label
         className="font-bold text-blue-700 mb-2"
         htmlFor="validationSelect"
@@ -26,6 +26,7 @@ function ValidationSelect(props) {
         name={props.name}
         id="validationSelect"
         ref={props.selectRef}
+        value={props.value}
         disabled={props.disabled}
         onChange={(e) => props.valueHandler(e.target.value)}
       >

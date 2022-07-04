@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
-import { DUMMY_AUTH_TOKEN } from "../../utils/consts";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
 import url from "../../config/api";
+import { getAuthToken } from "../../utils/auth";
 
 function TagRegisterPage() {
   const navigate = useNavigate();
@@ -25,6 +25,10 @@ function TagRegisterPage() {
       description: tagDescriptionRef.current.value,
     };
 
+    let token = getAuthToken(navigate);
+
+    if (!token) return;
+
     apiRequest(
       "POST",
       url + "/tag/",
@@ -39,7 +43,7 @@ function TagRegisterPage() {
         console.log(res.message);
         console.log(res.errorStack);
       },
-      DUMMY_AUTH_TOKEN
+      token
     );
   };
 

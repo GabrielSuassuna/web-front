@@ -49,4 +49,34 @@ const validationPasswordConfirmChecker = (inputRef, passwordInputRef) => {
   return { isValid: false, message: "As senhas não coincidem" };
 };
 
-export {validationStringChecker, validationNumberChecker, validationPasswordChecker, validationPasswordConfirmChecker}
+const validationOptionalPasswordChecker = (inputRef) => {
+  if (inputRef.current.value.length !== 0 && inputRef.current.value.length < 6)
+    return {
+      isValid: false,
+      message: "Sua senha não pode ter menos de 6 caracteres",
+    };
+  return { isValid: true };
+};
+
+const validationOptionalPasswordConfirmChecker = (
+  inputRef,
+  passwordInputRef
+) => {
+  if (
+    inputRef &&
+    inputRef.current &&
+    inputRef.current.value === passwordInputRef.current.value
+  ) {
+    return { isValid: true };
+  }
+  return { isValid: false, message: "As senhas não coincidem" };
+};
+
+export {
+  validationStringChecker,
+  validationNumberChecker,
+  validationPasswordChecker,
+  validationPasswordConfirmChecker,
+  validationOptionalPasswordChecker,
+  validationOptionalPasswordConfirmChecker
+};

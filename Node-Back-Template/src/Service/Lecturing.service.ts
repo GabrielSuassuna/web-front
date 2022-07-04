@@ -5,6 +5,7 @@ import { LecturingFilter } from '../Interfaces/Filters/LecturingFilter.interface
 import { GetLecturing } from '../Interfaces/Get/GetLecturing.interface'
 import { PostLecturing } from '../Interfaces/Post/PostLecturing.interface'
 import { LecturingInterface } from '../Interfaces/Lecturing.interface'
+import { GetTag } from '../Interfaces/Get/GetTag.interface'
 
 export class LecturingService {
     private repositoryUoW: RepositoryUoW
@@ -67,11 +68,18 @@ export class LecturingService {
             
             const toBeFoundLecturing: GetLecturing[] = await this.repositoryUoW.lecturingRepository.getById(lecturingId)
             
-            if(!!toBeFoundLecturing.length){
-                return response.status(200).json(setApiResponse<GetLecturing[]>(toBeFoundLecturing, sucessMessage))
+            if(!toBeFoundLecturing.length){
+                return response.status(404).json(setApiResponse<GetLecturing[]>(result, notFoundMessage))   
             }
+
+            const topTags: GetTag[] = await this.repositoryUoW.tagRepository.getTopLecturingTags(lecturingId);
             
-            return response.status(404).json(setApiResponse<GetLecturing[]>(result, notFoundMessage))
+            result = [{
+                ...toBeFoundLecturing[0],
+                tags: topTags
+            }];
+
+            return response.status(200).json(setApiResponse<GetLecturing[]>(result, sucessMessage))
         }
         catch(err: any){
             return response.status(400).json(setApiResponse<GetLecturing[]>(result, errorMessage, err.message))

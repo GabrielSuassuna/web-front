@@ -337,6 +337,164 @@ export const ReportPaths = {
             }
         },
     },
+    "/report/feedback/{feedbackId}": {
+        "get": {
+            "tags": ["Report"],
+            "summary": "Obtém a denúncia feita a um feedback especicifado. Necessita de autenticação de docente.",
+            "security": [{
+                "Bearer": []
+            }],
+            "parameters": [
+                {
+                    "name": "feedbackId",
+                    "in": "path",
+                    "description": "ID do feedback denunciado",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK - Denúncias obtidas com sucesso",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": 11,
+                                            "feedback_id": 25,
+                                            "author_id": 11,
+                                            "status": "ABERTO",
+                                            "author_name": "Professor 2",
+                                            "author_siape": "123123133",
+                                            "reviewer_name": "Professor 2",
+                                            "reviewer_siape": "123123123"
+                                        },
+                                    ],
+                                    "message" : "Denúncias obtidas com sucesso"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Report"
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "404": {
+                    "description": "Not found - Denúncias não encontradas",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Denúncias não encontradas"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "400": {
+                    "description": "Bad request - Erro ao obter denúncias",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Erro ao obter denúncias"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "401": {
+                    "description": "Unauthorized - Problema ao decodificar o token",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Problema ao decodificar o token"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+                "500": {
+                    "description": "Internal Server Error - Falha ao processar a requisição",
+                    "content": {
+                        "application/json": {
+                            "required": ["data", "message"],
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "data": [],
+                                    "message" : "Falha ao processar a requisição"
+                                }, 
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                        }
+                                    },    
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                },
+                            }
+                        }
+                    },
+                },
+            }
+        },
+    },
     "/report/professor/{professorId}": {
         "get": {
             "tags": ["Report"],

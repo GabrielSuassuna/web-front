@@ -17,6 +17,7 @@ export class ReportController {
     public getRouter() {
         this.router.get(`${this.prefixPath}`, authHandler,(request: Request, response: Response) => this.getAllOpen(request, response));
         this.router.post(`${this.prefixPath}`, authHandler,(request: Request, response: Response) => this.create(request, response));
+        this.router.get(`${this.prefixPath}/feedback/:feedbackId`, authHandler,(request: Request, response: Response) => this.getByFeedbackId(request, response));
         this.router.get(`${this.prefixPath}/professor/:professorId`, authHandler,(request: Request, response: Response) => this.getByAuthor(request, response));
         this.router.get(`${this.prefixPath}/reviewer/:professorId`, authHandler,(request: Request, response: Response) => this.getByReviewer(request, response));
         this.router.get(`${this.prefixPath}/:reportId`, authHandler,(request: Request, response: Response) => this.getById(request, response));
@@ -40,6 +41,10 @@ export class ReportController {
 
     private getById(request: Request, response: Response){
         this.serviceUoW.reportService.getById(request, response)
+    }
+
+    private getByFeedbackId(request: Request, response: Response){
+        this.serviceUoW.reportService.getByFeedbackId(request, response)
     }
 
     private create(request: Request, response: Response){

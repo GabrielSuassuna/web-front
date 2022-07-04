@@ -46,6 +46,22 @@ export class DepartmentRepository {
 
     }
 
+    public async getByProfessorLeader(professorId: string): Promise<GetDepartment[]>{
+        const SQL = `
+            SELECT  
+                d.*
+            FROM department as d 
+            WHERE d.course_coordinator_id = $1 OR d.department_head_id = $1 
+        `
+
+        const values = [
+            professorId
+        ]
+        
+        return await this.queryHandler.runQuery(SQL, values)
+
+    }
+
     public async getDepartmentCoordinator(departmentId: string): Promise<GetDepartment[]>{
         const SQL = `
             SELECT p.*

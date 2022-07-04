@@ -104,7 +104,18 @@ export class ReportRepository {
         ]
         
         return await this.queryHandler.runQuery(SQL, values)
+    }
 
+    public async getByFeedbackId(feedbackId: string): Promise<GetReport[]>{
+        const SQL = `
+            SELECT * FROM report WHERE feedback_id = $1
+        `
+
+        const values = [
+            feedbackId
+        ]
+
+        return await this.queryHandler.runQuery(SQL, values)
     }
 
     public async create(feedbackId: string, authorId: string): Promise<string> {

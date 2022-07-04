@@ -15,11 +15,16 @@ export class StudentController {
     }
  
     public getRouter() {
+        this.router.get(`${this.prefixPath}/:studentId`, authHandler,(request: Request, response: Response) => this.getById(request, response));
         this.router.post(`${this.prefixPath}`, (request: Request, response: Response) => this.create(request, response));
         this.router.put(`${this.prefixPath}/:studentId`, authHandler,(request: Request, response: Response) => this.update(request, response));
         this.router.delete(`${this.prefixPath}/:studentId`, authHandler,(request: Request, response: Response) => this.delete(request, response));
         
         return this.router
+    }
+
+    private getById(request: Request, response: Response){
+        this.serviceUoW.studentService.getById(request, response)
     }
 
     private create(request: Request, response: Response){
