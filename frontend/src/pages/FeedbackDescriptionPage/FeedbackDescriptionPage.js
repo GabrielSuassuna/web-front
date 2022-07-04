@@ -155,8 +155,8 @@ function FeedbackDescriptionPage() {
       "POST",
       `${url}/report/`,
       {
-        feedbackId: "28",
-        authorId: "10",
+        feedbackId: query.get("id"),
+        authorId: userId,
         description: reportUpdateRef.current.value,
         date: new Date(),
       },

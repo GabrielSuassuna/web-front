@@ -9,7 +9,10 @@ import URL from "../../config/api";
 import { getAuthData } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 
-const REPORT_STATUS_OPTIONS = [];
+const REPORT_STATUS_OPTIONS = [{
+  label: "Todos os estados",
+  value: ""
+}];
 for(let s in REPORT_UPDATE_TYPES){
   REPORT_STATUS_OPTIONS.push({
     label: REPORT_UPDATE_TRANSLATION[s],

@@ -15,9 +15,13 @@ const REPORT_UPDATE_TYPES = {
 
 const REPORT_UPDATE_TRANSLATION = {
   OPEN: 'Feedback denunciado', // Denúncia aberta
+  ABERTO: 'Feedback denunciado', // Denúncia aberta
   IN_REVISION: 'Feedback em revisão', // Denúncia aceita para revisão
+  EM_REVISAO: 'Feedback em revisão', // Denúncia aceita para revisão
   REMOVED: 'Feedback removido da plataforma', // Denúncia removida da plataforma
+  REMOVIDO: 'Feedback removido da plataforma', // Denúncia removida da plataforma
   REVOKED: 'Denúncia revogada pelo revisor', // Denúncia revogada pelo revisor
+  REVOGADO: 'Denúncia revogada pelo revisor', // Denúncia revogada pelo revisor
 }
 
 const REPORT_UPDATE_FILLER = {

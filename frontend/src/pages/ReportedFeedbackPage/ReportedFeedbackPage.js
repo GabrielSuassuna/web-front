@@ -87,8 +87,17 @@ function ReportedFeedbackPage() {
         token
       );
     } else {
+      console.log({
+        authorId: userId,
+        status: newStatus,
+        date: new Date(),
+        title: REPORT_UPDATE_TRANSLATION[newStatus],
+        description: reportUpdateRef.current.value
+          ? reportUpdateRef.current.value
+          : REPORT_UPDATE_TRANSLATION[newStatus],
+      })
       apiRequest(
-        "POST",
+        "PUT",
         `${url}/report/${report.data[0].id}`,
         {
           authorId: userId,
@@ -115,6 +124,7 @@ function ReportedFeedbackPage() {
   };
 
   let buttons = [];
+  let showPrompt = false;
 
   const genButton = (content, status) => (
     <IconButton
@@ -133,23 +143,26 @@ function ReportedFeedbackPage() {
   }
   if (
     userId === report.data[0].author_id &&
-    report.data[0].status === "EM_REVISAO"
+    report.data[0].status === "REVOGADO"
   ) {
+    showPrompt = true;
     buttons.push(genButton("Reabrir denúncia", "ABERTO"));
   }
   if (
     report.data[0].status === "ABERTO" &&
     userId !== report.data[0].author_id &&
     !report.data[0].reviewer_id &&
-    (userId === department.course_coordinator_id ||
-      userId === department.department_head_id)
+    (userId === department.data[0].course_coordinator_id ||
+      userId === department.data[0].department_head_id)
   ) {
+    showPrompt = true;
     buttons.push(genButton("Revisar Denúncia", "EM_REVISAO"));
   }
   if (
     userId === report.data[0].reviewer_id &&
     report.data[0].status === "EM_REVISAO"
   ) {
+    showPrompt = true;
     buttons.push(genButton("Revogar denúncia", "REVOGADO"));
     buttons.push(genButton("Excluir feedback", "REMOVIDO"));
   }
@@ -178,7 +191,7 @@ function ReportedFeedbackPage() {
         />
       ))}
 
-      {buttons.length > 1 && (
+      {showPrompt && (
         <div className="w-full mt-2">
           <ValidationInput
             label="Atualizar denúncia"
