@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import url from "../../config/api";
@@ -86,6 +86,22 @@ function LoginPage() {
             onClick={loginHandler}
           />
         </div>
+        <Link to="/login/professor">
+          <IconButton
+            className={[
+              "bg-indigo-700",
+              "text-white",
+              "py-2",
+              "text-xs",
+              "fixed",
+              "bottom-0",
+              "right-0",
+              "rounded-none",
+              "rounded-tl",
+            ]}
+            content="ENTRAR COMO PROFESSOR"
+          />
+        </Link>
       </div>
     </div>
   );
