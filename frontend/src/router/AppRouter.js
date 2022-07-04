@@ -36,6 +36,7 @@ import DisciplineEditPage from "../pages/DisciplineEditPage/DisciplineEditPage";
 import TagEditPage from "../pages/TagEditPage/TagEditPage";
 import DepartmentLeaderEditPage from "../pages/DepartmentLeaderEditPage/DepartmentLeaderEditPage";
 import LoginAdmin from "../pages/LoginAdmin/LoginAdmin";
+import ReviewedFeedbacks from "../pages/ReviewedFeedbacksPage/ReviewedFeedbacksPage";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -260,6 +261,14 @@ function AppRouter() {
           element={
             <AuthRedirect levels={[AUTH_LEVELS.HEAD]}>
               <OpenReportsPage />
+            </AuthRedirect>
+          }
+        />
+        <Route
+          path="/revision/reviewed"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.HEAD]}>
+              <ReviewedFeedbacks />
             </AuthRedirect>
           }
         />
