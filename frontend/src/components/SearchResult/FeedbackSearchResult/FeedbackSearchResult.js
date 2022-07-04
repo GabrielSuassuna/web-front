@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 import Tag from "../../Tag/Tag";
 /**
  * Componente que representa um resultado de uma pesquisa de Disciplina Ministrada.
@@ -23,35 +24,72 @@ import Tag from "../../Tag/Tag";
  */
 function FeedbackSearchResult(props) {
   return (
-    <div>
-      <Link
-        to={`/description/department?id=${props.resultData.professor_department_id}`}
-      >
-        <small>{props.resultData.professor_department}</small>
-      </Link>
+    <div className="p-4 drop-shadow-lg bg-white rounded">
       <Link to={`/description/feedback?id=${props.resultData.id}`}>
-        <h1>{props.resultData.title}</h1>
+        <h1 className="font-semibold mt-2">{props.resultData.title}</h1>
       </Link>
-      <Link to={`/description/discipline?id=${props.resultData.discipline_id}`}>
+
+      {/* <Link to={`/description/discipline?id=${props.resultData.discipline_id}`}>
         <h1>
           {props.resultData.discipline_code} -{" "}
-          {props.resultData.discipline_name}{" "}
-          ({props.resultData.discipline_hours})h
+          {props.resultData.discipline_name} (
+          {props.resultData.discipline_hours})h
         </h1>
-      </Link>
-      <Link to={`/description/professor?id=${props.resultData.professor_id}`}>
-        <h1>
-          {props.resultData.professor_siape} - {props.resultData.professor_name}
-        </h1>
-      </Link>
+      </Link> */}
+      <div className="flex items-center mt-2">
+        <Link to={`/description/professor?id=${props.resultData.professor_id}`}>
+          <h1 className="mr-2">{props.resultData.professor_name}</h1>
+        </Link>
+        <Link
+          to={`/description/department?id=${props.resultData.professor_department_id}`}
+        >
+          <small className="bg-orange-200 text-yellow-700 p-1 rounded mb-4">
+            {props.resultData.professor_department}
+          </small>
+        </Link>
+      </div>
+
+      <div className="mt-2">
+        <StarRatings
+          rating={props.resultData.general_score / 2}
+          starRatedColor="rgb(251, 203, 24)"
+          starDimension="32px"
+        />
+      </div>
+
       <Link to={`/description/feedback?id=${props.resultData.id}`}>
-        {props.resultData.tags.map((t, i) => (
-          <Tag key={i} id={i} title={t} />
-        ))}
-        <h2>Período: {props.resultData.period}</h2>{" "}
-        <h2>Classificação: {props.resultData.general_score}</h2>{" "}
-        <h2>Upvotes: {props.resultData.upvote_count}</h2>
-        <h2>Downvotes: {props.resultData.downvote_count}</h2>
+        <div className="flex mt-2 flex-wrap">
+          {props.resultData.tags.map((t, i) => (
+            <div className="mr-2">
+              <Tag key={i} id={i} title={t} />
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <p className="mr-2">Periodo: </p>
+            <h2 className="bg-red-200 text-red-700 p-1 rounded">
+              {props.resultData.period}
+            </h2>{" "}
+          </div>
+          <div className="flex-col justify-center">
+            <button>
+              <img
+                className="transform rotate-180 w-6"
+                src={require("../../../assets/icons/down-arrow.png")}
+              />
+            </button>
+            <h2 className="text-center">
+              {props.resultData.upvote_count - props.resultData.downvote_count}
+            </h2>
+            <button>
+              <img
+                className="w-6"
+                src={require("../../../assets/icons/down-arrow.png")}
+              />
+            </button>
+          </div>
+        </div>
       </Link>
     </div>
   );

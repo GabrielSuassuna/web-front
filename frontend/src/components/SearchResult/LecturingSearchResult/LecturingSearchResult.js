@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 import Tag from "../../Tag/Tag";
 /** TODO: Atualizar documentação
  * Componente que representa um resultado de uma pesquisa de Disciplina Ministrada.
@@ -16,28 +17,36 @@ import Tag from "../../Tag/Tag";
  */
 function LecturingSearchResult(props) {
   return (
-    <div>
-      <Link
-        to={`/description/department?id=${props.resultData.professor_department_id}`}
-      >
-        <small>{props.resultData.professor_department}</small>
-      </Link>
+    <div className="p-4 drop-shadow-lg bg-white rounded">
       <Link to={`/description/discipline?id=${props.resultData.discipline_id}`}>
-        <h1>
+        <h1 className="font-semibold mt-2">
           {props.resultData.discipline_code} -{" "}
           {props.resultData.discipline_name} (
           {props.resultData.discipline_hours})h
         </h1>
       </Link>
-      <Link to={`/description/professor?id=${props.resultData.professor_id}`}>
-        <h1>
-          {props.resultData.professor_siape} -{props.resultData.professor_name}
-        </h1>
-      </Link>
+      <div className="flex items-center mt-2">
+        <Link to={`/description/professor?id=${props.resultData.professor_id}`}>
+          <h1 className="mr-2">{props.resultData.professor_name}</h1>
+        </Link>
+        <Link
+          to={`/description/department?id=${props.resultData.professor_department_id}`}
+        >
+          <small className="bg-orange-200 text-yellow-700 p-1 rounded mb-4">
+            {props.resultData.professor_department}
+          </small>
+        </Link>
+      </div>
+
+      <div className="mt-2">
+        <StarRatings
+          rating={props.resultData.average_score / 2}
+          starRatedColor="rgb(251, 203, 24)"
+          starDimension="32px"
+        />
+      </div>
+
       <Link to={`/description/lecturing?id=${props.resultData.id}`}>
-        {props.resultData.feedback_count > 0 && (
-          <h2>Classificação: {props.resultData.average_score}</h2>
-        )}
         <small>{props.resultData.feedback_count} feedbacks</small>
       </Link>
     </div>

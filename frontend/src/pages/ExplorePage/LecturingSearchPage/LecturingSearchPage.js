@@ -65,7 +65,7 @@ function LecturingSearchPage() {
           alert("Nenhum resultado encontrado");
         }
         setResults(res.data);
-        setHasNextPage( res.message.split("last=")[1] === "FALSE" );
+        setHasNextPage(res.message.split("last=")[1] === "FALSE");
       });
   };
 
@@ -75,75 +75,98 @@ function LecturingSearchPage() {
   };
 
   return (
-    <div>
-      <ValidationInput
-        label="Nome do Professor"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
-        type="text"
-        name="name"
-        inputRef={professorNameRef}
-      />
-      <ValidationInput
-        label="SIAPE do Professor"
-        hint="ex: 12345"
-        type="text"
-        name="siape"
-        inputRef={professorSiapeRef}
-      />
-      <ValidationSelect
-        name="dept"
-        label="Departamento"
-        hint="Selecione um departamento"
-        value={professorDepartment}
-        valueHandler={setProfessorDepartment}
-        options={deptOptions}
-      />
-      <ValidationInput
-        label="Nome da Disciplina"
-        hint="ex: Algoritmos Aproximativos"
-        type="text"
-        name="name"
-        inputRef={disciplineNameRef}
-      />
-      <ValidationInput
-        label="Código da Disciplina"
-        hint="ex: CC0101"
-        type="text"
-        name="code"
-        inputRef={disciplineCodeRef}
-      />
-      <ValidationInput
-        label="Carga horária da Disciplina"
-        hint="ex: 64"
-        type="number"
-        name="hours"
-        inputRef={disciplineHoursRef}
-      />
-      <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
+    <div className="flex flex-col">
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="Nome do Professor"
+          hint="ex: Fulano de Tal Cicrano de Oliveira"
+          type="text"
+          name="name"
+          inputRef={professorNameRef}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationSelect
+          name="dept"
+          label="Departamento"
+          hint="Selecione um departamento"
+          value={professorDepartment}
+          valueHandler={setProfessorDepartment}
+          options={deptOptions}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="SIAPE do Professor"
+          hint="ex: 12345"
+          type="text"
+          name="siape"
+          className={["mr-4"]}
+          inputRef={professorSiapeRef}
+        />
+        <ValidationInput
+          label="Nome da Disciplina"
+          hint="ex: Algoritmos Aproximativos"
+          type="text"
+          name="name"
+          inputRef={disciplineNameRef}
+        />
+      </div>
+      <div className="flex max-w-2xl items-end mb-8">
+        <ValidationInput
+          label="Código da Disciplina"
+          hint="ex: CC0101"
+          type="text"
+          name="code"
+          className={["mr-4"]}
+          inputRef={disciplineCodeRef}
+        />
+        <ValidationInput
+          label="Carga horária da Disciplina"
+          hint="ex: 64"
+          type="number"
+          name="hours"
+          className={["mr-4"]}
+          inputRef={disciplineHoursRef}
+        />
+        <div className="mb-1">
+          <IconButton
+            className={["p-1"]}
+            content="Pesquisar"
+            onClick={() => handlePageChange(1)}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap">
+        {results.map((result, i) => (
+          <div key={i} className="mr-4">
+            <SearchResult
+              type={SEARCH_RESULT_TYPES.LECTURING}
+              resultData={result}
+            />{" "}
+            <br />{" "}
+          </div>
+        ))}
+      </div>
+
       {results.length > 0 && (
-        <>
+        <div className="flex items-center ml-auto">
           <IconButton
             content="<"
+            className={["mr-4"]}
             disabled={pageIndex === 1}
             onClick={() => handlePageChange(pageIndex - 1)}
           />
-          <h1>{pageIndex}</h1>
+          <h1 className="text-center">{pageIndex}</h1>
           <IconButton
             content=">"
+            className={["ml-4"]}
             disabled={!hasNextPage}
             onClick={() => handlePageChange(pageIndex + 1)}
           />
-        </>
-      )}
-      {results.map((result, i) => (
-        <div key={i}>
-          <SearchResult
-            type={SEARCH_RESULT_TYPES.LECTURING}
-            resultData={result}
-          />{" "}
-          <br />{" "}
         </div>
-      ))}
+      )}
     </div>
   );
 }

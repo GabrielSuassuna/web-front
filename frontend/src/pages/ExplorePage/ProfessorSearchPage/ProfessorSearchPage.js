@@ -99,7 +99,11 @@ function ProfessorSearchPage() {
           options={deptOptions}
         />
         <div className="mb-1">
-          <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
+          <IconButton
+            className={["p-1"]}
+            content="Pesquisar"
+            onClick={() => handlePageChange(1)}
+          />
         </div>
       </div>
 
