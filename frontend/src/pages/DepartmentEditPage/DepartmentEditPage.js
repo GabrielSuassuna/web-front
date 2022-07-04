@@ -14,11 +14,11 @@ import { AUTH_LEVELS } from "../../utils/consts";
 function DepartmentEditPage() {
   const navigate = useNavigate();
 
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const departmentNameRef = useRef(null);
   const departmentDescriptionRef = useRef(null);
-  const [courseCoordinator, setCourseCoordinator] = useState('');
-  const [departmentHead, setDepartmentHead] = useState('');
+  const [courseCoordinator, setCourseCoordinator] = useState("");
+  const [departmentHead, setDepartmentHead] = useState("");
 
   let [deptOptions, setDeptOptions] = useState([]);
   let [deptOptionsLoaded, setDeptOptionsLoaded] = useState(false);
@@ -162,7 +162,7 @@ function DepartmentEditPage() {
               />
             </div>
             <IconButton
-              classes={[
+              className={[
                 "w-full",
                 "bg-green-700",
                 "text-white",

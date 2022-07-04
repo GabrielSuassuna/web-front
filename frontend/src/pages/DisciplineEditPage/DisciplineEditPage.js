@@ -13,7 +13,7 @@ import { getAuthToken } from "../../utils/auth";
 function DisciplineEditPage() {
   const navigate = useNavigate();
 
-  const [selectedDiscipline, setSelectedDiscipline] = useState('');
+  const [selectedDiscipline, setSelectedDiscipline] = useState("");
   const disciplineCodeRef = useRef(null);
   const disciplineNameRef = useRef(null);
   const disciplineDescriptionRef = useRef(null);
@@ -169,7 +169,7 @@ function DisciplineEditPage() {
               inputRef={disciplineHoursRef}
             />
             <IconButton
-              classes={[
+              className={[
                 "w-full",
                 "bg-green-700",
                 "text-white",

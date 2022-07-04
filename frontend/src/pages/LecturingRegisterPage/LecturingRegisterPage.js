@@ -67,8 +67,8 @@ function LecturingRegisterPage() {
     };
 
     let token = getAuthToken(navigate);
-    
-    if(!token) return;
+
+    if (!token) return;
 
     apiRequest(
       "POST",
@@ -89,25 +89,43 @@ function LecturingRegisterPage() {
   };
 
   return (
-    <div>
-      <h1>Registrar disciplina ministrada por professor</h1>
-      <ValidationSelect
-        name="professor"
-        label="Professor"
-        hint="Selecione um professor"
-        value={professor}
-        valueHandler={setProfessor}
-        options={professorOptions}
-      />
-      <ValidationSelect
-        name="discipline"
-        label="Discipline"
-        hint="Selecione uma disciplina"
-        value={discipline}
-        valueHandler={setDiscipline}
-        options={disciplineOptions}
-      />
-      <IconButton content="Registrar-se" onClick={registerLecturingHandler} />
+    <div className="mt-6 ml-6">
+      <h1 className="text-4xl font-bold mb-6">
+        Cadastro de Disciplina Ministrada por Professor
+      </h1>
+
+      <div className="flex flex-col w-6/12">
+        <ValidationSelect
+          name="professor"
+          label="Professor"
+          hint="Selecione um professor"
+          value={professor}
+          valueHandler={setProfessor}
+          options={professorOptions}
+        />
+        <ValidationSelect
+          name="discipline"
+          label="Discipline"
+          hint="Selecione uma disciplina"
+          value={discipline}
+          valueHandler={setDiscipline}
+          options={disciplineOptions}
+        />
+        <IconButton
+          className={[
+            "w-full",
+            "bg-green-700",
+            "text-white",
+            "py-2",
+            "text-xs",
+            "rounded",
+            "mt-2",
+            "mb-10",
+          ]}
+          content="Registrar"
+          onClick={registerLecturingHandler}
+        />
+      </div>
     </div>
   );
 }

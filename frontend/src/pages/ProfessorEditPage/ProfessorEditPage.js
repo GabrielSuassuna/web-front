@@ -36,7 +36,7 @@ function ProfessorEditPage() {
     if (professorId || !professor) {
       return;
     }
-    console.log(professor)
+    console.log(professor);
     let professorData = professor.data[0];
     setProfessorId(professorData.id);
     setDepartmentId(professorData.department_id);
@@ -144,7 +144,7 @@ function ProfessorEditPage() {
           inputRef={professorLattesUrlRef}
         />
         <IconButton
-          classes={[
+          className={[
             "w-full",
             "bg-green-700",
             "text-white",

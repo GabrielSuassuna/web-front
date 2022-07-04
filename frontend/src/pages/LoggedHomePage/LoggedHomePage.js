@@ -11,7 +11,7 @@ function LoggedHomePage() {
       <h1 className="font-bold text-3xl mb-10 text-center">BEM VINDO!</h1>
 
       <IconButton
-        classes={[
+        className={[
           "flex",
           "flex-row",
           "bg-indigo-700",
@@ -29,7 +29,7 @@ function LoggedHomePage() {
         onClick={() => navigate("/explore")}
       />
       <IconButton
-        classes={[
+        className={[
           "flex",
           "flex-row",
           "bg-indigo-700",
@@ -47,7 +47,7 @@ function LoggedHomePage() {
         onClick={() => navigate("/myFeedbacks")}
       />
       <IconButton
-        classes={[
+        className={[
           "flex",
           "flex-row",
           "bg-indigo-700",

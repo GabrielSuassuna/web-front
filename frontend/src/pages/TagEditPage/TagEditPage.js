@@ -13,17 +13,14 @@ import { getAuthToken } from "../../utils/auth";
 function TagEditPage() {
   const navigate = useNavigate();
 
-  const [selectedTag, setSelectedTag] = useState('');
+  const [selectedTag, setSelectedTag] = useState("");
   const tagNameRef = useRef(null);
   const tagDescriptionRef = useRef(null);
 
   let [tagOptions, setTagOptions] = useState([]);
   let [tagOptionsLoaded, setTagOptionsLoaded] = useState(false);
 
-  const { data: tags, error: tagsError } = useSWR(
-    `${url}/tag/`,
-    fetcher
-  );
+  const { data: tags, error: tagsError } = useSWR(`${url}/tag/`, fetcher);
   checkForErrors([tagsError]);
 
   useEffect(() => {
@@ -146,7 +143,7 @@ function TagEditPage() {
               />
             </div>
             <IconButton
-              classes={[
+              className={[
                 "w-full",
                 "bg-green-700",
                 "text-white",
