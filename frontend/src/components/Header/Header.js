@@ -1,6 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { decodeToken, tokenIsValid } from "../../utils/auth";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const authHandler = () => {
+    if (!tokenIsValid(localStorage.getItem("token"))) {
+      navigate("/login");
+    } else {
+      localStorage.setItem("token", "");
+      localStorage.setItem("userType", "");
+      localStorage.setItem("userId", "");
+      localStorage.setItem("exp", "");
+      localStorage.setItem("token", "");
+      navigate("/");
+    }
+  };
+
   return (
     <header className="relative bg-white">
       <div>
@@ -36,11 +52,12 @@ export default function Header() {
               </button>
             </Link>
 
-            <Link to="login">
-              <button className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                Login
-              </button>
-            </Link>
+            <button
+              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              onClick={authHandler}
+            >
+              {tokenIsValid(localStorage.getItem("token")) ? "Logout" : "Login"}
+            </button>
           </div>
         </div>
       </div>

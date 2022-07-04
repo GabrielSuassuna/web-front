@@ -1,16 +1,16 @@
-import { Client } from 'pg'
-import { Database } from '../Database'
-import { Migration } from '../../Interfaces/Migration/Migration.interface'
+import { Client } from "pg";
+import { Database } from "../Database";
+import { Migration } from "../../Interfaces/Migration/Migration.interface";
 
-export class FeedbackMigration implements Migration{
-    private client: Client
+export class FeedbackMigration implements Migration {
+  private client: Client;
 
-    constructor(){
-        this.client = new Database().getClient()
-    }
+  constructor() {
+    this.client = new Database().getClient();
+  }
 
-    run(): Promise<string>{
-        const SQL = `
+  run(): Promise<string> {
+    const SQL = `
             CREATE TABLE feedback(
                 id serial PRIMARY KEY UNIQUE NOT NULL, 
                 lecturing_id serial NOT NULL,  
@@ -30,35 +30,34 @@ export class FeedbackMigration implements Migration{
             CREATE SEQUENCE feedback_seq
             START 1
             INCREMENT 1;
-        `
+        `;
 
-        return new Promise((resolve, reject) => {
-            this.client.query(SQL, (err, res) => {
-                if (err) {
-                    reject(`Error while applying Feedback migration; Stack: ${err}`)
-                }
-                else{
-                    resolve("")
-                }
-            })
-        })
-    }
+    return new Promise((resolve, reject) => {
+      this.client.query(SQL, (err, res) => {
+        if (err) {
+          reject(`Error while applying Feedback migration; Stack: ${err}`);
+        } else {
+          resolve("");
+        }
+      });
+    });
+  }
 
-    drop(): Promise<string>{
-        const SQL = `
-            DROP TABLE feedback;
+  drop(): Promise<string> {
+    const SQL = `
+            DROP TABLE IF EXISTS feedback;
             
             DROP SEQUENCE feedback_seq;
-        `
+        `;
 
-        return new Promise((resolve, reject) => {
-            this.client.query(SQL, (err, res) => {
-                if (err) {
-                    reject(`Error while dropping Feedback table; Stack: ${err}`)
-                }else{
-                    resolve("")
-                }
-            })
-        })  
-    }
+    return new Promise((resolve, reject) => {
+      this.client.query(SQL, (err, res) => {
+        if (err) {
+          reject(`Error while dropping Feedback table; Stack: ${err}`);
+        } else {
+          resolve("");
+        }
+      });
+    });
+  }
 }

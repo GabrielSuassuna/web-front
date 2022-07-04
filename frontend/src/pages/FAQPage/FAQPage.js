@@ -1,5 +1,4 @@
 import FAQ from "../../components/FAQ/FAQ";
-import useQuery from "../../hooks/useQuery";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { useEffect, useState } from "react";

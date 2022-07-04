@@ -63,7 +63,7 @@ function FeedbackSearchPage() {
     url += `&period=${feedbackPeriod}`;
     url += `&page=${pageNumber}`;
     url += `&limit=${PAGE_LIMIT}`;
-    console.log(url)
+    console.log(url);
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -71,7 +71,7 @@ function FeedbackSearchPage() {
           alert("Nenhum resultado encontrado");
         }
         setResults(res.data);
-        setHasNextPage( res.message.split("last=")[1] === "FALSE" );
+        setHasNextPage(res.message.split("last=")[1] === "FALSE");
       });
   };
 
@@ -81,90 +81,118 @@ function FeedbackSearchPage() {
   };
 
   return (
-    <div>
-      <ValidationInput
-        label="Nome do Professor"
-        hint="ex: Fulano de Tal Cicrano de Oliveira"
-        type="text"
-        name="name"
-        inputRef={professorNameRef}
-      />
-      <ValidationInput
-        label="SIAPE do Professor"
-        hint="ex: 12345"
-        type="text"
-        name="siape"
-        inputRef={professorSiapeRef}
-      />
-      <ValidationSelect
-        name="dept"
-        label="Departamento"
-        hint="Selecione um departamento"
-        value={professorDepartment}
-        valueHandler={setProfessorDepartment}
-        options={deptOptions}
-      />
-      <ValidationInput
-        label="Nome da Disciplina"
-        hint="ex: Algoritmos Aproximativos"
-        type="text"
-        name="name"
-        inputRef={disciplineNameRef}
-      />
-      <ValidationInput
-        label="Código da Disciplina"
-        hint="ex: CC0101"
-        type="text"
-        name="code"
-        inputRef={disciplineCodeRef}
-      />
-      <ValidationInput
-        label="Carga horária da Disciplina"
-        hint="ex: 64"
-        type="number"
-        name="hours"
-        inputRef={disciplineHoursRef}
-      />
-      <ValidationInput
-        label="Título do Feedback"
-        hint="ex: Ótimo profesor"
-        type="text"
-        name="title"
-        inputRef={feedbackTitleRef}
-      />
-      <ValidationSelect
-        name="periodSel"
-        label="Período que cursou a disciplina"
-        hint="Selecione um período"
-        value={feedbackPeriod}
-        valueHandler={setFeedbackPeriod}
-        options={genPeriodOptions()}
-      />
-      <IconButton content="Pesquisar" onClick={() => handlePageChange(1)} />
+    <div className="flex flex-col">
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="Nome do Professor"
+          hint="ex: Fulano de Tal Cicrano de Oliveira"
+          type="text"
+          name="name"
+          className={["mr-4"]}
+          inputRef={professorNameRef}
+        />
+        <ValidationInput
+          label="SIAPE do Professor"
+          hint="ex: 12345"
+          type="text"
+          name="siape"
+          inputRef={professorSiapeRef}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationSelect
+          name="dept"
+          label="Departamento"
+          hint="Selecione um departamento"
+          value={professorDepartment}
+          className={["mr-4"]}
+          valueHandler={setProfessorDepartment}
+          options={deptOptions}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="Nome da Disciplina"
+          hint="ex: Algoritmos Aproximativos"
+          type="text"
+          name="name"
+          inputRef={disciplineNameRef}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="Código da Disciplina"
+          hint="ex: CC0101"
+          type="text"
+          name="code"
+          className={["mr-4"]}
+          inputRef={disciplineCodeRef}
+        />
+        <ValidationInput
+          label="Carga horária da Disciplina"
+          hint="ex: 64"
+          type="number"
+          name="hours"
+          inputRef={disciplineHoursRef}
+        />
+      </div>
+      <div className="flex max-w-2xl mb-4">
+        <ValidationInput
+          label="Título do Feedback"
+          hint="ex: Ótimo profesor"
+          type="text"
+          name="title"
+          inputRef={feedbackTitleRef}
+        />
+      </div>
+      <div className="flex max-w-2xl items-end mb-8">
+        <ValidationSelect
+          name="periodSel"
+          label="Período que cursou a disciplina"
+          hint="Selecione um período"
+          value={feedbackPeriod}
+          className={["mr-4"]}
+          valueHandler={setFeedbackPeriod}
+          options={genPeriodOptions()}
+        />
+        <div className="mb-1">
+          <IconButton
+            className={["p-1"]}
+            content="Pesquisar"
+            onClick={() => handlePageChange(1)}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap">
+        {results.map((result, i) => (
+          <div key={i}>
+            <SearchResult
+              type={SEARCH_RESULT_TYPES.FEEDBACK}
+              resultData={result}
+            />{" "}
+            <br />{" "}
+          </div>
+        ))}
+      </div>
+
       {results.length > 0 && (
-        <>
+        <div className="flex items-center ml-auto">
           <IconButton
             content="<"
             disabled={pageIndex === 1}
+            className={["mr-4"]}
             onClick={() => handlePageChange(pageIndex - 1)}
           />
           <h1>{pageIndex}</h1>
           <IconButton
             content=">"
             disabled={!hasNextPage}
+            className={["ml-4"]}
             onClick={() => handlePageChange(pageIndex + 1)}
           />
-        </>
-      )}
-      {results.map((result, i) => (
-        <div key={i}>
-          <SearchResult
-            type={SEARCH_RESULT_TYPES.FEEDBACK}
-            resultData={result}
-          />{" "}
-          <br />{" "}
         </div>
-      ))}
+      )}
     </div>
   );
 }

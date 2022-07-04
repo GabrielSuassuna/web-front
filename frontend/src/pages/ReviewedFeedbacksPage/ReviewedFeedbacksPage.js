@@ -20,11 +20,11 @@ for(let s in REPORT_UPDATE_TYPES){
   });
 }
 
-function ReportedFeedbacksPage() {
+function ReviewedFeedbacks() {
   const navigate = useNavigate();
 
-  const reviewerNameRef = useRef(null);
-  const reviewerSiapeRef = useRef(null);
+  const authorNameRef = useRef(null);
+  const authorSiapeRef = useRef(null);
   const feedbackTitleRef = useRef(null);
 
   const [feedbackStatus, setFeedbackStatus] = useState(REPORT_STATUS_OPTIONS[0].value);
@@ -44,9 +44,9 @@ function ReportedFeedbacksPage() {
 
     if (!token) return;
 
-    let url = URL + `/report/professor/${userId}?`;  
-    url += `reviewerName=${checkRef(reviewerNameRef)}`;
-    url += `&reviewerSiape=${checkRef(reviewerSiapeRef)}`;
+    let url = URL + `/report/reviewer/${userId}?`;  
+    url += `authorName=${checkRef(authorNameRef)}`;
+    url += `&authorSiape=${checkRef(authorSiapeRef)}`;
     url += `&title=${checkRef(feedbackTitleRef)}`;
     url += `&status=${feedbackStatus}`;
     url += `&page=${pageNumber}`;
@@ -85,18 +85,18 @@ function ReportedFeedbacksPage() {
       {showFilter && (
         <>
           <ValidationInput
-            label="Nome do Revisor"
+            label="Nome do Autor"
             hint="ex: Fulano de Tal Cicrano de Oliveira"
             type="text"
-            name="reviewerName"
-            inputRef={reviewerNameRef}
+            name="authorName"
+            inputRef={authorNameRef}
           />
           <ValidationInput
-            label="SIAPE do Revisor"
+            label="SIAPE do Autor"
             hint="ex: 123456"
             type="text"
-            name="reviewerSiape"
-            inputRef={reviewerSiapeRef}
+            name="authorSiape"
+            inputRef={authorSiapeRef}
           />
           <ValidationInput
             label="Título do Feedback"
@@ -149,4 +149,4 @@ function ReportedFeedbacksPage() {
   );
 }
 
-export default ReportedFeedbacksPage;
+export default ReviewedFeedbacks;
