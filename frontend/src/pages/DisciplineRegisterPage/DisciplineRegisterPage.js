@@ -92,7 +92,7 @@ function DisciplineRegisterPage() {
         />
 
         <IconButton
-          classes={[
+          className={[
             "w-full",
             "bg-green-700",
             "text-white",
@@ -101,7 +101,7 @@ function DisciplineRegisterPage() {
             "rounded",
             "mt-2",
           ]}
-          content="Registrar disciplina"
+          content="Registrar Disciplina"
           onClick={registerDisciplineHandler}
         />
       </div>

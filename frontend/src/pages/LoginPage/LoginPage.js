@@ -5,7 +5,7 @@ import ValidationInput from "../../components/ValidationInput/ValidationInput";
 import url from "../../config/api";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
-import {tokenIsValid, decodeToken} from "../../utils/auth";
+import { tokenIsValid, decodeToken } from "../../utils/auth";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -29,12 +29,12 @@ function LoginPage() {
       url + "/auth/student",
       requestData,
       (response) => {
-        if(!tokenIsValid(response.data[0])){
+        if (!tokenIsValid(response.data[0])) {
           console.log(response);
           alert(response.message);
           return;
         }
-        const { id, userType, exp } = decodeToken(response.data[0])
+        const { id, userType, exp } = decodeToken(response.data[0]);
         localStorage.setItem("token", response.data[0]);
         localStorage.setItem("userId", id);
         localStorage.setItem("userType", userType);
@@ -72,19 +72,20 @@ function LoginPage() {
           inputRef={passwordRef}
           validation={validationStringChecker}
         />
-        <IconButton
-          classes={[
-            "w-full",
-            "bg-indigo-700",
-            "text-white",
-            "py-2",
-            "text-xs",
-            "rounded",
-            "mt-2",
-          ]}
-          content="ENTRAR"
-          onClick={loginHandler}
-        />
+        <div className="mt-2">
+          <IconButton
+            className={[
+              "w-full",
+              "bg-indigo-700",
+              "text-white",
+              "py-2",
+              "text-xs",
+              "rounded",
+            ]}
+            content="ENTRAR"
+            onClick={loginHandler}
+          />
+        </div>
       </div>
     </div>
   );

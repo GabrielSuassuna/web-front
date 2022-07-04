@@ -162,7 +162,9 @@ function DepartmentLeaderEditPage() {
 
   return (
     <div className="mt-6 ml-6">
-      <h1 className="text-4xl font-bold mb-6">Mudança de Líderes de Departamento</h1>
+      <h1 className="text-4xl font-bold mb-6">
+        Mudança de Líderes de Departamento
+      </h1>
 
       <div className="flex flex-col w-6/12">
         <ValidationSelect
@@ -193,7 +195,7 @@ function DepartmentLeaderEditPage() {
               options={professorOptions}
             />
             <IconButton
-              classes={[
+              className={[
                 "w-full",
                 "bg-green-700",
                 "text-white",

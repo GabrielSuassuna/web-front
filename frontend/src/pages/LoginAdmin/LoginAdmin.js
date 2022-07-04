@@ -2,40 +2,40 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "../../components/IconButton/IconButton";
 import ValidationInput from "../../components/ValidationInput/ValidationInput";
+import url from "../../config/api";
 import { apiRequest } from "../../utils/apiReq";
 import { validationStringChecker } from "../../utils/validation";
-import url from "../../config/api";
 import { tokenIsValid, decodeToken } from "../../utils/auth";
 
-function ProfessorLoginPage() {
+function LoginAdmin() {
   const navigate = useNavigate();
-  const siapeRef = useRef(null);
+  const registrationRef = useRef(null);
   const passwordRef = useRef(null);
 
   const loginHandler = async () => {
     if (
-      !validationStringChecker(siapeRef).isValid ||
+      !validationStringChecker(registrationRef).isValid ||
       !validationStringChecker(passwordRef).isValid
     )
       return alert("Dados inválidos!");
 
     let requestData = {
-      code: siapeRef.current.value,
+      code: registrationRef.current.value,
       password: passwordRef.current.value,
     };
 
     apiRequest(
       "POST",
-      url + "/auth/professor",
+      url + "/auth/admin",
       requestData,
-      (res) => {
-        if (!tokenIsValid(res.data[0])) {
-          console.log(res);
-          alert(res.message);
+      (response) => {
+        if (!tokenIsValid(response.data[0])) {
+          console.log(response);
+          alert(response.message);
           return;
         }
-        const { id, userType, exp } = decodeToken(res.data[0]);
-        localStorage.setItem("token", res.data[0]);
+        const { id, userType, exp } = decodeToken(response.data[0]);
+        localStorage.setItem("token", response.data[0]);
         localStorage.setItem("userId", id);
         localStorage.setItem("userType", userType);
         localStorage.setItem("exp", exp);
@@ -56,12 +56,12 @@ function ProfessorLoginPage() {
           className="w-40 mb-10 mt-5"
           src={require("../../assets/img/logo.png")}
         />
-        <p>Login Professor</p>
+        <p>Login Admin</p>
         <ValidationInput
-          hint="SIAPE"
+          hint="Matrícula"
           type="text"
           name="login"
-          inputRef={siapeRef}
+          inputRef={registrationRef}
           validation={validationStringChecker}
         />
         <ValidationInput
@@ -81,7 +81,6 @@ function ProfessorLoginPage() {
               "py-2",
               "text-xs",
               "rounded",
-              "mt-2",
             ]}
             content="ENTRAR"
             onClick={loginHandler}
@@ -92,4 +91,4 @@ function ProfessorLoginPage() {
   );
 }
 
-export default ProfessorLoginPage;
+export default LoginAdmin;

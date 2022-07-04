@@ -67,8 +67,8 @@ function LecturingRegisterPage() {
     };
 
     let token = getAuthToken(navigate);
-    
-    if(!token) return;
+
+    if (!token) return;
 
     apiRequest(
       "POST",
@@ -112,7 +112,7 @@ function LecturingRegisterPage() {
           options={disciplineOptions}
         />
         <IconButton
-          classes={[
+          className={[
             "w-full",
             "bg-green-700",
             "text-white",
@@ -122,7 +122,7 @@ function LecturingRegisterPage() {
             "mt-2",
             "mb-10",
           ]}
-          content="Registrar-se"
+          content="Registrar"
           onClick={registerLecturingHandler}
         />
       </div>

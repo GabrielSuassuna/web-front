@@ -75,7 +75,7 @@ function FAQRegisterPage() {
           />
         </div>
         <IconButton
-          classes={[
+          className={[
             "w-full",
             "bg-green-700",
             "text-white",

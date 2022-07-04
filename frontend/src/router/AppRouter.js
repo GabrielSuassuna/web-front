@@ -35,6 +35,7 @@ import StudentEditPage from "../pages/StudentEditPage/StudentEditPage";
 import DisciplineEditPage from "../pages/DisciplineEditPage/DisciplineEditPage";
 import TagEditPage from "../pages/TagEditPage/TagEditPage";
 import DepartmentLeaderEditPage from "../pages/DepartmentLeaderEditPage/DepartmentLeaderEditPage";
+import LoginAdmin from "../pages/LoginAdmin/LoginAdmin";
 
 /**
  * Esse componente é responsável por fazer o roteamento das páginas da aplicação.
@@ -66,6 +67,15 @@ function AppRouter() {
           element={
             <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
               <ProfessorLoginPage />
+            </AuthRedirect>
+          }
+        />
+
+        <Route
+          path="/login/admin"
+          element={
+            <AuthRedirect levels={[AUTH_LEVELS.GUEST]}>
+              <LoginAdmin />
             </AuthRedirect>
           }
         />

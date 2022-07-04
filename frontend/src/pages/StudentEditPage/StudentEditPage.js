@@ -33,7 +33,7 @@ function StudentEditPage() {
     if (studentId || !student) {
       return;
     }
-    console.log(student)
+    console.log(student);
     let studentData = student.data[0];
     setStudentId(studentData.id);
     studentNameRef.current.value = studentData.name;
@@ -117,7 +117,7 @@ function StudentEditPage() {
           inputRef={studentPasswordConfirmRef}
         />
         <IconButton
-          classes={[
+          className={[
             "w-full",
             "bg-green-700",
             "text-white",
